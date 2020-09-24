@@ -95,13 +95,7 @@ function t() {
 const $ = (function() {
     let name = 'jquery';
     return {
-        ajax: function({
-                           type,
-                           url,
-                           data,
-                           isAsync,
-                           success
-                       }) {
+        ajax: function({type,url,data,isAsync,success}) {
             if (!url) {
                 console.error('请输入请求地址')
                 return;
@@ -515,26 +509,11 @@ class Loading{
         // 创建一个Element对象
         let loadingEl = document.createElement('div');
         loadingEl.className = 'loading';
-        loadingEl.innerHTML = "<span></span>\n" +
-            "        <span></span>\n" +
-            "        <span></span>\n" +
-            "        <span></span>\n" +
-            "        <span></span>";
+        loadingEl.innerHTML = "<span></span><span></span><span></span><span></span><span></span>";
         this.containerEl.appendChild(loadingEl);
-
         document.body.style.overflow='hidden';
         document.documentElement.style.overflow='hidden'
-        //监听滚动事件
-        // document.addEventListener('touchmove', function (event) {
-        //     //禁止浏览器默认行为
-        //     event.preventDefault();
-        // })
-        // setTimeout(() => {
-        //     this.close();
-        // }, 15000);
     }
-
-
     close() {
         let loadingEl = document.querySelector(".loading");
         loadingEl.remove();
@@ -555,9 +534,6 @@ loading = new Loading();
 let zh_default = 'n'; //默认语言，请不要改变
 let zh_choose = 'n'; //当前选择
 let zh_expires = 7; //cookie过期天数
-let zh_class = 'zh_click'; //链接的class名，id为class + s/t/n 之一
-let zh_style_active = 'font-weight:bold; color:green;'; //当前选择的链接式样
-let zh_style_inactive = 'color:blue;'; //非当前选择的链接式样
 let zh_browserLang = ''; //浏览器语言
 let zh_autoLang_t = true; //浏览器语言为繁体时自动进行操作
 let zh_autoLang_s = true; //浏览器语言为简体时自动进行操作
@@ -626,16 +602,6 @@ function zh_tranBody(obj) {
     for (var i = 0; i < o.length; i++) {
         var c = o.item(i);
         if ('||BR|HR|TEXTAREA|SCRIPT|'.indexOf("|"+c.tagName+"|") > 0) continue;
-        // if (c.className == zh_class) {
-        //     if (c.id == zh_class + '_' + zh_choose) {
-        //         c.setAttribute('style', zh_style_active);
-        //         c.style.cssText = zh_style_active;
-        //     }else {
-        //         c.setAttribute('style', zh_style_inactive);
-        //         c.style.cssText = zh_style_inactive;
-        //     }
-        //     continue;
-        // }
         if (c.title != '' && c.title != null) c.title = c.title.tran();
         if (c.alt != '' && c.alt != null) c.alt = c.alt.tran();
         if (c.tagName == "INPUT" && c.value != '' && c.type != 'text' && c.type != 'hidden' && c.type != 'password') c.value = c.value.tran();
@@ -651,16 +617,6 @@ function zh_tranCustom(obj) {
     for (var i = 0; i < o.length; i++) {
         var c = o.item(i);
         if ('||BR|HR|TEXTAREA|SCRIPT|'.indexOf("|"+c.tagName+"|") > 0) continue;
-        // if (c.className == zh_class) {
-        //     if (c.id == zh_class + '_' + zh_choose) {
-        //         c.setAttribute('style', zh_style_active);
-        //         c.style.cssText = zh_style_active;
-        //     }else {
-        //         c.setAttribute('style', zh_style_inactive);
-        //         c.style.cssText = zh_style_inactive;
-        //     }
-        //     continue;
-        // }
         if (c.title != '' && c.title != null) c.title = c.title.tran();
         if (c.alt != '' && c.alt != null) c.alt = c.alt.tran();
         if (c.tagName == "INPUT" && c.value != '' && c.type != 'text' && c.type != 'hidden' && c.type != 'password') c.value = c.value.tran();
