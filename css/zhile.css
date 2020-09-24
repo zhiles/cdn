@@ -60,7 +60,7 @@ html{
     width: 100%;
     height: 2rem;
     top: -2rem;
-    background-image: url("/static/images/unfold-more.png");
+    background-image: url("https://cdn.jsdelivr.net/gh/zhiles/cdn/images/unfold-more.png");
     background-repeat: repeat-x;
 }
 .read-more {
@@ -171,7 +171,7 @@ a:hover{
 .top .img_user{
     width:30px;
     height:30px;
-    background-image:url(/static/images/_fragments.png);
+    background-image:url(https://cdn.jsdelivr.net/gh/zhiles/cdn/images/_fragments.png);
     background-repeat:no-repeat;
     background-position:-92.5px -9px;
     background-size:190px 100px;
@@ -179,7 +179,7 @@ a:hover{
 .top .img_message{
     width:30px;
     height:30px;
-    background-image:url(/static/images/_fragments.png);
+    background-image:url(https://cdn.jsdelivr.net/gh/zhiles/cdn/images/_fragments.png);
     background-repeat:no-repeat;
     background-position:-48px -9px;
     background-size:190px 100px;
@@ -187,7 +187,7 @@ a:hover{
 .top .img_top{
     width:30px;
     height:30px;
-    background-image:url(/static/images/_fragments.png);
+    background-image:url(https://cdn.jsdelivr.net/gh/zhiles/cdn/images/_fragments.png);
     background-repeat:no-repeat;
     background-position:-6.5px -9px;
     background-size:190px 100px;
