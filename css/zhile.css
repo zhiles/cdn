@@ -1,0 +1,599 @@
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
+html{
+    background: #F3F0EB;
+    letter-spacing: 0.8px;
+}
+@media screen and (min-width: 1024px){
+    .container {
+        max-width: 960px;
+    }
+}
+@media screen and (min-width: 1408px){
+    .container {
+        max-width: 1024px;
+    }
+}
+.webkit-1{
+    word-break:break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    /*white-space: pre-line;*/
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+.webkit-2{
+    word-break:break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    /*white-space: normal;*/
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.webkit-3{
+    word-break:break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    /*white-space: normal;*/
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.column{
+    margin: .3rem;
+}
+.columns.is-gapless:not(:last-child) {
+    margin-bottom: 1rem;
+}
+.head-title{
+    border-left: 5px solid #00d1b2;
+    padding: 0 .2rem;
+    margin: 0 0 .5rem 0;
+}
+.unfold-more{
+    width: 100%;
+    height: 2rem;
+    top: -2rem;
+    background-image: url("/static/images/unfold-more.png");
+    background-repeat: repeat-x;
+}
+.read-more {
+    position: relative;
+    top: 2rem;
+}
+.bread-margin{
+    padding: .5rem;
+}
+.padding-left{
+    padding-left: .5rem;
+}
+hr{
+    margin: .4rem .1rem;
+}
+.full-width{
+    width: 100%;
+}
+.full-height{
+    height: 100%;
+}
+.switch{
+    height: 1rem !important;
+    width: 2rem !important;
+}
+a:hover{
+    text-decoration: underline;
+}
+.revise a{
+    color:#4a4a4a;
+}
+.revise a:hover{
+    color:#ff4839;
+}
+.revises {
+    width: 3rem;
+    height: 3rem;
+    overflow: hidden;
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+}
+.ribbon-text{
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+}
+.ribbon {
+    font: bold 10px Sans-Serif;
+    color: #333;
+    text-align: center;
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    -o-transform: rotate(135deg);
+    position: relative;
+    padding: 2px 0;
+    top:1.6rem;
+    right:-.15rem;
+    width: 4rem;
+    background-color: #00D1B2;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#00D1B2), to(#00D1B2));
+    background-image: -webkit-linear-gradient(top, #00D1B2, #00D1B2);
+    background-image: -moz-linear-gradient(top, #00D1B2, #00D1B2);
+    background-image: -ms-linear-gradient(top, #00D1B2, #00D1B2);
+    background-image: -o-linear-gradient(top, #00D1B2, #00D1B2);
+    color: #FFFFFF;
+    -webkit-box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+}
+.ribbon:before, .ribbon:after {
+    content: "";
+    border-top: 3px solid #00B89C;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    position: absolute;
+    bottom: -3px;
+}
+.ribbon:before {
+    left: 0;
+}
+.ribbon:after {
+    right: 0;
+}
+.w-e-text{
+    -webkit-user-select:text !important;
+}
+.img-hand{
+    width: auto;height: 96px;
+    margin-left:0;
+    margin-bottom:0;
+}
+.top{
+    position: fixed;
+    right: 1.5rem;
+    top: 65vh;
+    text-align: center;
+    border:0px;
+}
+.top .top-background{
+    width: 2rem;
+    height: 2rem;
+    background-color: rgba(1,0,0,.3);
+    margin-top: 0.2rem;
+}
+.top .img_user{
+    width:30px;
+    height:30px;
+    background-image:url(/static/images/_fragments.png);
+    background-repeat:no-repeat;
+    background-position:-92.5px -9px;
+    background-size:190px 100px;
+}
+.top .img_message{
+    width:30px;
+    height:30px;
+    background-image:url(/static/images/_fragments.png);
+    background-repeat:no-repeat;
+    background-position:-48px -9px;
+    background-size:190px 100px;
+}
+.top .img_top{
+    width:30px;
+    height:30px;
+    background-image:url(/static/images/_fragments.png);
+    background-repeat:no-repeat;
+    background-position:-6.5px -9px;
+    background-size:190px 100px;
+}
+
+.container{
+    margin-top: calc(1.5rem - .75rem);
+    margin-bottom: calc(1.5rem - .75rem);
+}
+nav .container{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+/**/
+.serial{
+    width: 1.1rem;
+    margin-right: .2rem;
+    color: #fff;
+    font-size: .75rem;
+    display: inline-block;
+}
+.rank .red{
+    background: #F55242;
+}
+.rank .gray{
+    background: #DDDDDD;
+}
+.align-center{
+    align-items: center;
+}
+
+
+/**登陆**/
+.login {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom  : 0;
+    flex-direction: column;
+    /*  flex-start 	元素位于容器的开头  flex-end 元素位于容器的结尾*/
+    /* 元素位于容器的中心 */
+    align-items: center;
+    /*filter: alpha(opacity=60);*/
+    /*opacity:0.5; -moz-opacity:0.5;*/
+    background:rgba(0,0,0,.5);
+    display: flex;
+    text-align:center;
+    justify-content: center;
+    z-index: 2001;
+}
+.login .body{
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22);
+    position: fixed;
+    overflow: hidden;
+    width: 768px;
+    height: 480px;
+    z-index: 2002;
+}
+.login .form{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all .6s ease-in-out;
+}
+.login form{
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    padding:  0 50px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height:100%;
+}
+.login input{
+    background: #eee;
+    border: none;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 100%;
+    outline: none;
+}
+.login p {
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: .5px;
+    margin: 20px 0 30px;
+}
+.login .button{
+    border-radius: 20px;
+    border: 1px solid #ff4b2b;
+    background: #ff4b2b;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    height:auto;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+    cursor: pointer;
+}
+.login .button:hover{
+    color:#fff;
+    border: 1px solid #fff;
+}
+.login .button:active {
+    transform: scale(.95);
+}
+.login .button:focus {
+    outline: 0;
+    border-color: #fff;
+    color:#fff;
+}
+.login .send_code{
+    width: 18%;
+    padding: .75rem .5rem;
+    display: inline-block;
+}.login .verify_code{
+    width: 80%;
+    display: inline-block;
+}
+.login h1{
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0;
+}
+.login .container-text{
+    margin: 5px 0;
+    color:#ff4b2b;
+}
+.login .sign-in{
+    left: 0;
+    width: 50%;
+    z-index: 2;
+}
+.login .sign-up{
+    left: 0;
+    width: 50%;
+    z-index: 1;
+    opacity: 0;
+}
+.login .overlay-container{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform .6s ease-in-out;
+    z-index: 100;
+}
+.login .overlay{
+    background: #ff416c;
+    background: linear-gradient(to right, #ff4b2b, #ff416c) no-repeat 0 0 / cover;
+    color: #fff;
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateY(0);
+    transition: transform .6s ease-in-out;
+}
+.login .overlay-panel{
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 40px;
+    height: 100%;
+    width: 50%;
+    text-align: center;
+    transform: translateY(0);
+    transition: transform .6s ease-in-out;
+}
+.login .overlay-right {
+    right: 0;
+    transform: translateY(0);
+}
+.login .overlay-left {
+    transform: translateY(-20%);
+}
+.login .ghost {
+    background: transparent;
+    border-color: #fff;
+}
+.login .is-close{
+    padding: 13px;
+    position: absolute;
+    top:.5rem;
+    right:.5rem;
+    border: none;
+}
+/* Move signin to right */
+.login .panel-active .sign-in {
+    transform: translateY(100%);
+}
+
+/* Move overlay to left */
+.login .panel-active .overlay-container {
+    transform: translateX(-100%);
+}
+
+/* Bring signup over signin */
+.login .panel-active .sign-up {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+}
+
+/* Move overlay back to right */
+.login .panel-active .overlay {
+    transform: translateX(50%);
+}
+
+/* Bring back the text to center */
+.login .panel-active .overlay-left {
+    transform: translateY(0);
+}
+
+/* Same effect for right */
+.login .panel-active .overlay-right {
+    transform: translateY(20%);
+}
+@media screen and (max-width: 770px){
+    .login .body{
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22);
+        position: fixed;
+        overflow: hidden;
+        width: 100%;
+        min-width: 360px;
+        height: 480px;
+    }
+    .login input{
+        background: #eee;
+        border: none;
+        padding: 12px 15px;
+        margin: 8px 0;
+        width: 100%;
+        outline: none;
+        display:block;
+    }
+    .login .sign-in {
+        left: 0;
+        width: 100%;
+        z-index: 2;
+    }
+    .login .sign-up {
+        left: 0;
+        width: 100%;
+        z-index: 1;
+        opacity: 0;
+    }
+
+    .login .overlay-container{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        transition: transform .6s ease-in-out;
+        background: #ff416c;
+        background: linear-gradient(to right, #ff4b2b, #ff416c) no-repeat 0 0 / cover;
+        z-index: 0;
+    }
+    .login .overlay{
+        color: #fff;
+        position: relative;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        transform: translateY(0);
+        transition: transform .6s ease-in-out;
+    }
+    .login .overlay-panel{
+        position: absolute;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 40px;
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        transform: translateY(0);
+        transition: transform .6s ease-in-out;
+    }
+    .login .is-close{
+        padding: 13px;
+        position: absolute;
+        top:.5rem;
+        right:.5rem;
+        border: none;
+    }
+    /* Move signin to right */
+    .login .panel-active .sign-in {
+        transform: translateY(0);
+    }
+
+    /* Move overlay to left */
+    .login .panel-active .overlay-container {
+        transform: translateX(-100%);
+    }
+    /* Bring signup over signin */
+    .login .panel-active .sign-up {
+        transform: translateX(0);
+        opacity: 1;
+        z-index: 5;
+    }
+}
+
+/** 消息弹框 */
+#message-container {
+    position: fixed;
+    left: 0;
+    top: 4rem;
+    right: 0;
+    /* 采用flex弹性布局，让容器内部的所有消息可以水平居中，还能任意的调整宽度 */
+    display: flex;
+    flex-direction: column;
+    /* 元素位于容器的中心 */
+    /*align-items: center;*/
+    /*  flex-start 	元素位于容器的开头  flex-end 元素位于容器的结尾*/
+    align-items: center;
+}
+#message-container .message {
+    background: #fff;
+    margin: 10px 0;
+    padding: 0 10px;
+    height: 40px;
+    box-shadow: 0 0 10px 0 #eee;
+    font-size: 14px;
+    border-radius: 3px;
+    /* 让消息内部的三个元素（图标、文本、关闭按钮）可以垂直水平居中 */
+    display: flex;
+    align-items: center;
+
+    /* 增加一个过渡属性，当message元素的高度和margin变化时候将会有一个过渡动画 */
+    transition: height 0.2s ease-in-out, margin 0.2s ease-in-out;
+}
+#message-container .message .text {
+    color: #333;
+    padding: 0 5px 0 5px;
+}
+#message-container .message .close {
+    cursor: pointer;
+    color: #999;
+}
+
+/* 给每个图标都加上不同的颜色，用来区分不同类型的消息 */
+#message-container .message .icon-info {
+    color: #0482f8;
+}
+#message-container .message .icon-error {
+    color: #f83504;
+}
+#message-container .message .icon-success {
+    color: #06a35a;
+}
+#message-container .message .icon-warning {
+    color: #ceca07;
+}
+#message-container .message .icon-loading {
+    color: #0482f8;
+}
+@keyframes message-move-in {
+    0% {
+        /* 前边分析过了，弹出动画是一个自上而下的淡入过程 */
+        /* 所以在动画初始状态要把元素的不透明度设置为0，在动画结束的时候再把不透明度设置1，这样就会实现一个淡入动画 */
+        opacity: 0;
+        /* 那么“自上而下”这个动画可以用“transform”变换属性结合他的“translateY”上下平移函数来完成 */
+        /* translateY(-100%)表示动画初始状态，元素在实际位置上面“自身一个高度”的位置。 */
+        transform: translateY(-100%);
+    }
+    100% {
+        opacity: 1;
+        /* 平移到自身位置 */
+        transform: translateY(0);
+    }
+}
+#message-container .message.move-in {
+    /* animation属性是用来加载某个动画规则 请参考 https://developer.mozilla.org/zh-CN/docs/Web/CSS/animation */
+    animation: message-move-in 0.3s ease-in-out;
+}
+@keyframes message-move-out {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+}
+
+#message-container .message.move-out {
+    animation: message-move-out 0.3s ease-in-out;
+    /* 让动画结束后保持结束状态 */
+    animation-fill-mode: forwards;
+}
