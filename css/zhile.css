@@ -17,6 +17,10 @@ html{
         max-width: 1024px;
     }
 }
+.footer{
+    padding: 1rem 1.5rem 1rem;
+    font-size: 13px;
+}
 .webkit-1{
     word-break:break-all;
     overflow: hidden;
@@ -60,7 +64,7 @@ html{
     width: 100%;
     height: 2rem;
     top: -2rem;
-    background-image: url("https://cdn.jsdelivr.net/gh/zhiles/cdn/images/unfold-more.png");
+    background-image: url("/static/images/unfold-more.png");
     background-repeat: repeat-x;
 }
 .read-more {
