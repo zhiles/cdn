@@ -812,6 +812,7 @@ if(loginDisplay){
                 if(data.code == 1){
                     delCookie("zls_auth");
                     setCookie("zls_auth",xhr.getResponseHeader("Cookie"),1);
+                    setCookie("zls_user",JSON.stringify(data.data),1);
                     removeClass(signIn,'is-loading');
                     let url = redirect();
                     if (url == "") {
