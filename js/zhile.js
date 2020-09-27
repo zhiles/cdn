@@ -55,7 +55,7 @@ function cdc() {
                 setTimeout(function() {
                     if (a == 0) {
                         a = 1;
-                        setTimeout(function (){document.write("请尊重他人劳动成果，检测到非法调试，请关闭后刷新重试!");});
+                        setTimeout(function (){document.write("检测到非法调试，请关闭后刷新重试!");});
                     }
                 }, 200);
             }
