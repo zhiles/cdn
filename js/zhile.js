@@ -977,14 +977,20 @@ if(reads){
         el.addEventListener('click',function (){
             let source = el.getAttribute("data-source");
             let id = el.getAttribute("data-id");
-            $.ajax({
-                type:"GET",
-                url:"/loadMore",
-                data:{ticket:Base64.encode(parseInt(Math.random()*(9),10)+""+new Date().getTime()+"_"+id+"_"+source)},
-                success:function (res){
-                    el.parentNode.parentNode.innerHTML = res;
-                }
-            })
+            try {
+                let event = el.getAttribute("data-event").split(',');
+                _hmt.push(['_trackEvent',event[0], '加载更多',event[1]]);
+            }catch (e) {
+            }finally {
+                $.ajax({
+                    type:"GET",
+                    url:"/loadMore",
+                    data:{ticket:Base64.encode(parseInt(Math.random()*(9),10)+""+new Date().getTime()+"_"+id+"_"+source)},
+                    success:function (res){
+                        el.parentNode.parentNode.innerHTML = res;
+                    }
+                })
+            }
         })
     })
 }
