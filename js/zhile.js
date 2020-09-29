@@ -3,7 +3,14 @@ function cdc() {
     document.onkeydown = function() {
         let e = window.event || arguments[0];
         if (e.keyCode == 123) {
-            message.show({text:"(╯‵□′)╯炸弹！•••*～●～",duration:3000});
+            let notification = new NotificationFx({
+                message : '<p>(╯‵□′)╯炸弹！•••*～●～</p>',
+                layout : 'growl',
+                effect : 'jelly',
+                ttl:3000,
+                type : 'notice',
+            });
+            notification.show();
             return false;
         }
     }
@@ -220,15 +227,15 @@ document.addEventListener('DOMContentLoaded', function (){
                 data:{"keyword":keyword.value},
                 success:function (res){
                     html.innerHTML=res;
-                    addClass(sv,'is-active');
+                    classie.add(sv,'is-active');
                     keyword.focus();
                 }
             })
         })
         html.addEventListener('mouseout',function (event){
             if (!isInner(event, sv)) {
-                if(hasClass(sv,'is-active')){
-                    removeClass(sv,'is-active');
+                if(classie.has(sv,'is-active')){
+                    classie.remove(sv,'is-active');
                 }
             }
         })
@@ -241,107 +248,6 @@ function isInner(e,p) {
     while (o = o.parentNode) if (o == p) return true;//标准浏览器没有contains方法，遍历父节点实现
     return false;
 }
-class Message {
-    /**
-     * 构造函数会在实例化的时候自动执行
-     */
-    constructor() {
-
-    }
-    init(){
-        const containerId = 'message-container';
-        // 检测下html中是否已经有这个message-container元素
-        this.containerEl = document.getElementById(containerId);
-
-        if (!this.containerEl) {
-            // 创建一个Element对象，也就是创建一个id为message-container的dom节点
-            this.containerEl = document.createElement('div');
-            this.containerEl.id = containerId;
-            // 把message-container元素放在html的body末尾
-            document.body.appendChild(this.containerEl);
-        }
-    }
-    show({ type = 'info', text = '' , duration = 2000, closeable = false}) {
-        this.init()
-        // 创建一个Element对象
-        let messageEl = document.createElement('div');
-        // 设置消息class，这里加上move-in可以直接看到弹出效果
-        messageEl.className = 'message move-in';
-        let msg = "";
-        switch (type) {
-            case "info":
-                msg = `<ion-icon class="icon-info" name="information-circle-outline"></ion-icon>`;
-                break;
-            case "warning":
-                msg = `<ion-icon class="icon-warning" name="alert-circle-outline"></ion-icon>`;
-                break;
-            case "success":
-                msg = `<ion-icon class="icon-success" name="checkmark-circle-outline"></ion-icon>`;
-                break;
-            case "error":
-                msg = `<ion-icon class="icon-error" name="close-circle-outline"></ion-icon>`;
-                break;
-            default : console.log("type类型错误"); break;
-        }
-        // 消息内部html字符串
-        messageEl.innerHTML = msg+`<div class="text">${text}</div>`;
-
-        // 是否展示关闭按钮
-        if (closeable) {
-            // 创建一个关闭按钮
-            let closeEl = document.createElement('div');
-            let icon = document.createElement('i');
-            icon.className = 'fas fa-times';
-            closeEl.appendChild(icon);
-            // 把关闭按钮追加到message元素末尾
-            messageEl.appendChild(closeEl);
-
-            // 监听关闭按钮的click事件，触发后将调用我们的close方法
-            // 我们把刚才写的移除消息封装为一个close方法
-            closeEl.addEventListener('click', () => {
-                this.close(messageEl)
-            });
-        }
-
-        // 追加到message-container末尾
-        // this.containerEl属性是我们在构造函数中创建的message-container容器
-        this.containerEl.appendChild(messageEl);
-
-        // 只有当duration大于0的时候才设置定时器，这样我们的消息就会一直显示
-        if (duration > 0) {
-            // 用setTimeout来做一个定时器
-            setTimeout(() => {
-                this.close(messageEl);
-            }, duration);
-        }
-    }
-
-    /**
-     * 关闭某个消息
-     * 由于定时器里边要移除消息，然后用户手动关闭事件也要移除消息，所以我们直接把移除消息提取出来封装成一个方法
-     * @param {Element} messageEl
-     */
-    close(messageEl) {
-        // 首先把move-in这个弹出动画类给移除掉，要不然会有问题，可以自己测试下
-        messageEl.className = messageEl.className.replace('move-in', '');
-        // 增加一个move-out类
-        messageEl.className += 'move-out';
-
-        // move-out动画结束后把元素的高度和边距都设置为0
-        // 由于我们在css中设置了transition属性，所以会有一个过渡动画
-        messageEl.addEventListener('animationend', () => {
-            messageEl.setAttribute('style', 'height: 0; margin: 0');
-        });
-
-        // 这个地方是监听transition的过渡动画结束事件，在动画结束后把消息从dom树中移除。
-        messageEl.addEventListener('transitionend', () => {
-            // Element对象内部有一个remove方法，调用之后可以将该元素从dom树种移除！
-            messageEl.remove();
-            this.containerEl.remove();
-        });
-    }
-}
-let message = new Message();
 
 /**
  * 修订/完善相关
@@ -385,25 +291,46 @@ if(revises){
                 const element = document.querySelector(".onSubmit");
                 let nickName = document.getElementById("nickName");
                 let email = document.getElementById("email");
-                let zls_nick_user = JSON.parse(getCookie("zls_nick_user"));
-                if(getCookie("zls_nick_user") != ""){
-                    nickName.value = zls_nick_user.nickName;
-                    email.value = zls_nick_user.email;
+                let zls_nick_user = getCookie("zls_nick_user");
+                if(zls_nick_user){
+                    nickName.value = JSON.parse(zls_nick_user).nickName;
+                    email.value = JSON.parse(zls_nick_user).email;
                 }
                 element.addEventListener('click',function (){
                     // let reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
                     let reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
                     let txt = editor.txt.text();
                     if(txt.trim() == ""){
-                        message.show({text:"内容不能为空！"});
+                        let notification = new NotificationFx({
+                            message : '<p>内容不能为空</p>',
+                            layout : 'growl',
+                            effect : 'jelly',
+                            ttl:3000,
+                            type : 'notice',
+                        });
+                        notification.show();
                         return false;
                     }
                     if(nickName.value.trim() == ""){
-                        message.show({text:"昵称不能为空！"});
+                        let notification = new NotificationFx({
+                            message : '<p>昵称不能为空</p>',
+                            layout : 'growl',
+                            effect : 'jelly',
+                            ttl:3000,
+                            type : 'notice',
+                        });
+                        notification.show();
                         return false;
                     }
                     if (!reg.test(email.value.trim())) {
-                        message.show({text:"邮箱格式不正确！"});
+                        let notification = new NotificationFx({
+                            message : '<p>邮箱格式不正确</p>',
+                            layout : 'growl',
+                            effect : 'jelly',
+                            ttl:3000,
+                            type : 'notice',
+                        });
+                        notification.show();
                         return false;
                     }
                     zls_nick_user = JSON.stringify({"nickName":nickName.value,"email":email.value});
@@ -452,38 +379,20 @@ function saveRevise(that,source,id,nickName,email,title,content,randstr,ticket){
         data:{"source":source,"objId":id,"nickName":nickName,"email":email,"title":title,"content":content,"randStr":randstr,"ticket":ticket},
         success:function (res){
             if(JSON.parse(res).code == 1){
-                message.show({
-                    type:"info",
-                    text:"提交成功！"
-                })
+                let notification = new NotificationFx({
+                    message : '<p>提交成功</p>',
+                    layout : 'growl',
+                    effect : 'jelly',
+                    ttl:3000,
+                    type : 'notice',
+                });
+                notification.show();
                 that.parentNode.parentNode.remove();
             }else{
                 captchaRevise(that,source,id,nickName,email,title,content);
             }
         }
     })
-}
-
-function hasClass(ele, cls) {
-    cls = cls || '';
-    if (cls.replace(/\s/g, '').length == 0) return false; //当cls没有参数时，返回false
-    return new RegExp(' ' + cls + ' ').test(' ' + ele.className + ' ');
-}
-
-function addClass(ele, cls) {
-    if (!hasClass(ele, cls)) {
-        ele.className = ele.className == '' ? cls : ele.className + ' ' + cls;
-    }
-}
-
-function removeClass(ele, cls) {
-    if (hasClass(ele, cls)) {
-        var newClass = ' ' + ele.className.replace(/[\t\r\n]/g, '') + ' ';
-        while (newClass.indexOf(' ' + cls + ' ') >= 0) {
-            newClass = newClass.replace(' ' + cls + ' ', ' ');
-        }
-        ele.className = newClass.replace(/^\s+|\s+$/g, '');
-    }
 }
 
 class Loading{
@@ -525,19 +434,44 @@ class Loading{
 }
 loading = new Loading();
 
+function setCookie(name, value) {
+    let argv = setCookie.arguments;
+    let argc = setCookie.arguments.length;
+    let expires = (argc > 2) ? argv[2] : null;
+    if (expires != null) {
+        let LargeExpDate = new Date ();
+        LargeExpDate.setTime(LargeExpDate.getTime() + (expires*1000*3600*24));
+        document.cookie = name + "=" + escape (value)+"; expires=" +LargeExpDate.toGMTString()+";path=/";
+    }else{
+        document.cookie = name + "=" + escape (value)+";path=/";
+    }
+}
+function getCookie(Name) {
+    let search = Name + "="
+    if (document.cookie.length > 0) {
+        let offset = document.cookie.indexOf(search);
+        if(offset != -1) {
+            offset += search.length;
+            let end = document.cookie.indexOf(";", offset);
+            if(end == -1) end = document.cookie.length;
+            return unescape(document.cookie.substring(offset, end));
+        }else {
+            return '';
+        }
+    }
+}
+function delCookie(name){
+    setCookie(name,'',-1);
+}
+
 // 网页简繁体转换
-// 本js用于客户在网站页面选择繁体中文或简体中文显示，默认是正常显示，即简繁体同时显示
-// 在用户第一次访问网页时,会自动检测客户端语言进行操作并提示.此功能可关闭
-// 本程序只在UTF8编码下测试过，不保证其他编码有效
-// -------------- 以下参数大部分可以更改 --------------------
 //s = simplified 简体中文 t = traditional 繁体中文 n = normal 正常显示
-let zh_default = 'n'; //默认语言，请不要改变
-let zh_choose = 'n'; //当前选择
+let zh_default = 'n'; //默认语言
+let zh_choose = 's'; //当前选择
 let zh_expires = 7; //cookie过期天数
 let zh_browserLang = ''; //浏览器语言
 let zh_autoLang_t = true; //浏览器语言为繁体时自动进行操作
 let zh_autoLang_s = true; //浏览器语言为简体时自动进行操作
-//自动操作后的提示消息
 //判断浏览器语言的正则,ie为小写,ff为大写
 let zh_langReg_t = /^zh-TW|zh-HK$/i;
 let zh_langReg_s = /^zh-CN$/i;
@@ -568,37 +502,9 @@ String.prototype.tran = function() {
     }
     return a;
 }
-function setCookie(name, value) {
-    let argv = setCookie.arguments;
-    let argc = setCookie.arguments.length;
-    let expires = (argc > 2) ? argv[2] : null;
-    if (expires != null) {
-        let LargeExpDate = new Date ();
-        LargeExpDate.setTime(LargeExpDate.getTime() + (expires*1000*3600*24));
-        document.cookie = name + "=" + escape (value)+"; expires=" +LargeExpDate.toGMTString()+";path=/";
-    }else{
-        document.cookie = name + "=" + escape (value)+";path=/";
-    }
-}
-function getCookie(Name) {
-    let search = Name + "="
-    if (document.cookie.length > 0) {
-        let offset = document.cookie.indexOf(search);
-        if(offset != -1) {
-            offset += search.length;
-            let end = document.cookie.indexOf(";", offset);
-            if(end == -1) end = document.cookie.length;
-            return unescape(document.cookie.substring(offset, end));
-        }else {
-            return '';
-        }
-    }
-}
-function delCookie(name){
-    setCookie(name,'',-1);
-}
 function zh_tranBody(obj) {
-    var o = (typeof(obj) == "object") ? obj.childNodes : document.body.childNodes;
+    // var o = (typeof(obj) == "object") ? obj.childNodes : document.body.childNodes;
+    var o = (typeof(obj) == "object") ? obj.childNodes : document.querySelectorAll("*");
     for (var i = 0; i < o.length; i++) {
         var c = o.item(i);
         if ('||BR|HR|TEXTAREA|SCRIPT|'.indexOf("|"+c.tagName+"|") > 0) continue;
@@ -612,36 +518,13 @@ function zh_tranBody(obj) {
         }
     }
 }
-function zh_tranCustom(obj) {
-    var o = (typeof(obj) == "object") ? obj.childNodes : document.body.childNodes;
-    for (var i = 0; i < o.length; i++) {
-        var c = o.item(i);
-        if ('||BR|HR|TEXTAREA|SCRIPT|'.indexOf("|"+c.tagName+"|") > 0) continue;
-        if (c.title != '' && c.title != null) c.title = c.title.tran();
-        if (c.alt != '' && c.alt != null) c.alt = c.alt.tran();
-        if (c.tagName == "INPUT" && c.value != '' && c.type != 'text' && c.type != 'hidden' && c.type != 'password') c.value = c.value.tran();
-        if (c.nodeType == 3) {
-            c.data = c.data.tran();
-        }else{
-            zh_tranCustom(c);
-        }
-    }
-}
-function zh_tran_area(go,obj) {
-    if (go) zh_choose = go;
-    if (go == 'n') {
-        window.location.reload();
-    }else {
-        zh_tranCustom(obj);
-    }
-}
-function zh_tran(go) {
+function zh_tran(go,obj) {
     if (go) zh_choose = go;
     setCookie('zh_choose', zh_choose, zh_expires);
     if (go == 'n') {
         window.location.reload();
     }else {
-        zh_tranBody();
+        zh_tranBody(obj);
     }
 }
 function zh_getLang() {
@@ -656,18 +539,22 @@ function zh_getLang() {
         zh_browserLang = navigator.browserLanguage;
     }
     if (zh_autoLang_t && zh_langReg_t.test(zh_browserLang)) {
-        zh_choose = 't';
+        if (zh_default != 't') {
+            if(confirm("检测到繁体中文，是否进行切换？")){
+                zh_choose = 't';
+            }
+        }
     }else if (zh_autoLang_s && zh_langReg_s.test(zh_browserLang)) {
-        zh_choose = 's';
+        if (zh_default != 's') {
+            zh_choose = 's';
+        }
     }
-
     setCookie('zh_choose', zh_choose, zh_expires);
     if (zh_choose == zh_default) return false;
     return true;
 }
 function zh_init() {
     zh_getLang();
-    // c = document.getElementById(zh_class + '_' + zh_choose);
     if (zh_choose != zh_default) {
         if (window.onload) {
             window.onload_before_zh_init = window.onload;
@@ -696,11 +583,11 @@ function obtainParentNode(obj,cls) {
 for (let i = 0; i < simplifieds.length; i++) {
     simplifieds[i].addEventListener('click',function () {
         obtainParentNode(this,'is-relative');
-        zh_tran_area('s',translation);
+        zh_tran('s',translation);
     })
     traditionals[i].addEventListener('click',function () {
         obtainParentNode(this,'is-relative');
-        zh_tran_area('t',translation);
+        zh_tran('t',translation);
     })
 }
 let websiteSimplified = document.querySelector('.website_simplified');
@@ -727,27 +614,27 @@ if(loginDisplay){
     let body = document.querySelector(".body");
     if(window.location.href.indexOf("?login")>=0){
         if (getCookie("authorization") == '') {
-            removeClass(login_div,'is-hidden');
-            addClass(login_div,'is-flex');
+            classie.remove(login_div,'is-hidden');
+            classie.add(login_div,'is-flex');
         }
     }
     if(window.location.href.indexOf("?register")>=0){
-        removeClass(login_div,'is-hidden');
-        addClass(login_div,'is-flex');
-        addClass(body,'panel-active');
+        classie.remove(login_div,'is-hidden');
+        classie.add(login_div,'is-flex');
+        classie.add(body,'panel-active');
     }
     loginDisplay.addEventListener('click',function () {
-        removeClass(login_div,'is-hidden');
-        addClass(login_div,'is-flex');
+        classie.remove(login_div,'is-hidden');
+        classie.add(login_div,'is-flex');
     })
 
     let ghost = document.querySelectorAll(".ghost");
     ghost.forEach(function (g){
         g.addEventListener('click',function (){
-            if (hasClass(body, 'panel-active')) {
-                removeClass(body,'panel-active');
+            if (classie.has(body, 'panel-active')) {
+                classie.remove(body,'panel-active');
             }else{
-                addClass(body,'panel-active');
+                classie.add(body,'panel-active');
             }
         })
     })
@@ -755,8 +642,8 @@ if(loginDisplay){
     let login_close = document.querySelectorAll(".is-close");
     login_close.forEach(function (close){
         close.addEventListener('click',function (){
-            removeClass(login_div,'is-flex');
-            addClass(login_div,'is-hidden');
+            classie.remove(login_div,'is-flex');
+            classie.add(login_div,'is-hidden');
         })
     })
 
@@ -796,7 +683,7 @@ if(loginDisplay){
         if(randStr == null || ticket == null || randStr == "" || ticket == ""){
             captchaLogin();
         }
-        addClass(signIn,'is-loading');
+        classie.add(signIn,'is-loading');
         let data = {
             "username":document.getElementById("in_username").value,
             "password":document.getElementById("in_password").value,
@@ -813,20 +700,20 @@ if(loginDisplay){
                     delCookie("zls_auth");
                     setCookie("zls_auth",xhr.getResponseHeader("Cookie"),1);
                     setCookie("zls_user",JSON.stringify(data.data),1);
-                    removeClass(signIn,'is-loading');
+                    classie.remove(signIn,'is-loading');
                     let url = redirect();
                     if (url == "") {
-                        removeClass(login_div,'is-flex');
-                        addClass(login_div,'is-hidden');
+                        classie.remove(login_div,'is-flex');
+                        classie.add(login_div,'is-hidden');
                     }else{
                         window.location = url;
                     }
                 }else if(data.code == 1003){
-                    removeClass(signIn,'is-loading');
+                    classie.remove(signIn,'is-loading');
                     captchaLogin();
                 }else {
                     message_login[0].innerHTML = data.message;
-                    removeClass(signIn,'is-loading');
+                    classie.remove(signIn,'is-loading');
                 }
             }
         })
@@ -846,7 +733,7 @@ if(loginDisplay){
         if (verify(nickName, username, password, confirmPassword, verifyCode)) {
             return;
         }
-        addClass(signUp,'is-loading');
+        classie.add(signUp,'is-loading');
         let data = {
             "username":username,
             "password":password,
@@ -860,13 +747,20 @@ if(loginDisplay){
             success:function (res,xhr) {
                 let data = JSON.parse(res);
                 if(data.code == 1){
-                    removeClass(signUp,'is-loading');
-                    message.show({text: data.message});
-                    removeClass(body,'panel-active');
+                    let notification = new NotificationFx({
+                        message : '<p>'+data.message+'</p>',
+                        layout : 'growl',
+                        effect : 'jelly',
+                        ttl:3000,
+                        type : 'notice',
+                    });
+                    notification.show();
+                    classie.remove(signUp,'is-loading');
+                    classie.remove(body,'panel-active');
                     signUp.parentNode.parentNode.reset();
                 }else {
                     message_login[1].innerHTML = data.message;
-                    removeClass(signUp,'is-loading');
+                    classie.remove(signUp,'is-loading');
                 }
             }
         })
@@ -882,7 +776,14 @@ if(loginDisplay){
             success:function (res) {
                 let data = JSON.parse(res);
                 if(data.code == 1){
-                    message.show({text: data.message});
+                    let notification = new NotificationFx({
+                        message : '<p>'+data.message+'</p>',
+                        layout : 'growl',
+                        effect : 'jelly',
+                        ttl:3000,
+                        type : 'notice',
+                    });
+                    notification.show();
                 }else {
                     message_login[1].innerHTML = data.message;
                 }

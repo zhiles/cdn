@@ -71,10 +71,6 @@ hr{
 .full-height{
     height: 100%;
 }
-a:hover{
-    text-decoration: underline;
-}
-
 /*加载搜索框样式*/
 .dropdown-menu{
     min-width: 14rem;
