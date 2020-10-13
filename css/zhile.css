@@ -8,12 +8,12 @@ html{
     letter-spacing: 0.8px;
 }
 @media screen and (min-width: 1024px){
-    .container {
+    .container:not(.is-max-desktop){
         max-width: 960px;
     }
 }
 @media screen and (min-width: 1408px){
-    .container {
+    .container:not(.is-max-desktop):not(.is-max-widescreen){
         max-width: 1024px;
     }
 }
