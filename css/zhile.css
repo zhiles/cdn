@@ -241,6 +241,12 @@ nav .container{
 
 
 /**登陆**/
+.lgn-out{
+    margin:.3rem 0;
+}
+.lgn-in,.lgn-up,.lgn-out{
+    cursor: pointer;
+}
 .login {
     position: fixed;
     left: 0;
