@@ -370,9 +370,9 @@ function isInner(e,p) {
  * 修订/完善相关
  * @type {NodeListOf<Element>}
  */
+let E = window.wangEditor;
 ;(function () {
     let revises = document.querySelectorAll('.revises');
-    let E = window.wangEditor;
     if(revises){
         let selIndex = null;
         for (let i = 0; i < revises.length; i++) {
