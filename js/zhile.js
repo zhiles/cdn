@@ -716,7 +716,7 @@ loading = new Loading();
             zh_tran('t');
         });
     }
-    // zh_init();
+    zh_init();
 })();
 
 
