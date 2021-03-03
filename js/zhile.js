@@ -356,10 +356,8 @@ let E = window.wangEditor;
     }
 
     function removeEditor(revises) {
-        if(revises != null){
-            if (classie.hasClass(revises.parentNode.nextElementSibling, 'editor')) {
-                revises.parentNode.nextElementSibling.remove();
-            }
+        if(revises != null && classie.hasClass(revises.parentNode.nextElementSibling, 'editor')){
+            revises.parentNode.nextElementSibling.remove();
         }
     }
 
