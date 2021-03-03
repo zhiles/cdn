@@ -357,7 +357,7 @@ let E = window.wangEditor;
 
     function removeEditor(revises) {
         if(revises != null){
-            if (hasClass(revises.parentNode.nextElementSibling, 'editor')) {
+            if (classie.hasClass(revises.parentNode.nextElementSibling, 'editor')) {
                 revises.parentNode.nextElementSibling.remove();
             }
         }
@@ -760,6 +760,7 @@ loading = new Loading();
         });
         captcha1.show();
     }
+
     function login(username,password,randStr,ticket) {
         if(randStr == null || ticket == null || randStr.trim() == "" || ticket.trim() == "")captchaLogin();
         classie.add(signIn,'is-loading');
