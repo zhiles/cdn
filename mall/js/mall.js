@@ -315,7 +315,7 @@ const $ = (function() {
             "                <div class=\"container-text\">&nbsp;</div>\n" +
             "                <div class=\"full-width\">\n" +
             "                    <input type=\"email\" maxlength=\"11\" oninput = \"value=value.replace(/[^\\d]/g,'')\" placeholder=\"请输入手机号\" id=\"in_username\">\n" +
-            "                    <input type=\"password\" maxlength=\"6\" oninput = \"value=value.replace(/[^\\d]/g,'')\"  placeholder=\"密码\" id=\"in_password\">\n" +
+            "                    <input type=\"password\"  oninput = \"value=value.replace(/[^\\w]/g,'')\"  placeholder=\"密码\" id=\"in_password\">\n" +
             "                    <button type=\"button\" class=\"button signIn is-fullwidth\" style=\"margin-top: 2rem\">登录</button>\n" +
             "                </div>\n" +
             "                <div class=\"is-size-7\">\n" +
