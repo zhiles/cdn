@@ -1,0 +1,762 @@
+.container{
+    margin:2rem auto 1rem auto;
+    /*min-height: calc(100vh - 13.25rem);*/
+}
+nav .container{
+    margin:auto;
+    min-height: 0;
+}
+.information{
+    margin: 1rem auto;
+}
+.ab-bottom-time{
+    position: absolute;
+    bottom:-1px;
+}
+.ab-bottom-read{
+    position: absolute;
+    bottom:-1px;
+    right: .5rem
+}
+.box-shadow{
+    box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
+    margin-top: .75rem
+}
+.dropdown-menu{
+    background-color: #fff;
+    border-radius: 4px;
+    padding: .5rem;
+    min-width: 7rem;
+}
+.full-width {
+    width: 100%;
+}
+.columns{
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+.content pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    width: 100%;
+    overflow:hidden;
+}
+.head-title{
+    border-left: .3rem solid #3273dc;
+    padding-left: .3rem;
+}
+.toolbar {
+    position: fixed;
+    bottom: 10rem;
+    right: 2rem;
+}
+.tool-item{
+    height: 2.5rem;
+    width: 2.5rem;
+    padding: .5rem;
+    margin-bottom: .1rem;
+    background-color: #3273dc;
+}
+
+.bread-margin{
+    margin-bottom: 1rem !important;
+}
+.outline-fixed{
+    position:fixed;
+    width: 200px;
+}
+.webkit-1{
+    word-break:break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    /*white-space: pre-line;*/
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+.webkit-2{
+    word-break:break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    /*white-space: normal;*/
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.webkit-content{
+    word-break:break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    /*white-space: normal;*/
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.webkit-3{
+    word-break:break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    /*white-space: normal;*/
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.content h1{
+    line-height: 2.2rem;
+    font-weight: 600;
+    font-size: 2rem;
+    margin-bottom: .5rem;
+}
+.content h2{
+    line-height: 2rem;
+    font-weight: 600;
+    font-size: 1.7rem;
+    margin-bottom: .32rem;
+}
+.content h3{
+    line-height: 1.8rem;
+    font-weight: 600;
+    font-size: 1.4rem;
+    margin-bottom: .32rem;
+}
+
+.navbar-link:not(.is-arrowless)::after {
+    border-color: #3273dc;
+    margin-top: -.375em;
+    right: .3em;
+}
+.p-img{
+    margin: 1rem auto .5rem auto
+}
+.honesty-head {
+    height: 3rem;
+    line-height: 3rem;
+    padding-left: 24px;
+    font-size: 16px;
+    font-weight: 600;
+    background: #f1f4f7;
+    /*background: #f1f4f7 url(https://static.gcimg.net/i/201804/GTcEfXfFKw.png) no-repeat 173px 5px;*/
+}
+.honesty-name{
+    font-size: 14px;
+    color:#262626;
+}
+.index-top{
+    display:inline-block;
+    background-color: #f55424;
+    width: 1rem;
+    height: 1rem;
+    line-height: 1rem;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    margin-right: .5rem;
+}
+.index-num{
+    display:inline-block;
+    background-color: #DDDDDD;
+    width: 1rem;
+    height: 1rem;
+    line-height: 1rem;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    margin-right: .5rem;
+}
+
+.icon-btn{
+    background-image: linear-gradient(#4667cd, #68b6fb);
+    margin: .5rem .8rem .2rem;
+    padding: .2rem;
+    border-radius: .2rem
+}
+.nav-top{
+    display: flex;
+    min-height: 1rem;
+    max-height: 1.5rem;
+    background-color: #f5f5f5;
+    border-bottom: solid 1px #D8D8D8;
+    margin-bottom: 0 !important;
+    padding:.4rem 0;
+    font-size: 0.75rem;
+    width: 100%;
+}
+.nav-welcome{
+    margin: 0 1rem 0 2rem;
+}
+.cus-td{
+    width: 10rem;
+    text-align: center!important;
+}
+.column-relative{
+    position: relative;
+    min-height: 13rem;
+}
+.ul-absolute-left{
+    position: absolute;
+    top:.75rem;
+    bottom:.75rem;
+    right:0rem;
+    left:.75rem;
+    padding: 0 .75rem .75rem 0;
+    overflow: hidden;
+}
+.ul-absolute-right{
+    position: absolute;
+    top:.75rem;
+    bottom:.75rem;
+    right:.75rem;
+    left:0rem;
+    padding: 0 0 .75rem .75rem ;
+    overflow: hidden;
+}
+.middle-content{
+    height: 110px;
+    margin-top: -8rem;
+    justify-content: center;
+}
+.info-list{
+    text-align: center;
+    margin-top: 3rem
+}
+.classify-list-bg{
+    background-color: #f7f9fa;
+    padding: .75rem 0;
+}
+.classify-bg{
+    height: 100%;
+    background-color: #cdd4d9;
+    text-align: center;
+    position: relative;
+}
+.classify-title{
+    padding: .3rem 0;
+    font-size: 1.5rem;
+    color: #242424;
+}
+.classify-more{
+    position:absolute;
+    bottom: .3rem;
+    left: 45%;
+    font-size: 0.75rem
+}
+.classify-middle{
+    padding: .75rem 0;
+    text-align: center;
+    flex-wrap: wrap;
+    display: flex;
+}
+.classify-grand{
+    font-size: 15px;
+    font-weight: 700 !important;
+    color:#4a4a4a;
+}
+.tag{
+    margin: 0 !important;
+    padding: 0 .2rem!important;
+}
+.form-title{
+    display: inline-block;
+    padding: .2rem 0;
+}
+.ck-content{
+    min-height: 30vh;
+}
+.ul-absolute-left>ul>li:not(:first-child){
+    margin-top: .3rem;
+}
+.category-info{
+    margin-left: 1rem;
+    color: #4a4a4a !important;
+    float: left !important;
+}
+.btn-control{
+    background-color: #f7f9fa;
+    padding: .2rem .2rem .5rem;
+    text-align: center;
+    font-size: 0.75rem;
+}
+.btn-control > a{
+    display: inline-block;
+    font-size: .75rem;
+}
+.tab-list {
+    position: relative;
+    margin-top: .5rem;
+}
+
+.tab-item .tab-label {
+    position: relative;
+    display: block;
+    width: 100%;
+    font-size: .75rem;
+    text-align: center;
+    border-bottom:1px solid #ffffff;
+}
+
+.tab-box {
+    /* 设置绝对定位方便定位相对于tab-list栏的位置，同时为了可以使用z-index属性 */
+    position: absolute;
+    left: 0;
+    top: 1.5rem;
+    height: 10rem;
+    padding: 0 .5rem;
+    background: #fff;
+    font-size: 14px;
+    width: 100%;
+    /* 设置层级最低方便选中状态遮挡 */
+    z-index: 0;
+}
+.tab-box a{
+    display: inline-block;
+}
+/* 用绝对定位使按钮脱离文档流，透明度设置为0将其隐藏 */
+input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+/* 利用选择器实现  tab切换 */
+
+/* 当radio为选中状态时设置它的tab-label兄弟元素的属性 */
+input[type="radio"]:checked + .tab-label {
+    /* 为了修饰存在的边框背景属性 */
+    border-bottom:1px solid #3273dc;
+    color: #3273dc;
+    /* 为了修饰存在的层级使下边框遮挡下方div的上边框 */
+    z-index: 10;
+}
+/* 当radio为选中状态时设置与它同级的tab-box元素的显示层级 */
+input[type="radio"]:checked ~ .tab-box {
+    /* 选中时提升层级，遮挡其他tab页达到选中切换的效果 */
+    z-index: 5;
+}
+
+@media screen and (min-width: 1408px){
+    .container:not(.is-max-desktop):not(.is-max-widescreen) {
+        max-width: 1152px;
+    }
+    .icon-btn{
+        background-image: linear-gradient(#4667cd, #68b6fb);
+        margin: .5rem .8rem .2rem;
+        padding: .2rem;
+        border-radius: .2rem
+    }
+}
+@media screen and (min-width: 1023px){
+    /*.container:not(.is-max-desktop):not(.is-max-widescreen) {*/
+    /*    max-width: 1152px;*/
+    /*}*/
+    .icon-btn{
+        background-image: linear-gradient(#4667cd, #68b6fb);
+        margin: .5rem .8rem .2rem;
+        padding: .2rem;
+        border-radius: .2rem
+    }
+}
+@media screen and (max-width: 1023px){
+    .webkit-content{
+        word-break:break-all;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        /*white-space: normal;*/
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+    .icon-btn{
+        background-image: linear-gradient(#4667cd, #68b6fb);
+        margin: .5rem .5rem .2rem;
+        padding: .2rem;
+        border-radius: .2rem
+    }
+}
+
+.modal-card-head,.modal-card-foot{
+    padding: .5rem 20px;
+}
+.map-search{
+    position: absolute;
+    right:20px;
+    top:20px;
+    width: 30%;
+    z-index: 1001;
+}
+@media screen and (max-width: 769px){
+    .map-search{
+        width: 50%;
+    }
+    .modal-card{
+        height: 100vh;
+        max-height: 100vh;
+    }
+    .modal-card-head,.modal-card-foot{
+        border-radius: 0;
+    }
+    .tile.is-parent{
+        padding-right: 0;
+    }
+    .tile.is-ancestor {
+        margin-right: 0;
+    }
+    .content h1{
+        line-height: 1.5rem;
+        font-weight: 700;
+        font-size: 1.3rem;
+        margin-bottom: .5rem;
+    }
+    .content h2{
+        line-height: 1.4rem;
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-bottom: .32rem;
+    }
+    .content h3{
+        line-height: 1.3rem;
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin-bottom: .32rem;
+    }
+    .information{
+        margin: 2rem auto;
+    }
+    .nav-welcome{
+        margin: 0 1rem 0 1rem;
+    }
+    .classify-title{
+        padding: 1rem 0;
+    }
+    .category-info{
+        margin-left: 0;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**登陆**/
+.lgn-out{
+    margin:.3rem 0;
+}
+.lgn-in,.lgn-up,.lgn-out{
+    cursor: pointer;
+}
+.login {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom  : 0;
+    flex-direction: column;
+    /*  flex-start 	元素位于容器的开头  flex-end 元素位于容器的结尾*/
+    /* 元素位于容器的中心 */
+    align-items: center;
+    /*filter: alpha(opacity=60);*/
+    /*opacity:0.5; -moz-opacity:0.5;*/
+    background:rgba(0,0,0,.5);
+    display: flex;
+    text-align:center;
+    justify-content: center;
+    z-index: 2001;
+}
+.login .body{
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22);
+    position: fixed;
+    overflow: hidden;
+    width: 768px;
+    height: 480px;
+    z-index: 2002;
+}
+.login .form{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all .6s ease-in-out;
+}
+.login form{
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    padding:  0 5rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height:100%;
+}
+.login input{
+    background: #eee;
+    border: none;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 100%;
+    outline: none;
+}
+.login p {
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: .5px;
+    margin: 10px;
+}
+.login .button{
+    border-radius: 20px;
+    border: 1px solid #ff4b2b;
+    background: #ff4b2b;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    height:auto;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+    cursor: pointer;
+}
+.login .button:hover{
+    color:#fff;
+    border: 1px solid #fff;
+}
+.login .button:active {
+    transform: scale(.95);
+}
+.login .button:focus {
+    outline: 0;
+    border-color: #fff;
+    color:#fff;
+}
+.login .send_code{
+    width: 18%;
+    padding: .75rem .5rem;
+    display: inline-block;
+}.login .verify_code{
+     width: 80%;
+     display: inline-block;
+ }
+.login h1{
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0;
+}
+.login .container-text{
+    margin: 5px 0;
+    font-size: 14px;
+    color:#ff4b2b;
+    width: 100%;
+}
+.login .sign-in{
+    left: 0;
+    width: 55%;
+    z-index: 2;
+}
+.login .sign-up{
+    left: 0;
+    width: 50%;
+    z-index: 1;
+    opacity: 0;
+}
+.login .overlay-container{
+    position: absolute;
+    top: 0;
+    left: 55%;
+    width: 45%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform .6s ease-in-out;
+    z-index: 100;
+}
+.login .overlay{
+    background: #ff416c;
+    background: linear-gradient(to right, #ff4b2b, #ff416c) no-repeat 0 0 / cover;
+    color: #fff;
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateY(0);
+    transition: transform .6s ease-in-out;
+}
+.login .overlay-panel{
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 40px;
+    height: 100%;
+    width: 50%;
+    /*text-align: center;*/
+    transform: translateY(0);
+    transition: transform .6s ease-in-out;
+}
+.login .overlay-right {
+    right: 0;
+    transform: translateY(0);
+}
+.login .overlay-left {
+    transform: translateY(-20%);
+}
+.login .ghost {
+    background: transparent;
+    border-color: #fff;
+}
+.login .is-close{
+    padding: 13px;
+    position: absolute;
+    top:.5rem;
+    right:.5rem;
+    border: none;
+}
+/* Move signin to right */
+.login .panel-active .sign-in {
+    transform: translateY(100%);
+}
+
+/* Move overlay to left */
+.login .panel-active .overlay-container {
+    transform: translateX(-100%);
+}
+
+/* Bring signup over signin */
+.login .panel-active .sign-up {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+}
+
+/* Move overlay back to right */
+.login .panel-active .overlay {
+    transform: translateX(50%);
+}
+
+/* Bring back the text to center */
+.login .panel-active .overlay-left {
+    transform: translateY(0);
+}
+
+/* Same effect for right */
+.login .panel-active .overlay-right {
+    transform: translateY(20%);
+}
+
+@media screen and (max-width: 769px){
+    .classify-list-bg{
+        padding: 0;
+    }
+    .login .body{
+        background: #fff;
+        border-radius: 0;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22);
+        position: fixed;
+        overflow: hidden;
+        width: 100%;
+        height: 100vh;
+    }
+    .login form{
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        padding:  0 3rem;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height:100%;
+    }
+    .login input{
+        background: #eee;
+        border: none;
+        padding: 12px 15px;
+        margin: 8px 0;
+        width: 100%;
+        outline: none;
+        display:block;
+    }
+    .login .sign-in {
+        left: 0;
+        width: 100%;
+        z-index: 2;
+    }
+    .login .sign-up {
+        left: 0;
+        width: 100%;
+        z-index: 1;
+        opacity: 0;
+    }
+
+    .login .overlay-container{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        transition: transform .6s ease-in-out;
+        background: #ff416c;
+        background: linear-gradient(to right, #ff4b2b, #ff416c) no-repeat 0 0 / cover;
+        z-index: 0;
+    }
+    .login .overlay{
+        color: #fff;
+        position: relative;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        transform: translateY(0);
+        transition: transform .6s ease-in-out;
+    }
+    .login .overlay-panel{
+        position: absolute;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 40px;
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        transform: translateY(0);
+        transition: transform .6s ease-in-out;
+    }
+    .login .is-close{
+        padding: 13px;
+        position: absolute;
+        top:.5rem;
+        right:.5rem;
+        border: none;
+    }
+    /* Move signin to right */
+    .login .panel-active .sign-in {
+        transform: translateY(0);
+    }
+
+    /* Move overlay to left */
+    .login .panel-active .overlay-container {
+        transform: translateX(-100%);
+    }
+    /* Bring signup over signin */
+    .login .panel-active .sign-up {
+        transform: translateX(0);
+        opacity: 1;
+        z-index: 5;
+    }
+}
