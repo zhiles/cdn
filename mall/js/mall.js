@@ -1,5 +1,4 @@
 let TCaptcha_URL = "https://ssl.captcha.qq.com/TCaptcha.js";
-let tf_auth = "tf_auth";
 let tf_auth_info = "tf_auth_info";
 let toolbar = document.querySelector(".toolbar"), H = 0, Y = toolbar
 let box = document.querySelector(".top");
@@ -370,13 +369,11 @@ const $ = (function() {
         // sendCode.addEventListener('click',sendVerifyCode);
     }
 
-    // if(window.location.href.indexOf("?login")>=0){
-    //     if (cookie.getCookie(tf_auth)==''){
-    //         init_login();
-    //         classie.remove(login,'is-hidden');
-    //         classie.add(login,'is-flex');
-    //     };
-    // }
+    if(window.location.href.indexOf("?login")>=0){
+        init_login();
+        classie.remove(login,'is-hidden');
+        classie.add(login,'is-flex');
+    }
     // if(window.location.href.indexOf("?register")>=0){
     //     init_login();
     //     classie.remove(login,'is-hidden');
@@ -435,7 +432,6 @@ const $ = (function() {
                 let data = JSON.parse(res);
                 classie.remove(signIn,'is-loading');
                 if(data.code == 1){
-                    cookie.setCookie(tf_auth_info,data.data);
                     let url = redirect();
                     if (url == "") {
                         html_init();
@@ -571,7 +567,6 @@ function logout(){
         success:function (res){
             res = JSON.parse(res);
             if (res.code == 1) {
-                cookie.delCookie(tf_auth_info);
                 storage.clear();
                 window.location = "/";
             }
