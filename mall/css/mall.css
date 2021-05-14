@@ -266,6 +266,12 @@ nav .container{
 .ul-absolute-left>ul>li:not(:first-child){
     margin-top: .3rem;
 }
+.list-bottom{
+    height: 1px;
+    width:100%;
+    margin:.75rem 0 0;
+    background-color: #F3F0EB;
+}
 .category-info{
     margin-left: 1rem;
     color: #4a4a4a !important;
