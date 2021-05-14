@@ -114,12 +114,18 @@ window.onload = function (){
         let argv = setCookie.arguments;
         let argc = setCookie.arguments.length;
         let expires = (argc > 2) ? argv[2] : null;
+        if(Object.prototype.toString.call(value) == '[object Object]'){
+            value = JSON.stringify(value);
+        }
+        if(Object.prototype.toString.call(value) == '[object Array]'){
+            value = JSON.stringify(value);
+        }
         if (expires != null) {
             let LargeExpDate = new Date ();
             LargeExpDate.setTime(LargeExpDate.getTime() + (expires*1000*3600*24));
-            document.cookie = name + "=" + escape (value)+"; expires=" +LargeExpDate.toGMTString()+";path=/";
+            document.cookie = name + "=" + escape (value)+";domain=.teifan.com;expires=" +LargeExpDate.toGMTString()+";path=/";
         }else{
-            document.cookie = name + "=" + escape (value)+";path=/";
+            document.cookie = name + "=" + escape (value)+";domain=.teifan.com;path=/";
         }
     }
     function getCookie(Name) {
@@ -130,7 +136,7 @@ window.onload = function (){
                 offset += search.length;
                 let end = document.cookie.indexOf(";", offset);
                 if(end == -1) end = document.cookie.length;
-                return unescape(document.cookie.substring(offset, end));
+                return JSON.parse(unescape(document.cookie.substring(offset, end)));
             }else {
                 return '';
             }
@@ -177,11 +183,12 @@ const $ = (function() {
             // 默认使用GET,默认异步
             xhr.open(type || 'GET', url, isAsync || true);
             xhr.onreadystatechange = function() {
+                loading.close();
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    if (xhr.getResponseHeader("Cookie")) {
-                        cookie.delCookie(tf_auth);
-                        cookie.setCookie(tf_auth,xhr.getResponseHeader("Cookie"),1);
-                    }
+                    // if (xhr.getResponseHeader("Cookie")) {
+                    //     cookie.delCookie(tf_auth);
+                    //     cookie.setCookie(tf_auth,xhr.getResponseHeader("Cookie"),1);
+                    // }
                     // 有传入success回调就执行
                     success && success(xhr.responseText,xhr);
                 }
@@ -194,12 +201,16 @@ const $ = (function() {
                     return;
                 }
             }
+            xhr.onerror = function (){
+                loading.close();
+            }
             if (type == 'POST') {
                 //给指定的HTTP请求头赋值
                 xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
                 // 数组转成字符串
-                xhr.send(queryData)
+                xhr.send(queryData);
+                loading.show();
             } else {
                 xhr.send()
             }
@@ -297,11 +308,9 @@ const $ = (function() {
     let logins = document.querySelectorAll('.login-in');
     for (let i = 0; i < logins.length; i++) {
         logins[i].addEventListener('click',function (){
-            if (cookie.getCookie(tf_auth)==''){
-                init_login();
-                classie.remove(login,'is-hidden');
-                classie.add(login,'is-flex');
-            };
+            init_login();
+            classie.remove(login,'is-hidden');
+            classie.add(login,'is-flex');
         })
     }
     function init_login() {
@@ -361,18 +370,18 @@ const $ = (function() {
         // sendCode.addEventListener('click',sendVerifyCode);
     }
 
-    if(window.location.href.indexOf("?login")>=0){
-        if (cookie.getCookie(tf_auth)==''){
-            init_login();
-            classie.remove(login,'is-hidden');
-            classie.add(login,'is-flex');
-        };
-    }
-    if(window.location.href.indexOf("?register")>=0){
-        init_login();
-        classie.remove(login,'is-hidden');
-        classie.add(login,'is-flex');
-    }
+    // if(window.location.href.indexOf("?login")>=0){
+    //     if (cookie.getCookie(tf_auth)==''){
+    //         init_login();
+    //         classie.remove(login,'is-hidden');
+    //         classie.add(login,'is-flex');
+    //     };
+    // }
+    // if(window.location.href.indexOf("?register")>=0){
+    //     init_login();
+    //     classie.remove(login,'is-hidden');
+    //     classie.add(login,'is-flex');
+    // }
 
     function clear_error() {
         msg.innerHTML = "&nbsp;";
@@ -426,7 +435,7 @@ const $ = (function() {
                 let data = JSON.parse(res);
                 classie.remove(signIn,'is-loading');
                 if(data.code == 1){
-                    storage.setItem(tf_auth_info,data.data);
+                    cookie.setCookie(tf_auth_info,data.data);
                     let url = redirect();
                     if (url == "") {
                         html_init();
@@ -526,7 +535,7 @@ function html_init(){
     let no_login = document.querySelector('.no-login');
     let in_login = document.querySelector('.in-login');
     let in_login_name = document.querySelector('.in-login-name');
-    let tf_auth = storage.getItem(tf_auth_info);
+    let tf_auth = cookie.getCookie(tf_auth_info);
     if(tf_auth){
         classie.addClass(no_login,'is-hidden');
         classie.removeClass(in_login,'is-hidden');
@@ -556,9 +565,18 @@ function limitImg(file){
 }
 
 function logout(){
-    cookie.delCookie(tf_auth);
-    storage.delItem(tf_auth_info);
-    window.location = "/";
+    $.ajax({
+        url:"/loginOut",
+        type:"POST",
+        success:function (res){
+            res = JSON.parse(res);
+            if (res.code == 1) {
+                cookie.delCookie(tf_auth_info);
+                storage.clear();
+                window.location = "/";
+            }
+        }
+    })
 }
 function loadScript(url, callback) {
     let script = document.createElement("script");
@@ -579,3 +597,51 @@ function loadScript(url, callback) {
     document.body.appendChild(script);
 }
 
+
+;( function( window ) {
+    'use strict';
+    let container,isLoading;
+    function init(){
+        //检测下html中是否已经有这个loading元素
+        container =document.querySelector(".loading-body");
+        if (!container) {
+            // 创建一个Element对象
+            container = document.createElement('div');
+            container.className = "loading-body";
+            document.body.appendChild(container);
+        }
+    }
+    function show(){
+        init();
+        // 创建一个Element对象
+        isLoading = document.createElement('div');
+        isLoading.className = 'loading';
+        isLoading.innerHTML = "<span></span><span></span><span></span><span></span><span></span>";
+        container.appendChild(isLoading);
+        document.body.style.overflow='hidden';
+        document.documentElement.style.overflow='hidden'
+    }
+    function close() {
+        try {
+            isLoading.remove();
+            container.remove();
+            document.body.removeAttribute("style")
+            document.documentElement.removeAttribute("style")
+        }catch (e){
+
+        }
+    }
+    let loading = {
+        // full names
+        show: show,
+        close: close
+    };
+    // transport
+    if ( typeof define === 'function' && define.amd ) {
+        // AMD
+        define( loading );
+    } else {
+        // browser global
+        window.loading = loading;
+    }
+})( window );
