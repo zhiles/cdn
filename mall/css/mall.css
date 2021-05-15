@@ -42,8 +42,11 @@ nav .container{
     overflow:hidden;
 }
 .head-title{
-    border-left: .3rem solid #3273dc;
+    border-left: .3rem solid #f9484c;
     padding-left: .3rem;
+}
+.is-danger{
+    background-color: #f9484c !important;
 }
 .toolbar {
     position: fixed;
@@ -55,7 +58,21 @@ nav .container{
     width: 2.5rem;
     padding: .5rem;
     margin-bottom: .1rem;
-    background-color: #3273dc;
+    background-color: #f9484c;
+}
+
+.kj-btn{
+    border-radius: 50%;
+    text-align: center;
+    height: 55px;
+    width: 55px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.kj-text{
+    font-size: 14px;
+    color: #363636;
 }
 
 .bread-margin{
@@ -393,9 +410,12 @@ input[type="radio"]:checked ~ .tab-box {
     margin-bottom:0 !important;
     bottom: 0px;
     width: 100%;
-    height: 50px;
-    background-color: #fff;
+    padding: .3rem 0 0 0;
+    background-color: #f9484c;
     z-index: 9999;
+}
+.flex-bottom > a{
+    color:#fff;
 }
 @media screen and (max-width: 769px){
     .map-search{
