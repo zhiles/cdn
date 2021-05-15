@@ -388,6 +388,15 @@ input[type="radio"]:checked ~ .tab-box {
     width: 30%;
     z-index: 1001;
 }
+.flex-bottom{
+    position: fixed;
+    margin-bottom:0 !important;
+    bottom: 0px;
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+    z-index: 9999;
+}
 @media screen and (max-width: 769px){
     .map-search{
         width: 50%;
@@ -427,7 +436,7 @@ input[type="radio"]:checked ~ .tab-box {
         margin: 2rem auto;
     }
     .nav-welcome{
-        margin: 0 1rem 0 1rem;
+        margin: 0 1rem 0 .2rem;
     }
     .classify-title{
         padding: 1rem 0;
