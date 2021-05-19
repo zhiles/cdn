@@ -122,9 +122,9 @@ window.onload = function (){
         if (expires != null) {
             let LargeExpDate = new Date ();
             LargeExpDate.setTime(LargeExpDate.getTime() + (expires*1000*3600*24));
-            document.cookie = name + "=" + escape (value)+";domain=.teifan.com;expires=" +LargeExpDate.toGMTString()+";path=/";
+            document.cookie = name + "=" + encodeURIComponent(value)+";domain=.teifan.com;expires=" +LargeExpDate.toGMTString()+";path=/";
         }else{
-            document.cookie = name + "=" + escape (value)+";domain=.teifan.com;path=/";
+            document.cookie = name + "=" + encodeURIComponent(value)+";domain=.teifan.com;path=/";
         }
     }
     function getCookie(Name) {
@@ -135,7 +135,7 @@ window.onload = function (){
                 offset += search.length;
                 let end = document.cookie.indexOf(";", offset);
                 if(end == -1) end = document.cookie.length;
-                return JSON.parse(unescape(document.cookie.substring(offset, end)));
+                return JSON.parse(decodeURIComponent(document.cookie.substring(offset, end)));
             }else {
                 return '';
             }
@@ -184,10 +184,6 @@ const $ = (function() {
             xhr.onreadystatechange = function() {
                 loading.close();
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    // if (xhr.getResponseHeader("Cookie")) {
-                    //     cookie.delCookie(tf_auth);
-                    //     cookie.setCookie(tf_auth,xhr.getResponseHeader("Cookie"),1);
-                    // }
                     // 有传入success回调就执行
                     success && success(xhr.responseText,xhr);
                 }
