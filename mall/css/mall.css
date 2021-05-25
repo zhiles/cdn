@@ -1,5 +1,4 @@
 .icon {
-    width: 1em; height: 1em;
     vertical-align: -0.15em;
     fill: currentColor;
     overflow: hidden;
@@ -55,9 +54,6 @@ nav .container{
     /*border-left: .3rem solid #f9484c;*/
     border-left: .3rem solid #3273dc;
     padding-left: .3rem;
-}
-.is-danger{
-    background-color: #f9484c !important;
 }
 .toolbar {
     position: fixed;
@@ -156,7 +152,7 @@ nav .container{
     right: .3em;
 }
 .p-img{
-    margin: 1rem auto .5rem auto
+    margin: .5rem auto .5rem auto;
 }
 .honesty-head {
     height: 3rem;
@@ -264,14 +260,8 @@ nav .container{
     font-size: 1.5rem;
     color: #242424;
 }
-.classify-more{
-    position:absolute;
-    bottom: .3rem;
-    left: 45%;
-    font-size: 0.75rem
-}
 .classify-middle{
-    padding: .75rem 0;
+    padding: .5rem 0;
     text-align: center;
     flex-wrap: wrap;
     display: flex;
@@ -304,7 +294,7 @@ nav .container{
 .category-info{
     margin-left: 1rem;
     color: #4a4a4a !important;
-    float: left !important;
+    display: inline-block;
 }
 .btn-control{
     background-color: #f7f9fa;
@@ -599,7 +589,6 @@ loading 样式
     padding:  0 5rem;
     justify-content: center;
     align-items: center;
-    text-align: center;
     height:100%;
 }
 .login input{
@@ -628,7 +617,6 @@ loading 样式
     letter-spacing: 1px;
     text-transform: uppercase;
     transition: transform 80ms ease-in;
-    cursor: pointer;
 }
 .login .button:hover{
     color:#fff;
@@ -646,14 +634,20 @@ loading 样式
     width: 18%;
     padding: .75rem .5rem;
     display: inline-block;
-}.login .verify_code{
+}
+.login .verify_code{
      width: 80%;
      display: inline-block;
- }
+}
+.login .level-item:not(:last-child){
+    margin-right: 0 !important;
+}
+.login .level-item:hover{
+    color:#ff4b2b;
+}
 .login h1{
     font-size: 2em;
     font-weight: bold;
-    margin: 0;
 }
 .login .container-text{
     margin: 5px 0;
@@ -762,32 +756,12 @@ loading 样式
         padding: 0;
     }
     .login .body{
-        background: #fff;
-        border-radius: 0;
-        box-shadow: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22);
-        position: fixed;
-        overflow: hidden;
         width: 100%;
         height: 100vh;
+        border-radius:0;
     }
     .login form{
-        background: #fff;
-        display: flex;
-        flex-direction: column;
         padding:  0 3rem;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        height:100%;
-    }
-    .login input{
-        background: #eee;
-        border: none;
-        padding: 12px 15px;
-        margin: 8px 0;
-        width: 100%;
-        outline: none;
-        display:block;
     }
     .login .sign-in {
         left: 0;

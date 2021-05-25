@@ -299,16 +299,17 @@ const $ = (function() {
 
 })( window );
 ;(function () {
-    let msg,login,signIn,sendCode,close,index_login;
+    let msg,login,signIn,close,loginType,verifyCode,username,password,sendCode;
     let logins = document.querySelectorAll('.login-in');
     for (let i = 0; i < logins.length; i++) {
         logins[i].addEventListener('click',function (){
             init_login();
             classie.remove(login,'is-hidden');
-            classie.add(login,'is-flex');
         })
     }
     function init_login() {
+        let element = document.querySelector('.login');
+        if(element)return;
         let div = document.createElement("div");
         div.className = 'login is-hidden';
         div.innerHTML = "<div class=\"body\">\n" +
@@ -318,15 +319,42 @@ const $ = (function() {
             "                <h1>登陆</h1>\n" +
             "                <div class=\"container-text\">&nbsp;</div>\n" +
             "                <div class=\"full-width\">\n" +
-            "                    <input type=\"email\" maxlength=\"11\" oninput = \"value=value.replace(/[^\\d]/g,'')\" placeholder=\"请输入手机号\" id=\"in_username\">\n" +
-            "                    <input type=\"password\"  oninput = \"value=value.replace(/[^\\w]/g,'')\"  placeholder=\"密码\" id=\"in_password\">\n" +
-            "                    <button type=\"button\" class=\"button signIn is-fullwidth\" style=\"margin-top: 2rem\">登录</button>\n" +
+            "                    <input type=\"text\" maxlength=\"11\" oninput = \"value=value.replace(/[^\\d]/g,'')\" placeholder=\"请输入手机号\" id=\"username\">\n" +
+            "                    <input type=\"password\"  oninput = \"value=value.replace(/[^\\w]/g,'')\"  placeholder=\"请输入密码\" id=\"password\">\n" +
+        "                        <input type=\"text\" maxlength=\"4\" oninput = \"value=value.replace(/[^\\d]/g,'')\" class=\"verify_code is-hidden\" placeholder=\"验证码\">\n" +
+        "                        <input type=\"button\" class=\"send_code is-hidden\" value=\"发送\">\n" +
+            "                    <span class=\"is-size-7\">手机登陆时，未注册用户将会自动注册。</span>\n" +
+            "                    <div class=\"level is-mobile\">\n" +
+            "                        <div class=\"level-item\"></div>\n" +
+            "                        <div class=\"level-item pw_login\">\n" +
+            "                            <div>\n" +
+            "                                <div class=\"is-inline-block\" style=\"background-color: #f1f3f7;border-radius: 50%;padding: .5rem\">\n" +
+            "                                    <svg class=\"icon is-size-4\" aria-hidden=\"true\">\n" +
+            "                                        <use xlink:href=\"#icon-icon-test\"></use>\n" +
+            "                                    </svg>\n" +
+            "                                </div>\n" +
+            "                                <div class=\"is-size-7\">密码登陆</div>\n" +
+            "                            </div>\n" +
+            "                        </div>\n" +
+            "                        <div class=\"level-item ph_login\">\n" +
+            "                            <div>\n" +
+            "                                <div class=\"is-inline-block\" style=\"background-color: #f1f3f7;border-radius: 50%;padding: .5rem\">\n" +
+            "                                    <svg class=\"icon is-size-4\" aria-hidden=\"true\">\n" +
+            "                                        <use xlink:href=\"#icon-shoujidenglu\"></use>\n" +
+            "                                    </svg>\n" +
+            "                                </div>\n" +
+            "                                <div class=\"is-size-7\">手机登录</div>\n" +
+            "                            </div>\n" +
+            "                        </div>\n" +
+            "                        <div class=\"level-item\"></div>\n" +
+            "                    </div>"+
+            "                    <button type=\"button\" class=\"button signIn is-fullwidth\">登录</button>\n" +
             "                </div>\n" +
             "                <div class=\"is-size-7\">\n" +
             "                    <input style=\"width: auto;display:inline-block\" type=\"checkbox\" checked> 我已阅读并同意\n" +
             "                </div>\n" +
             "                <div class=\"is-size-7\">\n" +
-            "                    <a class=\"has-text-grey\" href=\"//www.teifan.com/agreement\" target=\"_blank\">《网络服务协议》</a> 和 <a class=\"has-text-grey\" href=\"//www.teifan.com/privacy\">《用户隐私条款》</a>\n" +
+            "                    <a class=\"has-text-grey\" href=\"//www.teifan.com/agreement\" target=\"_blank\">《网络服务协议》</a> 和 <a class=\"has-text-grey\" href=\"//www.teifan.com/privacy\" target=\"_blank\">《用户隐私条款》</a>\n" +
             "                </div>\n" +
             "            </form>\n" +
             "        </div>\n" +
@@ -346,79 +374,121 @@ const $ = (function() {
         document.body.appendChild(div);
 
         msg = document.querySelector('.container-text');
-        login = document.querySelector(".login");
+        login = document.querySelector('.login');
+        verifyCode = document.querySelector('.verify_code');
         //登陆
         signIn = document.querySelector('.signIn');
-        //验证码
-        sendCode = document.querySelector('.send_code');
+        signIn.addEventListener('click', submit)
         //关闭登录框按钮
-        close = document.querySelectorAll(".is-close");
-
+        close = document.querySelectorAll('.is-close');
         close.forEach(function (close){
             close.addEventListener('click',function (){
-                classie.remove(login,'is-flex');
                 classie.add(login,'is-hidden');
                 clear_error();
             })
         })
-        signIn.addEventListener('click', password_login)
-        // sendCode.addEventListener('click',sendVerifyCode);
+        //验证码
+        sendCode = document.querySelector('.send_code');
+        sendCode.addEventListener('click',sendVerifyCode);
+        username = document.querySelector('#username');
+        password = document.querySelector('#password');
+        let pw = document.querySelector('.pw_login');
+        let ph = document.querySelector('.ph_login');
+        loginType = 1;
+        pw.addEventListener('click',function (){
+            loginType = 1;
+            verifyCode.value = "";
+            classie.removeClass(password,'is-hidden')
+            classie.addClass(verifyCode,'is-hidden');
+            classie.addClass(sendCode,'is-hidden');
+        })
+        ph.addEventListener('click',function (){
+            loginType = 2;
+            password.value = "";
+            classie.addClass(password,'is-hidden')
+            classie.removeClass(verifyCode,'is-hidden');
+            classie.removeClass(sendCode,'is-hidden');
+        })
     }
 
     if(window.location.href.indexOf("?login")>=0){
         init_login();
         classie.remove(login,'is-hidden');
-        classie.add(login,'is-flex');
     }
     // if(window.location.href.indexOf("?register")>=0){
     //     init_login();
     //     classie.remove(login,'is-hidden');
-    //     classie.add(login,'is-flex');
     // }
 
     function clear_error() {
         msg.innerHTML = "&nbsp;";
     }
-    // 多种登录方式判断
-    // let loginMap = new Map([
-    //     [1,password_login],
-    //     [2,code_login],
-    //     [3,wechat_login]
-    // ]);
-    // loginMap.get(index_login)();
-    function password_login() {
+
+    function submit(){
         clear_error();
-        let username = document.getElementById("in_username").value.trim();
-        let password = document.getElementById("in_password").value.trim();
-        if(username == null || username == ""){
-            msg.innerHTML = "请输入手机号";
+        if(!(/^1[3456789]\d{9}$/.test(username.value))){
+            msg.innerHTML = "请输入正确的手机号";
             return;
         }
-        if(password == null || password == ""){
+        // 多种登录方式判断
+        let loginMap = new Map([
+            [1,pw_login],
+            [2,code_login],
+            // [3,wechat_login]
+        ]);
+        loginMap.get(loginType)();
+    }
+    function code_login(){
+        if(verifyCode.value == null || verifyCode.value == ""){
+            msg.innerHTML = "请输入验证码";
+            return;
+        }
+        $.ajax({
+            type:"POST",
+            url:"/auth/sms",
+            data:{"username":username.value,"smsCode":verifyCode.value},
+            success:function (res) {
+                let data = JSON.parse(res);
+                classie.remove(signIn,'is-loading');
+                if(data.code == 1){
+                    let url = redirect();
+                    if (url == "") {
+                        html_init();
+                        classie.add(login,'is-hidden');
+                    }else{
+                        window.location = url;
+                    }
+                }else {
+                    msg.innerHTML = data.msg;
+                }
+            }
+        })
+    }
+    function pw_login() {
+        if(password.value == null || password.value == ""){
             msg.innerHTML = "请输入密码";
             return;
         }
         captcha_init(function (res) {
             if (res.ret == 0) {
-                // 可分为密码登录 手机号登录 微信扫码登录
-
                 $.ajax({
                     type:"GET",
                     url:"/captchaVerify",
                     data:{"randStr":res.randstr,"ticket":res.ticket},
                     success:function (flag) {
                         if(flag){
-                            login_f(username,password,res.randstr,res.ticket);
+                            login_pw(username.value,password.value,res.randstr,res.ticket);
                         }else{
-                            password_login();
+                            pw_login();
                         }
                     }
                 })
             }
         })
     }
-    function login_f(username,password,randStr,ticket) {
-        if(randStr == null || ticket == null || randStr.trim() == "" || ticket.trim() == "")password_login();
+
+    function login_pw(username,password,randStr,ticket) {
+        if(randStr == null || ticket == null || randStr.trim() == "" || ticket.trim() == "")pw_login();
         classie.add(signIn,'is-loading');
         $.ajax({
             type:"POST",
@@ -431,13 +501,12 @@ const $ = (function() {
                     let url = redirect();
                     if (url == "") {
                         html_init();
-                        classie.remove(login,'is-flex');
                         classie.add(login,'is-hidden');
                     }else{
                         window.location = url;
                     }
                 }else if(data.code == 1000){
-                    password_login();
+                    pw_login();
                 }else {
                     msg.innerHTML = data.msg;
                 }
@@ -446,31 +515,54 @@ const $ = (function() {
     }
 
     function sendVerifyCode() {
+        if(!(/^1[3456789]\d{9}$/.test(username.value))){
+            msg.innerHTML = "请输入正确的手机号";
+            return;
+        }
+        captcha_init(function (res){
+            if (res.ret == 0) {
+                $.ajax({
+                    type:"GET",
+                    url:"/captchaVerify",
+                    data:{"randStr":res.randstr,"ticket":res.ticket},
+                    success:function (flag) {
+                        if(flag){
+                            sendCodeF(username.value,res.randstr,res.ticket);
+                        }else{
+                            pw_login();
+                        }
+                    }
+                })
+            }
+        });
+    }
+
+    function sendCodeF(username,randStr,ticket){
         $.ajax({
             type:"GET",
-            url:"/getVerifyCode",
-            data:{email:document.getElementById('up_username').value},
+            url:"/getVerify",
+            data:{"username":username,"randStr":randStr,"ticket":ticket},
             success:function (res) {
                 let data = JSON.parse(res);
                 if(data.code == 1){
-                    noticeMsg(data.msg,"success")
+                    msg.innerHTML = "发送成功";
+                    let time = 59,timer = null;
+                    sendCode.disabled = true;
+                    sendCode.value = time+1;
+                    timer = setInterval(function(){
+                        sendCode.value = time;
+                        time--;//时间值自减
+                        if(time ==0){
+                            sendCode.value='发送';
+                            sendCode.disabled = false;
+                            clearInterval(timer);
+                        }
+                    },1000);
                 }else {
                     msg.innerHTML = data.msg;
                 }
             }
         })
-        let that = this,time = 59,timer = null;
-        that.disabled = true;
-        that.value = time+1;
-        timer = setInterval(function(){
-            that.value = time;
-            time--;//时间值自减
-            if(time ==0){
-                that.value='发送';
-                that.disabled = false;
-                clearInterval(timer);
-            }
-        },1000);
     }
 
     function verify(username,verifyCode) {
