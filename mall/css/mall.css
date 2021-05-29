@@ -50,9 +50,41 @@ nav .container{
     width: 100%;
     overflow:hidden;
 }
+
 .head-title{
-    /*border-left: .3rem solid #f9484c;*/
     border-left: .3rem solid #3273dc;
+    padding-left: .3rem;
+}
+.-head-title{
+    border-left: .3rem solid #3273dc;
+    padding-left: .3rem;
+}
+.null-head-title{
+    border-left: .3rem solid #3273dc;
+    padding-left: .3rem;
+}
+.is-default-head-title{
+    border-left: .3rem solid #3273dc;
+    padding-left: .3rem;
+}
+.is-red-head-title{
+    border-left: .3rem solid #f9484c;
+    padding-left: .3rem;
+}
+.is-green-head-title{
+    border-left: .3rem solid #53cb3e;
+    padding-left: .3rem;
+}
+.is-orange-head-title{
+    border-left: .3rem solid #ff8b3b;
+    padding-left: .3rem;
+}
+.is-blue-head-title{
+    border-left: .3rem solid #1b6bd7;
+    padding-left: .3rem;
+}
+.is-purple-head-title{
+    border-left: .3rem solid #8892fc;
     padding-left: .3rem;
 }
 .toolbar {
@@ -386,6 +418,12 @@ input[type="radio"]:checked ~ .tab-box {
     .icon-btn{
         margin: .5rem .5rem .2rem;
     }
+    .nav-welcome{
+        margin: 0 1rem 0 .75rem;
+    }
+    .is-red .navbar-start a,.is-green .navbar-start a,.is-orange .navbar-start a,.is-blue .navbar-start a,.is-purple .navbar-start a{
+        color:#000000;
+    }
 }
 
 .modal-card-head,.modal-card-foot{
@@ -403,10 +441,9 @@ input[type="radio"]:checked ~ .tab-box {
     margin-bottom:0 !important;
     bottom: 0px;
     width: 100%;
-    /*height: 55px;*/
     padding-top: .3rem;
     padding-bottom: calc(0.1rem + env(safe-area-inset-bottom));
-    /*background-color: #f9484c;*/
+
     background-color: #fff;
     border-top: 1px solid #d8d8d8;
     z-index: 9999;
@@ -414,7 +451,64 @@ input[type="radio"]:checked ~ .tab-box {
 .flex-bottom > a{
     color:#7a7a7a;
 }
+.is-logout{
+    color: #f14668;
+}
+.is-red{
+    background-color: #f9484c;
+}
+
+.is-red .nav-top{
+    background-color: #f9484c;
+    border-bottom: 0;
+}
+
+.is-green{
+    background-color: #53cb3e;
+}
+
+.is-green .nav-top{
+    background-color: #53cb3e;
+    border-bottom: 0;
+}
+.is-orange{
+    background-color: #ff8b3b;
+}
+.is-orange .nav-top{
+    background-color: #ff8b3b;
+    border-bottom: 0;
+}
+.is-blue{
+    background-color: #1b6bd7;
+}
+.is-blue .nav-top{
+    background-color: #1b6bd7;
+    border-bottom: 0;
+}
+.is-purple{
+    background-color: #8892fc;
+}
+.is-purple .nav-top{
+    background-color: #8892fc;
+    border-bottom: 0;
+}
+
+.is-red a,.is-green a,.is-orange a,.is-blue a,.is-purple a{
+    color:#ffffff;
+}
+.is-red .is-organ:hover,.is-green .is-organ:hover,.is-orange .is-organ:hover,.is-blue .is-organ:hover,.is-purple .is-organ:hover{
+    color: #ffffff;
+}
+.is-red .is-logout,.is-green .is-logout,.is-orange .is-logout,.is-blue .is-logout,.is-purple .is-logout{
+    color: #ffffff;
+}
+.is-red .nav-welcome,.is-green .nav-welcome,.is-orange .nav-welcome,.is-blue .nav-welcome,.is-purple .nav-welcome{
+    color:#ffffff;
+}
 @media screen and (max-width: 769px){
+    .is-red .navbar-start a,.is-green .navbar-start a,.is-orange .navbar-start a,.is-blue .navbar-start a,.is-purple .navbar-start a{
+        color:#000000;
+    }
     .map-search{
         width: 50%;
     }
@@ -453,7 +547,7 @@ input[type="radio"]:checked ~ .tab-box {
         margin: 2rem auto;
     }
     .nav-welcome{
-        margin: 0 1rem 0 .2rem;
+        margin: 0 1rem 0 .75rem;
     }
     .classify-title{
         padding: 1rem 0;
@@ -562,7 +656,6 @@ loading 样式
     /*opacity:0.5; -moz-opacity:0.5;*/
     background:rgba(0,0,0,.5);
     display: flex;
-    text-align:center;
     justify-content: center;
     z-index: 2001;
 }
@@ -677,7 +770,6 @@ loading 样式
     z-index: 100;
 }
 .login .overlay{
-    background: #ff416c;
     background: linear-gradient(to right, #ff4b2b, #ff416c) no-repeat 0 0 / cover;
     color: #fff;
     position: relative;
@@ -703,7 +795,6 @@ loading 样式
 }
 .login .overlay-right {
     right: 0;
-    transform: translateY(0);
 }
 .login .overlay-left {
     transform: translateY(-20%);
@@ -717,7 +808,6 @@ loading 样式
     position: absolute;
     top:.5rem;
     right:.5rem;
-    border: none;
 }
 /* Move signin to right */
 .login .panel-active .sign-in {
@@ -764,9 +854,7 @@ loading 样式
         padding:  0 3rem;
     }
     .login .sign-in {
-        left: 0;
         width: 100%;
-        z-index: 2;
     }
     .login .sign-up {
         left: 0;
@@ -776,46 +864,23 @@ loading 样式
     }
 
     .login .overlay-container{
-        position: absolute;
-        top: 0;
         left: 0;
         width: 100%;
-        height: 100%;
-        overflow: hidden;
-        transition: transform .6s ease-in-out;
-        background: #ff416c;
         background: linear-gradient(to right, #ff4b2b, #ff416c) no-repeat 0 0 / cover;
         z-index: 0;
     }
     .login .overlay{
-        color: #fff;
-        position: relative;
         left: 0;
-        height: 100%;
         width: 100%;
-        transform: translateY(0);
-        transition: transform .6s ease-in-out;
     }
     .login .overlay-panel{
-        position: absolute;
-        top: 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 0 40px;
-        height: 100%;
         width: 100%;
-        text-align: center;
-        transform: translateY(0);
-        transition: transform .6s ease-in-out;
     }
     .login .is-close{
-        padding: 13px;
-        position: absolute;
-        top:.5rem;
-        right:.5rem;
-        border: none;
+        padding: 20px;
+        position: relative;
+        right: 0;
+        top:2rem;
     }
     /* Move signin to right */
     .login .panel-active .sign-in {

@@ -2,6 +2,10 @@ let TCaptcha_URL = "https://ssl.captcha.qq.com/TCaptcha.js";
 let tf_auth_info = "tf_auth_info";
 let toolbar = document.querySelector(".toolbar"), H = 0, Y = toolbar
 let box = document.querySelector(".top");
+let baseURL = "//api.teifan.com";
+if(window.location.href.indexOf('teifan.com')<0){
+    baseURL = "";
+}
 if(box){
     box.style.display = "none";
     window.onscroll = function(){
@@ -172,6 +176,7 @@ const $ = (function() {
                 return;
             }
             let xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
             // 处理data对象
             let query = [],queryData;
             for (let key in data) {
@@ -179,6 +184,7 @@ const $ = (function() {
             }
             queryData = query.join('&');
             if (type == 'GET')url = url + '?' + queryData;
+            url = baseURL + url;
             // 默认使用GET,默认异步
             xhr.open(type || 'GET', url, isAsync || true);
             xhr.onreadystatechange = function() {
@@ -312,50 +318,33 @@ const $ = (function() {
         if(element)return;
         let div = document.createElement("div");
         div.className = 'login is-hidden';
-        div.innerHTML = "<div class=\"body\">\n" +
+        div.innerHTML = "<div class=\"login\">\n" +
+            "    <div class=\"body\">\n" +
             "        <div class=\"form sign-in\">\n" +
-            "            <button class=\"is-close delete is-small is-hidden-desktop is-hidden-tablet\" title=\"关闭\"></button>\n" +
             "            <form>\n" +
             "                <h1>登陆</h1>\n" +
             "                <div class=\"container-text\">&nbsp;</div>\n" +
             "                <div class=\"full-width\">\n" +
             "                    <input type=\"text\" maxlength=\"11\" oninput = \"value=value.replace(/[^\\d]/g,'')\" placeholder=\"请输入手机号\" id=\"username\">\n" +
             "                    <input type=\"password\"  oninput = \"value=value.replace(/[^\\w]/g,'')\"  placeholder=\"请输入密码\" id=\"password\">\n" +
-        "                        <input type=\"text\" maxlength=\"4\" oninput = \"value=value.replace(/[^\\d]/g,'')\" class=\"verify_code is-hidden\" placeholder=\"验证码\">\n" +
-        "                        <input type=\"button\" class=\"send_code is-hidden\" value=\"发送\">\n" +
-            "                    <span class=\"is-size-7\">手机登陆时，未注册用户将会自动注册。</span>\n" +
-            "                    <div class=\"level is-mobile\">\n" +
-            "                        <div class=\"level-item\"></div>\n" +
-            "                        <div class=\"level-item pw_login\">\n" +
-            "                            <div>\n" +
-            "                                <div class=\"is-inline-block\" style=\"background-color: #f1f3f7;border-radius: 50%;padding: .5rem\">\n" +
-            "                                    <svg class=\"icon is-size-4\" aria-hidden=\"true\">\n" +
-            "                                        <use xlink:href=\"#icon-icon-test\"></use>\n" +
-            "                                    </svg>\n" +
-            "                                </div>\n" +
-            "                                <div class=\"is-size-7\">密码登陆</div>\n" +
-            "                            </div>\n" +
-            "                        </div>\n" +
-            "                        <div class=\"level-item ph_login\">\n" +
-            "                            <div>\n" +
-            "                                <div class=\"is-inline-block\" style=\"background-color: #f1f3f7;border-radius: 50%;padding: .5rem\">\n" +
-            "                                    <svg class=\"icon is-size-4\" aria-hidden=\"true\">\n" +
-            "                                        <use xlink:href=\"#icon-shoujidenglu\"></use>\n" +
-            "                                    </svg>\n" +
-            "                                </div>\n" +
-            "                                <div class=\"is-size-7\">手机登录</div>\n" +
-            "                            </div>\n" +
-            "                        </div>\n" +
-            "                        <div class=\"level-item\"></div>\n" +
-            "                    </div>"+
-            "                    <button type=\"button\" class=\"button signIn is-fullwidth\">登录</button>\n" +
+            "                    <input type=\"text\" maxlength=\"4\" oninput = \"value=value.replace(/[^\\d]/g,'')\" class=\"verify_code is-hidden\" placeholder=\"验证码\">\n" +
+            "                    <input type=\"button\" class=\"send_code  is-hidden\" value=\"发送\">\n" +
+            "                    <div class=\"is-size-7 is-clearfix\" style=\"margin-left: .2rem\">\n" +
+            "                        <span class=\"pw_login is-hidden\">\n" +
+            "                            <a class=\"is-pulled-left\">密码登录</a>\n" +
+            "                            <span style=\"margin-left: .5rem\">登录未注册账户，将自动注册。</span>\n" +
+            "                        </span>\n" +
+            "                        <a class=\"is-pulled-left ph_login\">短信登录/注册</a>\n" +
+            "                    </div>\n" +
+            "                    <button type=\"button\" class=\"button signIn is-fullwidth\" style=\"margin-top: 2rem\">登录</button>\n" +
             "                </div>\n" +
             "                <div class=\"is-size-7\">\n" +
-            "                    <input style=\"width: auto;display:inline-block\" type=\"checkbox\" checked> 我已阅读并同意\n" +
+            "                    <input style=\"width: auto;display:inline-block\" type=\"checkbox\" class=\"checkbox\" checked> 我已阅读并同意\n" +
             "                </div>\n" +
             "                <div class=\"is-size-7\">\n" +
-            "                    <a class=\"has-text-grey\" href=\"//www.teifan.com/agreement\" target=\"_blank\">《网络服务协议》</a> 和 <a class=\"has-text-grey\" href=\"//www.teifan.com/privacy\" target=\"_blank\">《用户隐私条款》</a>\n" +
+            "                    <a class=\"has-text-grey\" href=\"//www.teifan.com/agreement\" target=\"_blank\">《网络服务协议》</a> 和 <a class=\"has-text-grey\" href=\"//www.teifan.com/privacy\">《用户隐私条款》</a>\n" +
             "                </div>\n" +
+            "                <button class=\"is-close delete is-small is-hidden-desktop is-hidden-tablet\" title=\"关闭\"></button>\n" +
             "            </form>\n" +
             "        </div>\n" +
             "        <div class=\"overlay-container\">\n" +
@@ -370,7 +359,8 @@ const $ = (function() {
             "                </div>\n" +
             "            </div>\n" +
             "        </div>\n" +
-            "    </div>";
+            "    </div>\n" +
+            "</div>";
         document.body.appendChild(div);
 
         msg = document.querySelector('.container-text');
@@ -401,13 +391,17 @@ const $ = (function() {
             classie.removeClass(password,'is-hidden')
             classie.addClass(verifyCode,'is-hidden');
             classie.addClass(sendCode,'is-hidden');
+            classie.removeClass(ph,'is-hidden');
+            classie.addClass(this,'is-hidden');
         })
         ph.addEventListener('click',function (){
             loginType = 2;
             password.value = "";
-            classie.addClass(password,'is-hidden')
+            classie.addClass(password,'is-hidden');
             classie.removeClass(verifyCode,'is-hidden');
             classie.removeClass(sendCode,'is-hidden');
+            classie.removeClass(pw,'is-hidden');
+            classie.addClass(this,'is-hidden');
         })
     }
 
