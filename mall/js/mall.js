@@ -321,7 +321,7 @@ const $ = (function() {
         div.innerHTML = "<div class=\"login\">\n" +
             "    <div class=\"body\">\n" +
             "        <div class=\"form sign-in\">\n" +
-            "            <form>\n" +
+            "            <form onsubmit=\"return false;\">\n" +
             "                <h1>登陆</h1>\n" +
             "                <div class=\"container-text\">&nbsp;</div>\n" +
             "                <div class=\"full-width\">\n" +
