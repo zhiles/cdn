@@ -283,12 +283,10 @@ nav .container{
 }
 .classify-bg{
     height: 100%;
-    background-color: #cdd4d9;
     text-align: center;
-    position: relative;
 }
 .classify-title{
-    padding: .3rem 0;
+    padding: 3rem 0 .3rem 0;
     font-size: 1.5rem;
     color: #242424;
 }
@@ -302,6 +300,20 @@ nav .container{
     font-size: 15px;
     font-weight: 700 !important;
     color:#4a4a4a;
+}
+.classify-icon{
+    height: 60%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.classify-icon svg{
+    width: 5rem;
+    height: 5rem;
+}
+.sincerity{
+    padding: .5rem;
+    display: block;
 }
 .tag{
     margin: 0 !important;
