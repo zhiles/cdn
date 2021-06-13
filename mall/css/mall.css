@@ -54,38 +54,56 @@ nav .container{
 .head-title{
     border-left: .3rem solid #3273dc;
     padding-left: .3rem;
+    display:block;
+    margin:.3rem 0;
 }
 .-head-title{
     border-left: .3rem solid #3273dc;
     padding-left: .3rem;
+    display:block;
+    margin:.3rem 0;
 }
 .null-head-title{
     border-left: .3rem solid #3273dc;
     padding-left: .3rem;
+    display:block;
+    margin:.3rem 0;
 }
 .is-default-head-title{
     border-left: .3rem solid #3273dc;
     padding-left: .3rem;
+    display:block;
+    margin:.3rem 0;
 }
 .is-red-head-title{
     border-left: .3rem solid #f9484c;
     padding-left: .3rem;
+    display:block;
+    margin:.3rem 0;
 }
 .is-green-head-title{
     border-left: .3rem solid #53cb3e;
     padding-left: .3rem;
+    display:block;
+    margin:.3rem 0;
 }
 .is-orange-head-title{
     border-left: .3rem solid #ff8b3b;
     padding-left: .3rem;
+    display:block;
+    margin:.3rem 0;
 }
 .is-blue-head-title{
     border-left: .3rem solid #1b6bd7;
     padding-left: .3rem;
+    display:block;
+    margin:.3rem 0;
 }
 .is-purple-head-title{
     border-left: .3rem solid #8892fc;
     padding-left: .3rem;
+    display:block;
+    margin:.3rem 0;
 }
 .toolbar {
     position: fixed;
@@ -757,6 +775,7 @@ loading 样式
 .login .container-text{
     margin: 5px 0;
     font-size: 14px;
+    text-align: center;
     color:#ff4b2b;
     width: 100%;
 }
@@ -854,6 +873,9 @@ loading 样式
 }
 
 @media screen and (max-width: 769px){
+    .toolbar{
+        right: .5rem;
+    }
     .classify-list-bg{
         padding: 0;
     }

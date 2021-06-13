@@ -624,10 +624,10 @@ function html_init(){
     }
 }
 
-function noticeMsg(msg,type,ttl){
+function noticeMsg(msg,type){
     let notice = new NotificationFx({
         message : msg,
-        ttl:ttl||3000,
+        ttl:3000,
         type : type||'warning'
     });
     notice.show();
@@ -636,7 +636,7 @@ function noticeMsg(msg,type,ttl){
 function limitImg(file){
     let f = (file.files && file.files[0])|| file;
     if (f.size / 1024 > 400) {
-        noticeMsg("文件大小不能超过400k");
+        noticeMsg("图片大小不能超过400k。");
         return true;
     }
     return false;
