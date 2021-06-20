@@ -6,6 +6,9 @@ let baseURL = "//api.teifan.com";
 if(window.location.href.indexOf('teifan.com')<0){
     baseURL = "";
 }
+let CONST = {
+    admin_error : "系统错误,请联系管理员。"
+}
 if(box){
     box.style.display = "none";
     window.onscroll = function(){
