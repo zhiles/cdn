@@ -59,8 +59,10 @@ document.addEventListener('DOMContentLoaded', function (){
     }
 });
 window.onload = function (){
-    let is_logout = document.querySelector('.is-logout');
-    is_logout.addEventListener('click',logout)
+    let is_logout = document.querySelectorAll('.is-logout');
+    for (let i = 0; i < is_logout.length; i++) {
+        is_logout[i].addEventListener('click',logout)
+    }
     html_init();
 }
 ;( function( window ) {
@@ -613,17 +615,21 @@ function captcha_init(callback) {
 }
 
 function html_init(){
-    let no_login = document.querySelector('.no-login');
-    let in_login = document.querySelector('.in-login');
-    let in_login_name = document.querySelector('.in-login-name');
+    let no_login = document.querySelectorAll('.no-login');
+    let in_login = document.querySelectorAll('.in-login');
+    let in_login_name = document.querySelectorAll('.in-login-name');
     let tf_auth = cookie.getCookie(tf_auth_info);
     if(tf_auth){
-        classie.addClass(no_login,'is-hidden');
-        classie.removeClass(in_login,'is-hidden');
-        in_login_name.innerHTML = tf_auth.nickName;
+        for (let i = 0; i < no_login.length; i++) {
+            classie.addClass(no_login[i],'is-hidden');
+            classie.removeClass(in_login[i],'is-hidden');
+            in_login_name[i].innerHTML = tf_auth.nickName;
+        }
     }else{
-        classie.addClass(in_login,'is-hidden');
-        classie.removeClass(no_login,'is-hidden');
+        for (let i = 0; i < no_login.length; i++) {
+            classie.addClass(in_login[i],'is-hidden');
+            classie.removeClass(no_login[i],'is-hidden');
+        }
     }
 }
 

@@ -295,6 +295,14 @@ nav .container{
     text-align: center;
     margin-top: 2rem
 }
+.news-img{
+    height: 128px !important;
+    padding-top: .5rem
+}
+.new-img{
+    width: 100%;
+    height: 20rem
+}
 .classify-list-bg{
     background-color: #f7f9fa;
     padding: .75rem 0;
@@ -424,7 +432,7 @@ input[type="radio"]:checked ~ .tab-box {
         max-width: 1152px;
     }
     .icon-btn{
-        margin: .5rem .8rem .2rem;
+        margin: .5rem 1rem .2rem;
     }
 }
 @media screen and (min-width: 1023px){
@@ -762,12 +770,7 @@ loading 样式
      width: 80%;
      display: inline-block;
 }
-.login .level-item:not(:last-child){
-    margin-right: 0 !important;
-}
-.login .level-item:hover{
-    color:#ff4b2b;
-}
+
 .login h1{
     font-size: 2em;
     font-weight: bold;
@@ -784,12 +787,7 @@ loading 样式
     width: 55%;
     z-index: 2;
 }
-.login .sign-up{
-    left: 0;
-    width: 50%;
-    z-index: 1;
-    opacity: 0;
-}
+
 .login .overlay-container{
     position: absolute;
     top: 0;
@@ -840,37 +838,6 @@ loading 样式
     top:.5rem;
     right:.5rem;
 }
-/* Move signin to right */
-.login .panel-active .sign-in {
-    transform: translateY(100%);
-}
-
-/* Move overlay to left */
-.login .panel-active .overlay-container {
-    transform: translateX(-100%);
-}
-
-/* Bring signup over signin */
-.login .panel-active .sign-up {
-    transform: translateX(100%);
-    opacity: 1;
-    z-index: 5;
-}
-
-/* Move overlay back to right */
-.login .panel-active .overlay {
-    transform: translateX(50%);
-}
-
-/* Bring back the text to center */
-.login .panel-active .overlay-left {
-    transform: translateY(0);
-}
-
-/* Same effect for right */
-.login .panel-active .overlay-right {
-    transform: translateY(20%);
-}
 
 @media screen and (max-width: 769px){
     .toolbar{
@@ -889,12 +856,6 @@ loading 样式
     }
     .login .sign-in {
         width: 100%;
-    }
-    .login .sign-up {
-        left: 0;
-        width: 100%;
-        z-index: 1;
-        opacity: 0;
     }
 
     .login .overlay-container{
@@ -916,22 +877,14 @@ loading 样式
         right: 0;
         top:2rem;
     }
-    /* Move signin to right */
-    .login .panel-active .sign-in {
-        transform: translateY(0);
-    }
-
-    /* Move overlay to left */
-    .login .panel-active .overlay-container {
-        transform: translateX(-100%);
-    }
-    /* Bring signup over signin */
-    .login .panel-active .sign-up {
-        transform: translateX(0);
-        opacity: 1;
-        z-index: 5;
-    }
     .middle-content{
         margin-top: .5rem;
+    }
+    .news-img{
+        height: 200px !important;
+    }
+    .new-img{
+        width: 100%;
+        height: 10rem
     }
 }
