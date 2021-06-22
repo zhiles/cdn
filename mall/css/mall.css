@@ -15,6 +15,9 @@ nav .container{
     margin:auto;
     min-height: 0;
 }
+.modal-width{
+    width: 60%;
+}
 .information{
     margin: 1rem auto;
 }
@@ -462,6 +465,9 @@ input[type="radio"]:checked ~ .tab-box {
     .is-red .navbar-start a,.is-green .navbar-start a,.is-orange .navbar-start a,.is-blue .navbar-start a,.is-purple .navbar-start a{
         color:#000000;
     }
+    .modal-width{
+        width: 100%;
+    }
 }
 
 .modal-card-head,.modal-card-foot{
@@ -886,5 +892,8 @@ loading 样式
     .new-img{
         width: 100%;
         height: 10rem
+    }
+    .modal-width{
+        width: 100%;
     }
 }
