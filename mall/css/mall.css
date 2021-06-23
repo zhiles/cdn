@@ -204,8 +204,26 @@ nav .container{
     margin-top: -.375em;
     right: .3em;
 }
+.p-div{
+    border:1px solid #e8edf2;
+    border-left: 0;
+    border-bottom: 0;
+    transition: box-shadow .3s;
+}
 .p-img{
-    margin: .7rem auto;
+    height: 128px;
+    width: 128px;
+    margin: .8rem auto;
+}
+.p-name{
+    font-size: 0.75rem;
+    color: #4a4a4a;
+    margin: .6rem 0;
+}
+.p-price{
+    color: #f14668;
+    font-size: 14px;
+    margin: .5rem 0;
 }
 .honesty-head {
     height: 3rem;
@@ -320,7 +338,7 @@ nav .container{
     color: #242424;
 }
 .classify-middle{
-    padding: .5rem 0;
+    padding: .75rem 0;
     text-align: center;
     flex-wrap: wrap;
     display: flex;
