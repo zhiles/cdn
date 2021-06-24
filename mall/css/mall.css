@@ -210,9 +210,12 @@ nav .container{
     border-bottom: 0;
     transition: box-shadow .3s;
 }
-.p-img{
+.p-imgs{
     height: 128px;
     width: 128px;
+    margin: .6rem auto;
+}
+.p-img{
     margin: .6rem auto;
 }
 .p-name{
