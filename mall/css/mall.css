@@ -25,6 +25,17 @@ nav .container{
     position: absolute;
     bottom:-1px;
 }
+.ab-bottom-div{
+    line-height: 14px;
+    position: absolute;
+    bottom: -2px;
+    left: 5rem;
+    width: 55%;
+}
+.ab-bottom-div .is-tag-bordered{
+    margin: 0 .2rem !important;
+}
+
 .ab-bottom-read{
     position: absolute;
     bottom:-1px;
@@ -168,6 +179,8 @@ nav .container{
     display: -webkit-box;
     /*white-space: normal;*/
     -webkit-line-clamp: 2;
+    color: #7a7a7a;
+    font-size: 15px;
     -webkit-box-orient: vertical;
 }
 .webkit-3{
@@ -240,6 +253,80 @@ nav .container{
 .honesty-name{
     font-size: 14px;
     color:#262626;
+}
+.trades-name,.category-name{
+    font-size: 1rem;
+    color:#262626;
+}
+.trades-div,.category-div{
+    padding: .5rem 0;
+    font-size: 14px;
+    border-bottom: 2px solid #f5f5f5;
+}
+.trades-right,.category-right{
+    width: 60%;
+    margin: .3rem 0 0 .5rem;
+}
+.trades-info,.category-info{
+    margin-left: 1rem;
+    color: #4a4a4a !important;
+    display: inline-block;
+}
+.trades-info .tag,.news-info .tag{
+    margin: .2rem .5rem 0 0;
+}
+.tag-bordered{
+    line-height: 14px;
+    justify-content: center;
+    display: inline-flex;
+    align-items: center;
+}
+.is-tag-bordered{
+    color:#c1c1c1 !important;
+    background-color: white !important;
+    border:1px solid #d8d8d8;
+    border-radius: 290486px !important;
+    height: auto !important;
+    padding: 0 .2rem;
+    margin: .2rem;
+    white-space: nowrap;
+    justify-content: center;
+    display: inline-flex;
+    align-items: center;
+}
+.is-tag-bordered:hover{
+    border: 1px solid #46a0fc;
+    color: #46a0fc !important;
+}
+.trades-info .is-bordered,.news-info .is-bordered{
+    background-color: white;
+    border:1px solid #d8d8d8;
+    color:#c1c1c1 !important;
+    height:auto !important;
+    padding: 0 .2rem;
+}
+.trades-info .is-bordered:hover,.news-info .is-bordered:hover{
+    border: 1px solid #46a0fc;
+    color: #46a0fc !important;
+    text-decoration:none;
+}
+.trades-info .tags-mrg{
+    margin-top:.2rem;
+}
+.news-info{
+    padding: .5rem
+}
+.trade-info{
+    background-color: #f9f9f9;
+    margin: .5rem auto;
+    padding: .5rem;
+}
+.trade-info .tag-bordered,.new-info .tag-bordered{
+    line-height: 22px;
+}
+.trade-info .is-tag-bordered,.new-info .is-tag-bordered{
+    padding: 0 .5rem;
+    font-size: 13px;
 }
 .index-top{
     display:inline-block;
@@ -365,7 +452,7 @@ nav .container{
     padding: .5rem;
     display: block;
 }
-.tag{
+.ul-absolute-left .tag{
     margin: 0 !important;
     padding: 0 .2rem!important;
 }
@@ -384,11 +471,6 @@ nav .container{
     width:100%;
     margin:.75rem 0 0;
     background-color: #F3F0EB;
-}
-.category-info{
-    margin-left: 1rem;
-    color: #4a4a4a !important;
-    display: inline-block;
 }
 .btn-control{
     background-color: #f7f9fa;
@@ -469,13 +551,7 @@ input[type="radio"]:checked ~ .tab-box {
 }
 @media screen and (max-width: 1023px){
     .webkit-content{
-        word-break:break-all;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        /*white-space: normal;*/
         -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
     }
     .icon-btn{
         margin: .5rem .5rem .2rem;
@@ -614,10 +690,13 @@ input[type="radio"]:checked ~ .tab-box {
     .nav-welcome{
         margin: 0 1rem 0 .75rem;
     }
+    .classify-middle{
+        padding: .75rem 0 0 0;
+    }
     .classify-title{
         padding: 1rem 0;
     }
-    .category-info{
+    .trades-info,.category-info{
         margin-left: 0;
     }
 }
@@ -871,7 +950,7 @@ loading 样式
         right: .5rem;
     }
     .classify-list-bg{
-        padding: 0;
+        padding: 0 0 .75rem 0;
     }
     .login .body{
         width: 100%;
