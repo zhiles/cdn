@@ -297,6 +297,7 @@ nav .container{
 .is-tag-bordered:hover{
     border: 1px solid #46a0fc;
     color: #46a0fc !important;
+    text-decoration: none;
 }
 .trades-info .is-bordered,.news-info .is-bordered{
     background-color: white;
