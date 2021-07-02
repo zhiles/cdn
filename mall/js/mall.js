@@ -731,3 +731,32 @@ function loadScript(url, callback) {
         window.loading = loading;
     }
 })( window );
+
+function uploadImg(file,img){
+    $.ajax({
+        url:"/getUpToken",
+        type:"get",
+        success:function (res){
+            res = JSON.parse(res);
+            if (res.code == 1) {
+                sendRequest(file,res.data,img);
+            }
+        }
+    })
+}
+
+function sendRequest(file,token,img){
+    loading.show();
+    const data = new FormData();
+    data.append( 'file', file);
+    data.append( 'token', token );
+    const xhr  = new XMLHttpRequest();
+    xhr.responseType = 'json';
+    xhr.addEventListener( 'load', () => {
+        loading.close();
+        const response = xhr.response;
+        img.src = response.path;
+    })
+    xhr.open( 'POST', 'https://upload-z2.qiniup.com/', true );
+    xhr.send(data);
+}
