@@ -294,7 +294,7 @@ nav .container{
     display: inline-flex;
     align-items: center;
 }
-.is-tag-bordered:hover{
+.is-tag-bordered:hover,.ab-bottom-div .is-tag-bordered:hover{
     border: 1px solid #46a0fc;
     color: #46a0fc !important;
     text-decoration: none;
