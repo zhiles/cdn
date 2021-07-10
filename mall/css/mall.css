@@ -123,6 +123,7 @@ nav .container{
     position: fixed;
     bottom: 10rem;
     right: 2rem;
+    z-index: 30;
 }
 .tool-item{
     height: 2.5rem;
@@ -170,6 +171,15 @@ nav .container{
     display: -webkit-box;
     /*white-space: normal;*/
     -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.webkit-6{
+    word-break:break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    /*white-space: pre-line;*/
+    -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
 }
 .webkit-content{
