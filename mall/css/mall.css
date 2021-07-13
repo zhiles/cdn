@@ -15,6 +15,9 @@ nav .container{
     margin:auto;
     min-height: 0;
 }
+.content ol{
+    margin-left: 1rem;
+}
 .modal-width{
     width: 60%;
 }
