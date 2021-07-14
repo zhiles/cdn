@@ -240,9 +240,16 @@ nav .container{
     height: 128px;
     width: 128px;
     margin: .6rem auto;
+    border-radius: .25rem;
 }
 .p-img{
     margin: .6rem auto;
+}
+.p-img img{
+    border-radius: .25rem;
+}
+.img-radius{
+    border-radius: .25rem;
 }
 .p-name{
     font-size: 0.75rem;
@@ -422,11 +429,19 @@ nav .container{
 }
 .news-img{
     height: 128px !important;
-    padding-top: .5rem
+    border-radius: .25rem;
+}
+.img-pt{
+    padding-top: .5rem;
+}
+.recommend-img{
+    margin: .2rem auto;
+    border-radius: .25rem;
 }
 .new-img{
     width: 100%;
-    height: 20rem
+    height: 20rem;
+    border-radius: .25rem;
 }
 .classify-list-bg{
     background-color: #f7f9fa;
@@ -483,7 +498,7 @@ nav .container{
 .list-bottom{
     height: 1px;
     width:100%;
-    margin:.75rem 0 0;
+    margin:.5rem 0 0;
     background-color: #F3F0EB;
 }
 .btn-control{
