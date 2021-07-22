@@ -760,3 +760,14 @@ function sendRequest(file,token,img){
     xhr.open( 'POST', 'https://upload-z2.qiniup.com/', true );
     xhr.send(data);
 }
+let w_url = window.location.href;
+if(w_url.search(/https:\/\/\w+.teifan.com\//i) != -1) {
+    let v = storage.getItem("ve") || new Array();
+    if (v.toString().indexOf(w_url) < 0) {
+        v.push(w_url);
+        let expires = new Date(new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 - 1) - new Date().getTime();
+        storage.setItem("ve",v,expires);
+        let t = new Image;
+        t.src = "//api.teifan.com/s.gif?v=" + w_url;
+    }
+}
