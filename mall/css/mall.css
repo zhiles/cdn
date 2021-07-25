@@ -3,7 +3,10 @@
     fill: currentColor;
     overflow: hidden;
 }
-
+em{
+    font-style: normal;
+    color:#f73131;
+}
 .has-text-vip{
     color:#ff8b4f;
 }
@@ -436,6 +439,9 @@ nav .container{
 }
 .recommend-img{
     margin: .2rem auto;
+    border-radius: .25rem;
+}
+figure img{
     border-radius: .25rem;
 }
 .new-img{
