@@ -1,53 +1,57 @@
-let TCaptcha_URL = "https://ssl.captcha.qq.com/TCaptcha.js";
+let CONST = {
+    admin_error: "系统错误,请联系管理员。",
+    host: "//api.teifan.com",
+    tf_auth_info: "tf_auth_info",
+    TCaptcha_url: "https://ssl.captcha.qq.com/TCaptcha.js",
+    box_top: document.querySelector(".top")
+}
+//冗余兼容，下个版本删除
 let tf_auth_info = "tf_auth_info";
 let toolbar = document.querySelector(".toolbar"), H = 0, Y = toolbar
-let box = document.querySelector(".top");
-let baseURL = "//api.teifan.com";
-if(window.location.href.indexOf('teifan.com')<0){
-    baseURL = "";
+let box_top = document.querySelector(".top");
+
+if (window.location.href.indexOf('teifan.com') < 0) {
+    CONST.host = "";
 }
-let CONST = {
-    admin_error : "系统错误,请联系管理员。"
-}
-if(box){
-    box.style.display = "none";
-    window.onscroll = function(){
-        let win_scrol = document.body.scrollTop || document.documentElement.scrollTop;
-        box.style.display = win_scrol>130? "block":"none";
+if (CONST.box_top) {
+    CONST.box_top.style.display = "none";
+    window.onscroll = () => {
+        let win_scroll = document.body.scrollTop || document.documentElement.scrollTop;
+        CONST.box_top.style.display = win_scroll > 130 ? "block" : "none";
     }
-    box.onclick = function(){
-        scrollAnimate(0,1000);
+    CONST.box_top.onclick = () => {
+        scrollAnimate(0, 1000);
     }
-    function scrollAnimate(target,time){
+
+    function scrollAnimate(target, time) {
         let frameNumber = 0;    //帧编号
         let start = document.body.scrollTop || document.documentElement.scrollTop;   //起点
         let distance = target - start;
         let interval = 10;
         let maxFrame = time / interval;
-
-        clearInterval(timer);
-        var timer = setInterval(function(){
+        clearInterval(time);
+        let timer = setInterval(function () {
             frameNumber++;
-            if(frameNumber == maxFrame){
+            if (frameNumber == maxFrame) {
                 clearInterval(timer);
             }
-            document.body.scrollTop = document.documentElement.scrollTop = CubicEaseInOut(frameNumber,start,distance,maxFrame);
-        },interval);
-
+            document.body.scrollTop = document.documentElement.scrollTop = CubicEaseInOut(frameNumber, start, distance, maxFrame);
+        }, interval);
     }
+
     function CubicEaseInOut(t, b, c, d) {
         if ((t /= d / 2) < 1) return c / 2 * t * t * t + b;
         return c / 2 * ((t -= 2) * t * t + 2) + b;
     }
 }
-document.addEventListener('DOMContentLoaded', function (){
+document.addEventListener('DOMContentLoaded', () => {
     // Get all "navbar-burger" elements
     const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
     // Check if there are any navbar burgers
     if ($navbarBurgers.length > 0) {
         // Add a click event on each of them
-        $navbarBurgers.forEach( function (el) {
-            el.addEventListener('click', function () {
+        $navbarBurgers.forEach(el => {
+            el.addEventListener('click', () => {
                 // Get the target from the "data-target" attribute
                 const target = el.dataset.target;
                 const $target = document.getElementById(target);
@@ -58,44 +62,47 @@ document.addEventListener('DOMContentLoaded', function (){
         });
     }
 });
-window.onload = function (){
-    let is_logout = document.querySelectorAll('.is-logout');
-    for (let i = 0; i < is_logout.length; i++) {
-        is_logout[i].addEventListener('click',logout)
-    }
+window.onload = () => {
+    document.querySelectorAll('.is-logout').forEach(el => {
+        el.addEventListener('click', logout);
+    })
     html_init();
 }
-;( function( window ) {
+;(function (window) {
     'use strict';
-    function classReg( className ) {
+
+    function classReg(className) {
         return new RegExp("(^|\\s+)" + className + "(\\s+|$)");
     }
+
     var hasClass, addClass, removeClass;
-    if ( 'classList' in document.documentElement ) {
-        hasClass = function( elem, c ) {
-            return elem.classList.contains( c );
+    if ('classList' in document.documentElement) {
+        hasClass = function (elem, c) {
+            return elem.classList.contains(c);
         };
-        addClass = function( elem, c ) {
-            elem.classList.add( c );
+        addClass = function (elem, c) {
+            elem.classList.add(c);
         };
-        removeClass = function( elem, c ) {
-            elem.classList.remove( c );
+        removeClass = function (elem, c) {
+            elem.classList.remove(c);
         };
-    }else {
-        hasClass = function( elem, c ) {
-            return classReg( c ).test( elem.className );
+    } else {
+        hasClass = function (elem, c) {
+            return classReg(c).test(elem.className);
         };
-        addClass = function( elem, c ) {
-            if ( !hasClass( elem, c ) ) elem.className = elem.className + ' ' + c;
+        addClass = function (elem, c) {
+            if (!hasClass(elem, c)) elem.className = elem.className + ' ' + c;
         };
-        removeClass = function( elem, c ) {
-            elem.className = elem.className.replace( classReg( c ), ' ' );
+        removeClass = function (elem, c) {
+            elem.className = elem.className.replace(classReg(c), ' ');
         };
     }
-    function toggleClass( elem, c ) {
-        var fn = hasClass( elem, c ) ? removeClass : addClass;
-        fn( elem, c );
+
+    function toggleClass(elem, c) {
+        var fn = hasClass(elem, c) ? removeClass : addClass;
+        fn(elem, c);
     }
+
     var classie = {
         // full names
         hasClass: hasClass,
@@ -109,51 +116,54 @@ window.onload = function (){
         toggle: toggleClass
     };
     // transport
-    if ( typeof define === 'function' && define.amd ) {
+    if (typeof define === 'function' && define.amd) {
         // AMD
-        define( classie );
+        define(classie);
     } else {
         // browser global
         window.classie = classie;
     }
-})( window );
+})(window);
 ;(function (window) {
     function setCookie(name, value) {
         let argv = setCookie.arguments;
         let argc = setCookie.arguments.length;
         let expires = (argc > 2) ? argv[2] : null;
-        if(Object.prototype.toString.call(value) == '[object Object]'){
+        if (Object.prototype.toString.call(value) == '[object Object]') {
             value = JSON.stringify(value);
         }
-        if(Object.prototype.toString.call(value) == '[object Array]'){
+        if (Object.prototype.toString.call(value) == '[object Array]') {
             value = JSON.stringify(value);
         }
         if (expires != null) {
-            let LargeExpDate = new Date ();
-            LargeExpDate.setTime(LargeExpDate.getTime() + (expires*1000*3600*24));
-            document.cookie = name + "=" + encodeURIComponent(value)+";domain=.teifan.com;expires=" +LargeExpDate.toGMTString()+";path=/";
-        }else{
-            document.cookie = name + "=" + encodeURIComponent(value)+";domain=.teifan.com;path=/";
+            let LargeExpDate = new Date();
+            LargeExpDate.setTime(LargeExpDate.getTime() + (expires * 1000 * 3600 * 24));
+            document.cookie = name + "=" + encodeURIComponent(value) + ";domain=.teifan.com;expires=" + LargeExpDate.toGMTString() + ";path=/";
+        } else {
+            document.cookie = name + "=" + encodeURIComponent(value) + ";domain=.teifan.com;path=/";
         }
     }
+
     function getCookie(Name) {
         let search = Name + "="
         if (document.cookie.length > 0) {
             let offset = document.cookie.indexOf(search);
-            if(offset != -1) {
+            if (offset != -1) {
                 offset += search.length;
                 let end = document.cookie.indexOf(";", offset);
-                if(end == -1) end = document.cookie.length;
+                if (end == -1) end = document.cookie.length;
                 return JSON.parse(decodeURIComponent(document.cookie.substring(offset, end)));
-            }else {
+            } else {
                 return '';
             }
         }
         return '';
     }
-    function delCookie(name){
-        setCookie(name,'',-1);
+
+    function delCookie(name) {
+        setCookie(name, '', -1);
     }
+
     var cookie = {
         // full names
         getCookie: getCookie,
@@ -162,20 +172,55 @@ window.onload = function (){
     };
 
     // transport
-    if ( typeof define === 'function' && define.amd ) {
+    if (typeof define === 'function' && define.amd) {
         // AMD
-        define( cookie );
+        define(cookie);
     } else {
         // browser global
         window.cookie = cookie;
     }
 })(window);
 
+const ask = (function (url, data = {}, method = "GET") {
+    return new Promise((resolve, reject) => {
+        url = CONST.host + url;
+        let xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        let param = [], params;
+        for (let key in data) {
+            param.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+        }
+        params = param.join('&');
+        if (method == 'GET') {
+            url = url + '?' + params;
+            xhr.open(method, url);
+            loading.show();
+            xhr.send()
+        } else if (method == 'POST') {
+            xhr.open(method, url);
+            //给指定的HTTP请求头赋值
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            loading.show();
+            xhr.send(params);
+        }
+        xhr.onreadystatechange = () => {
+            loading.close();
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                resolve(xhr.responseText);
+            }
+        }
+        xhr.onerror = () => {
+            reject(xhr.responseText);
+            loading.close();
+        }
+    })
+});
+
 //Ajax
-const $ = (function() {
-    let name = 'jquery';
+const $ = (function () {
     return {
-        ajax: function({type,url,data,isAsync,success}) {
+        ajax: function ({type, url, data, isAsync, success}) {
             if (!url) {
                 console.error('请输入请求地址')
                 return;
@@ -183,20 +228,20 @@ const $ = (function() {
             let xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
             // 处理data对象
-            let query = [],queryData;
+            let query = [], queryData;
             for (let key in data) {
                 query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
             }
             queryData = query.join('&');
-            if (type == 'GET')url = url + '?' + queryData;
-            url = baseURL + url;
+            if (type == 'GET') url = url + '?' + queryData;
+            url = CONST.host + url;
             // 默认使用GET,默认异步
             xhr.open(type || 'GET', url, isAsync || true);
-            xhr.onreadystatechange = function() {
+            xhr.onreadystatechange = function () {
                 loading.close();
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     // 有传入success回调就执行
-                    success && success(xhr.responseText,xhr);
+                    success && success(xhr.responseText, xhr);
                 }
                 if (xhr.readyState == 4 && xhr.status == 401) {
                     console.log("重新登陆");
@@ -207,7 +252,7 @@ const $ = (function() {
                     return;
                 }
             }
-            xhr.onerror = function (){
+            xhr.onerror = function () {
                 loading.close();
             }
             if (type == 'POST') {
@@ -224,74 +269,79 @@ const $ = (function() {
     }
 })();
 
-;( function( window ) {
+;(function (window) {
     'use strict';
+
     //设置缓存
-    function setItem(name,value,expires){
+    function setItem(name, value, expires) {
         let obj = {
-            name:name,
-            value:value,
-            expires:expires,
-            startTime:new Date().getTime()//记录何时将值存入缓存，毫秒级
+            name: name,
+            value: value,
+            expires: expires,
+            startTime: new Date().getTime()//记录何时将值存入缓存，毫秒级
         }
         let options = {};
         //将obj和传进来的params合并
-        Object.assign(options,obj);
-        if(options.expires){
+        Object.assign(options, obj);
+        if (options.expires) {
             //如果options.expires设置了的话
             //以options.name为key，options为值放进去
-            localStorage.setItem(options.name,JSON.stringify(options));
-        }else{
+            localStorage.setItem(options.name, JSON.stringify(options));
+        } else {
             //如果options.expires没有设置，就判断一下value的类型
             let type = Object.prototype.toString.call(options.value);
             //如果value是对象或者数组对象的类型，就先用JSON.stringify转一下，再存进去
-            if(Object.prototype.toString.call(options.value) == '[object Object]'){
+            if (Object.prototype.toString.call(options.value) == '[object Object]') {
                 options.value = JSON.stringify(options.value);
             }
-            if(Object.prototype.toString.call(options.value) == '[object Array]'){
+            if (Object.prototype.toString.call(options.value) == '[object Array]') {
                 options.value = JSON.stringify(options.value);
             }
-            localStorage.setItem(options.name,options.value);
+            localStorage.setItem(options.name, options.value);
         }
     }
+
     //拿到缓存
-    function getItem(name){
+    function getItem(name) {
         let item = localStorage.getItem(name);
-        if(item == null){
+        if (item == null) {
             return null;
         }
         //先将拿到的试着进行json转为对象的形式
-        try{
+        try {
             item = JSON.parse(item);
-        }catch(error){
+        } catch (error) {
             //如果不行就不是json的字符串，就直接返回
             item = item;
         }
         //如果有startTime的值，说明设置了失效时间
-        if(item.startTime){
+        if (item.startTime) {
             let date = new Date().getTime();
             //何时将值取出减去刚存入的时间，与item.expires比较，如果大于就是过期了，如果小于或等于就还没过期
-            if(date - item.startTime > item.expires){
+            if (date - item.startTime > item.expires) {
                 //缓存过期，清除缓存，返回false
                 localStorage.removeItem(name);
                 return false;
-            }else{
+            } else {
                 //缓存未过期，返回值
                 return item.value;
             }
-        }else{
+        } else {
             //如果没有设置失效时间，直接返回值
             return item;
         }
     }
+
     //移出缓存
-    function delItem(name){
+    function delItem(name) {
         localStorage.removeItem(name);
     }
+
     //移出全部缓存
-    function clear(){
+    function clear() {
         localStorage.clear();
     }
+
     var storage = {
         // full names
         getItem: getItem,
@@ -300,31 +350,28 @@ const $ = (function() {
         clear: clear
     };
     // transport
-    if ( typeof define === 'function' && define.amd ) {
+    if (typeof define === 'function' && define.amd) {
         // AMD
-        define( storage );
+        define(storage);
     } else {
         // browser global
         window.storage = storage;
     }
 
-})( window );
+})(window);
 ;(function () {
-    let msg,login,signIn,close,loginType,verifyCode,username,password,sendCode;
+    let login, signIn, close, loginType, verifyCode, username, password;
     let logins = document.querySelectorAll('.login-in');
-    for (let i = 0; i < logins.length; i++) {
-        logins[i].addEventListener('click',function (){
-            init_login();
-            classie.remove(login,'is-hidden');
-        })
-    }
+    logins.forEach(el => {
+        el.addEventListener('click', init_login);
+    })
+
     function init_login() {
         let element = document.querySelector('.login');
-        if(element)return;
+        if (element) return;
         let div = document.createElement("div");
-        div.className = 'login is-hidden';
-        div.innerHTML = "<div class=\"login\">\n" +
-            "    <div class=\"body\">\n" +
+        div.className = 'login';
+        div.innerHTML = "<div class=\"body\">\n" +
             "        <div class=\"form sign-in\">\n" +
             "            <form onsubmit=\"return false;\">\n" +
             "                <h1>登陆</h1>\n" +
@@ -364,227 +411,182 @@ const $ = (function() {
             "                </div>\n" +
             "            </div>\n" +
             "        </div>\n" +
-            "    </div>\n" +
-            "</div>";
+            "    </div>";
         document.body.appendChild(div);
-
-        msg = document.querySelector('.container-text');
         login = document.querySelector('.login');
         verifyCode = document.querySelector('.verify_code');
         //登陆
         signIn = document.querySelector('.signIn');
-        signIn.addEventListener('click', submit)
+        signIn.addEventListener('click', submit);
         //关闭登录框按钮
         close = document.querySelectorAll('.is-close');
-        close.forEach(function (close){
-            close.addEventListener('click',function (){
-                classie.add(login,'is-hidden');
-                clear_error();
-            })
-        })
+        close.forEach(el => {
+            el.addEventListener('click', () => {
+                login.remove();
+            });
+        });
         //验证码
-        sendCode = document.querySelector('.send_code');
-        sendCode.addEventListener('click',sendVerifyCode);
+        let sendCodeBtn = document.querySelector('.send_code');
+        sendCodeBtn.addEventListener('click', sendVerifyCode);
         username = document.querySelector('#username');
         password = document.querySelector('#password');
         let pw = document.querySelector('.pw_login');
         let ph = document.querySelector('.ph_login');
         loginType = 1;
-        pw.addEventListener('click',function (){
+        pw.addEventListener('click', () => {
             loginType = 1;
             verifyCode.value = "";
-            classie.removeClass(password,'is-hidden')
-            classie.addClass(verifyCode,'is-hidden');
-            classie.addClass(sendCode,'is-hidden');
-            classie.removeClass(ph,'is-hidden');
-            classie.addClass(this,'is-hidden');
-        })
-        ph.addEventListener('click',function (){
+            classie.removeClass(password, 'is-hidden')
+            classie.addClass(verifyCode, 'is-hidden');
+            classie.addClass(sendCodeBtn, 'is-hidden');
+            classie.removeClass(ph, 'is-hidden');
+            classie.addClass(pw, 'is-hidden');
+        });
+        ph.addEventListener('click', () => {
             loginType = 2;
             password.value = "";
-            classie.addClass(password,'is-hidden');
-            classie.removeClass(verifyCode,'is-hidden');
-            classie.removeClass(sendCode,'is-hidden');
-            classie.removeClass(pw,'is-hidden');
-            classie.addClass(this,'is-hidden');
+            classie.addClass(password, 'is-hidden');
+            classie.removeClass(verifyCode, 'is-hidden');
+            classie.removeClass(sendCodeBtn, 'is-hidden');
+            classie.removeClass(pw, 'is-hidden');
+            classie.addClass(ph, 'is-hidden');
         })
     }
 
-    if(window.location.href.indexOf("?login")>=0){
+    if (window.location.href.includes("?login")) {
         init_login();
-        classie.remove(login,'is-hidden');
-    }
-    // if(window.location.href.indexOf("?register")>=0){
-    //     init_login();
-    //     classie.remove(login,'is-hidden');
-    // }
-
-    function clear_error() {
-        msg.innerHTML = "&nbsp;";
     }
 
-    function submit(){
-        clear_error();
-        if(!(/^1[3456789]\d{9}$/.test(username.value))){
-            msg.innerHTML = "请输入正确的手机号";
+    function msg(msg) {
+        let text = document.querySelector('.container-text');
+        text.innerHTML = msg;
+    }
+
+    function signInLoading() {
+        let has = classie.has(signIn, 'is-loading');
+        if (has) {
+            classie.remove(signIn, 'is-loading');
+        } else {
+            classie.add(signIn, 'is-loading');
+        }
+    }
+
+    function submit() {
+        msg("&nbsp;");
+        if (!(/^1[3456789]\d{9}$/.test(username.value))) {
+            msg("请输入正确的手机号");
             return;
         }
         // 多种登录方式判断
         let loginMap = new Map([
-            [1,pw_login],
-            [2,code_login],
+            [1, pw_login],
+            [2, code_login],
             // [3,wechat_login]
         ]);
         loginMap.get(loginType)();
     }
-    function code_login(){
-        if(verifyCode.value == null || verifyCode.value == ""){
-            msg.innerHTML = "请输入验证码";
+
+    async function code_login() {
+        if (verifyCode.value == null || verifyCode.value == "") {
+            msg("请输入验证码");
             return;
         }
-        $.ajax({
-            type:"POST",
-            url:"/auth/sms",
-            data:{"username":username.value,"smsCode":verifyCode.value},
-            success:function (res) {
-                let data = JSON.parse(res);
-                classie.remove(signIn,'is-loading');
-                if(data.code == 1){
-                    let url = redirect();
-                    if (url == "") {
-                        html_init();
-                        classie.add(login,'is-hidden');
-                    }else{
-                        window.location = url;
-                    }
-                }else {
-                    msg.innerHTML = data.msg;
-                }
-            }
-        })
+        signInLoading();
+        let res = await ask("/auth/sms", {"username": username.value, "smsCode": verifyCode.value}, "POST");
+        signInLoading();
+        extracted(res);
     }
+
+    function extracted(res) {
+        let data = JSON.parse(res);
+        if (data.code == 1) {
+            let url = redirect();
+            if (url == "") {
+                html_init();
+                login.remove();
+            } else {
+                window.location = url;
+            }
+        } else if (data.code == 1000) {
+            pw_login();
+        } else {
+            msg(data.msg);
+        }
+    }
+
     function pw_login() {
-        if(password.value == null || password.value == ""){
-            msg.innerHTML = "请输入密码";
+        if (password.value == null || password.value == "") {
+            msg("请输入密码");
             return;
         }
-        captcha_init(function (res) {
+        captcha_init(async (res) => {
             if (res.ret == 0) {
-                $.ajax({
-                    type:"GET",
-                    url:"/captchaVerify",
-                    data:{"randStr":res.randstr,"ticket":res.ticket},
-                    success:function (flag) {
-                        if(flag){
-                            login_pw(username.value,password.value,res.randstr,res.ticket);
-                        }else{
-                            pw_login();
-                        }
-                    }
-                })
-            }
-        })
-    }
-
-    function login_pw(username,password,randStr,ticket) {
-        if(randStr == null || ticket == null || randStr.trim() == "" || ticket.trim() == "")pw_login();
-        classie.add(signIn,'is-loading');
-        $.ajax({
-            type:"POST",
-            url:"/auth/login",
-            data:{"username":username,"password":password,"randStr":randStr,"ticket":ticket},
-            success:function (res,xhr) {
-                let data = JSON.parse(res);
-                classie.remove(signIn,'is-loading');
-                if(data.code == 1){
-                    let url = redirect();
-                    if (url == "") {
-                        html_init();
-                        classie.add(login,'is-hidden');
-                    }else{
-                        window.location = url;
-                    }
-                }else if(data.code == 1000){
+                let flag = await ask("/captchaVerify", {"randStr": res.randstr, "ticket": res.ticket});
+                if (flag) {
+                    login_pw(res.randstr, res.ticket);
+                } else {
                     pw_login();
-                }else {
-                    msg.innerHTML = data.msg;
                 }
-            }
-        })
-    }
-
-    function sendVerifyCode() {
-        if(!(/^1[3456789]\d{9}$/.test(username.value))){
-            msg.innerHTML = "请输入正确的手机号";
-            return;
-        }
-        captcha_init(function (res){
-            if (res.ret == 0) {
-                $.ajax({
-                    type:"GET",
-                    url:"/captchaVerify",
-                    data:{"randStr":res.randstr,"ticket":res.ticket},
-                    success:function (flag) {
-                        if(flag){
-                            sendCodeF(username.value,res.randstr,res.ticket);
-                        }else{
-                            pw_login();
-                        }
-                    }
-                })
             }
         });
     }
 
-    function sendCodeF(username,randStr,ticket){
-        $.ajax({
-            type:"GET",
-            url:"/getVerify",
-            data:{"username":username,"randStr":randStr,"ticket":ticket},
-            success:function (res) {
-                let data = JSON.parse(res);
-                if(data.code == 1){
-                    msg.innerHTML = "发送成功";
-                    let time = 59,timer = null;
-                    sendCode.disabled = true;
-                    sendCode.value = time+1;
-                    timer = setInterval(function(){
-                        sendCode.value = time;
-                        time--;//时间值自减
-                        if(time ==0){
-                            sendCode.value='发送';
-                            sendCode.disabled = false;
-                            clearInterval(timer);
-                        }
-                    },1000);
-                }else {
-                    msg.innerHTML = data.msg;
+    async function login_pw(randStr, ticket) {
+        if (randStr == null || ticket == null || randStr.trim() == "" || ticket.trim() == "") pw_login();
+        signInLoading();
+        let res = await ask("/auth/login", {
+            "username": username.value,
+            "password": password.value,
+            "randStr": randStr,
+            "ticket": ticket
+        }, "POST");
+        signInLoading();
+        extracted(res);
+    }
+
+    async function sendVerifyCode() {
+        if (!(/^1[3456789]\d{9}$/.test(username.value))) {
+            msg("请输入正确的手机号");
+            return;
+        }
+        captcha_init(async function (res) {
+            if (res.ret == 0) {
+                let flag = await ask("/captchaVerify", {"randStr": res.randstr, "ticket": res.ticket});
+                if (flag) {
+                    let res = await ask("/getVerify", {
+                        "username": username.value,
+                        "randStr": res.randstr,
+                        "ticket": res.ticket
+                    });
+                    let data = JSON.parse(res);
+                    if (data.code == 1) codeBtnTime();
+                    msg(data.code == 1 ? "验证码已发送" : data.msg);
+                } else {
+                    sendVerifyCode();
                 }
             }
-        })
+        });
     }
 
-    function verify(username,verifyCode) {
-        if (username == null || username.trim() == "") {
-            msg.innerHTML = "请输入邮箱。";
-            return true;
-        }else{
-            let regx = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-            if (!regx.test(username)) {
-                msg.innerHTML = "请输入正确的邮箱。";
-                return true;
+    function codeBtnTime() {
+        let codeBtn = document.querySelector('.send_code');
+        let time = 59, timer = null;
+        codeBtn.disabled = true;
+        codeBtn.value = time + 1;
+        timer = setInterval(function () {
+            codeBtn.value = time;
+            time--;//时间值自减
+            if (time == 0) {
+                codeBtn.value = '发送';
+                codeBtn.disabled = false;
+                clearInterval(timer);
             }
-        }
-        if (verifyCode == null || verifyCode.trim() == "") {
-            msg.innerHTML = "请输入验证码。";
-            return true;
-        }
-        return false;
+        }, 1000);
     }
 
-    function redirect(){
+    function redirect() {
         let url = window.location.href;
-        if (url.indexOf("redirect") < 0) {
+        if (!url.includes("redirect")) {
             return "";
         }
         let split = url.split("&");
@@ -600,50 +602,57 @@ const $ = (function() {
         return "";
     }
 })();
+
 function captcha_init(callback) {
-    let scr = document.querySelector('script[src="'+TCaptcha_URL+'"]');
-    if(scr){
-        let captcha1 = new TencentCaptcha('2002020665', function(res) {
+    let scr = document.querySelector('script[src="' + CONST.TCaptcha_url + '"]');
+    if (scr) {
+        let captcha1 = new TencentCaptcha('2002020665', function (res) {
             callback(res);
         })
         captcha1.show();
-    }else{
-        loadScript(TCaptcha_URL,function () {
+    } else {
+        loadScript(CONST.TCaptcha_url, function () {
             captcha_init(callback);
         });
     }
 }
 
-function html_init(){
+function html_init() {
     let no_login = document.querySelectorAll('.no-login');
     let in_login = document.querySelectorAll('.in-login');
     let in_login_name = document.querySelectorAll('.in-login-name');
-    let tf_auth = cookie.getCookie(tf_auth_info);
-    if(tf_auth){
-        for (let i = 0; i < no_login.length; i++) {
-            classie.addClass(no_login[i],'is-hidden');
-            classie.removeClass(in_login[i],'is-hidden');
-            in_login_name[i].innerHTML = tf_auth.nickName;
-        }
-    }else{
-        for (let i = 0; i < no_login.length; i++) {
-            classie.addClass(in_login[i],'is-hidden');
-            classie.removeClass(no_login[i],'is-hidden');
-        }
+    let tf_auth = cookie.getCookie(CONST.tf_auth_info);
+    if (tf_auth) {
+        no_login.forEach(el => {
+            classie.addClass(el, 'is-hidden');
+        });
+        in_login.forEach(el => {
+            classie.removeClass(el, 'is-hidden');
+        });
+        in_login_name.forEach(el => {
+            el.innerHTML = tf_auth.nickName;
+        })
+    } else {
+        in_login.forEach(el => {
+            classie.addClass(el, 'is-hidden');
+        });
+        no_login.forEach(el => {
+            classie.removeClass(el, 'is-hidden');
+        });
     }
 }
 
-function noticeMsg(msg,type){
+function noticeMsg(msg, type = "warning") {
     let notice = new NotificationFx({
-        message : msg,
-        ttl:3000,
-        type : type||'warning'
+        message: msg,
+        ttl: 3000,
+        type: type
     });
     notice.show();
 }
 
-function limitImg(file){
-    let f = (file.files && file.files[0])|| file;
+function limitImg(file) {
+    let f = (file.files && file.files[0]) || file;
     if (f.size / 1024 > 400) {
         noticeMsg("图片大小不能超过400k。");
         return true;
@@ -651,45 +660,45 @@ function limitImg(file){
     return false;
 }
 
-function logout(){
-    $.ajax({
-        url:"/loginOut",
-        type:"POST",
-        success:function (res){
-            res = JSON.parse(res);
-            if (res.code == 1) {
-                storage.clear();
-                window.location = "/";
-            }
-        }
-    })
+async function logout() {
+    let res = await ask("/loginOut");
+    let data = JSON.parse(res);
+    if (data.code == 1) {
+        storage.clear();
+        window.location = "/";
+    }
 }
+
 function loadScript(url, callback) {
     let script = document.createElement("script");
     script.type = "text/javascript";
-    if (typeof(callback) != "undefined") {
+    if (typeof (callback) != "undefined") {
         if (script.readyState) {
-            script.onreadystatechange = function() {
+            script.onreadystatechange = function () {
                 if (script.readyState == "loaded" || script.readyState == "complete") {
                     script.onreadystatechange = null;
                     callback();
                 }
             };
         } else {
-            script.onload = function() {callback()};
+            script.onload = function () {
+                callback()
+            };
         }
-    };
+    }
+    ;
     script.src = url;
     document.body.appendChild(script);
 }
 
 
-;( function( window ) {
+;(function (window) {
     'use strict';
-    let container,isLoading;
-    function init(){
+    let container, loadingDiv;
+
+    function init() {
         //检测下html中是否已经有这个loading元素
-        container =document.querySelector(".loading-body");
+        container = document.querySelector(".loading-body");
         if (!container) {
             // 创建一个Element对象
             container = document.createElement('div');
@@ -697,76 +706,80 @@ function loadScript(url, callback) {
             document.body.appendChild(container);
         }
     }
-    function show(){
+
+    function show() {
         init();
         // 创建一个Element对象
-        isLoading = document.createElement('div');
-        isLoading.className = 'loading';
-        isLoading.innerHTML = "<span></span><span></span><span></span><span></span><span></span>";
-        container.appendChild(isLoading);
-        document.body.style.overflow='hidden';
-        document.documentElement.style.overflow='hidden'
+        loadingDiv = document.createElement('div');
+        loadingDiv.className = 'loading';
+        loadingDiv.innerHTML = "<span></span><span></span><span></span><span></span><span></span>";
+        container.appendChild(loadingDiv);
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden'
     }
+
     function close() {
         try {
-            isLoading.remove();
+            loadingDiv.remove();
             container.remove();
             document.body.removeAttribute("style")
             document.documentElement.removeAttribute("style")
-        }catch (e){
+        } catch (e) {
 
         }
     }
+
     let loading = {
         // full names
         show: show,
         close: close
     };
     // transport
-    if ( typeof define === 'function' && define.amd ) {
+    if (typeof define === 'function' && define.amd) {
         // AMD
-        define( loading );
+        define(loading);
     } else {
         // browser global
         window.loading = loading;
     }
-})( window );
+})(window);
 
-function uploadImg(file,img){
+function uploadImg(file, img) {
     $.ajax({
-        url:"/getUpToken",
-        type:"get",
-        success:function (res){
+        url: "/getUpToken",
+        type: "get",
+        success: function (res) {
             res = JSON.parse(res);
             if (res.code == 1) {
-                sendRequest(file,res.data,img);
+                sendRequest(file, res.data, img);
             }
         }
     })
 }
 
-function sendRequest(file,token,img){
+function sendRequest(file, token, img) {
     loading.show();
     const data = new FormData();
-    data.append( 'file', file);
-    data.append( 'token', token );
-    const xhr  = new XMLHttpRequest();
+    data.append('file', file);
+    data.append('token', token);
+    const xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
-    xhr.addEventListener( 'load', () => {
+    xhr.addEventListener('load', () => {
         loading.close();
         const response = xhr.response;
         img.src = response.path;
     })
-    xhr.open( 'POST', 'https://upload-z2.qiniup.com/', true );
+    xhr.open('POST', 'https://upload-z2.qiniup.com/', true);
     xhr.send(data);
 }
+
 let w_url = window.location.href;
-if(w_url.search(/https:\/\/\w+.teifan.com\//i) != -1) {
+if (w_url.search(/https:\/\/\w+.teifan.com\//i) != -1) {
     let v = storage.getItem("ve") || new Array();
-    if (v.toString().indexOf(w_url) < 0) {
+    if (!v.toString().includes(w_url)) {
         v.push(w_url);
         let expires = new Date(new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 - 1) - new Date().getTime();
-        storage.setItem("ve",v,expires);
+        storage.setItem("ve", v, expires);
         let t = new Image;
         t.src = "//api.teifan.com/s.gif?v=" + w_url;
     }
