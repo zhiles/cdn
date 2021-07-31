@@ -553,12 +553,12 @@ const $ = (function () {
             if (res.ret == 0) {
                 let flag = await ask("/captchaVerify", {"randStr": res.randstr, "ticket": res.ticket});
                 if (flag) {
-                    let res = await ask("/getVerify", {
+                    let d = await ask("/getVerify", {
                         "username": username.value,
                         "randStr": res.randstr,
                         "ticket": res.ticket
                     });
-                    let data = JSON.parse(res);
+                    let data = JSON.parse(d);
                     if (data.code == 1) codeBtnTime();
                     msg(data.code == 1 ? "验证码已发送" : data.msg);
                 } else {
