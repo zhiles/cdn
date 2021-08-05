@@ -5,11 +5,6 @@ let CONST = {
     TCaptcha_url: "https://ssl.captcha.qq.com/TCaptcha.js",
     box_top: document.querySelector(".top")
 }
-//冗余兼容，下个版本删除
-let tf_auth_info = "tf_auth_info";
-let toolbar = document.querySelector(".toolbar"), H = 0, Y = toolbar
-let box_top = document.querySelector(".top");
-
 if (window.location.href.indexOf('teifan.com') < 0) {
     CONST.host = "";
 }
@@ -774,7 +769,7 @@ function sendRequest(file, token, img) {
 }
 
 let w_url = window.location.href;
-if (w_url.search(/https:\/\/\w+.teifan.com\//i) != -1) {
+if (w_url.search(/https:\/\/\w+.teifan.com\//i) != -1 && w_url.indexOf("admin") == -1 && w_url.indexOf("manage") == -1) {
     let v = storage.getItem("ve") || new Array();
     if (!v.toString().includes(w_url)) {
         v.push(w_url);
