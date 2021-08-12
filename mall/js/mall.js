@@ -1,25 +1,16 @@
 let CONST = {
-    admin_error: "系统错误,请联系管理员。",
-    host: "//api.teifan.com",
-    tf_auth_info: "tf_auth_info",
-    TCaptcha_url: "https://ssl.captcha.qq.com/TCaptcha.js",
+    admin_error: '系统错误,请联系管理员。',
+    host: '//api.teifan.com',
+    tf_auth_info: 'tf_auth_info',
+    TCaptcha_url: 'https://ssl.captcha.qq.com/TCaptcha.js',
     box_top: document.querySelector(".top")
 }
 if (window.location.href.indexOf('teifan.com') < 0) {
-    CONST.host = "";
+    CONST.host = '';
 }
 if (CONST.box_top) {
-    CONST.box_top.style.display = "none";
-    window.onscroll = () => {
-        let win_scroll = document.body.scrollTop || document.documentElement.scrollTop;
-        CONST.box_top.style.display = win_scroll > 130 ? "block" : "none";
-    }
-    CONST.box_top.onclick = () => {
-        scrollAnimate(0, 1000);
-    }
-
     function scrollAnimate(target, time) {
-        let frameNumber = 0;    //帧编号
+        let frameNumber = 0;//帧编号
         let start = document.body.scrollTop || document.documentElement.scrollTop;   //起点
         let distance = target - start;
         let interval = 10;
@@ -37,6 +28,16 @@ if (CONST.box_top) {
     function CubicEaseInOut(t, b, c, d) {
         if ((t /= d / 2) < 1) return c / 2 * t * t * t + b;
         return c / 2 * ((t -= 2) * t * t + 2) + b;
+    }
+
+    CONST.box_top.style.display = "none";
+    window.onscroll = () => {
+        let win_scroll = document.body.scrollTop || document.documentElement.scrollTop;
+        CONST.box_top.style.display = win_scroll > 130 ? 'block' : 'none';
+    }
+
+    CONST.box_top.onclick = () => {
+        scrollAnimate(0, 1000);
     }
 }
 document.addEventListener('DOMContentLoaded', () => {
@@ -176,7 +177,7 @@ window.onload = () => {
     }
 })(window);
 
-const ask = (function (url, data = {}, method = "GET") {
+const ask = (function (url, data = {}, method = 'GET') {
     return new Promise((resolve, reject) => {
         url = CONST.host + url;
         let xhr = new XMLHttpRequest();
@@ -212,58 +213,6 @@ const ask = (function (url, data = {}, method = "GET") {
     })
 });
 
-//Ajax
-const $ = (function () {
-    return {
-        ajax: function ({type, url, data, isAsync, success}) {
-            if (!url) {
-                console.error('请输入请求地址')
-                return;
-            }
-            let xhr = new XMLHttpRequest();
-            xhr.withCredentials = true;
-            // 处理data对象
-            let query = [], queryData;
-            for (let key in data) {
-                query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
-            }
-            queryData = query.join('&');
-            if (type == 'GET') url = url + '?' + queryData;
-            url = CONST.host + url;
-            // 默认使用GET,默认异步
-            xhr.open(type || 'GET', url, isAsync || true);
-            xhr.onreadystatechange = function () {
-                loading.close();
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    // 有传入success回调就执行
-                    success && success(xhr.responseText, xhr);
-                }
-                if (xhr.readyState == 4 && xhr.status == 401) {
-                    console.log("重新登陆");
-                    return;
-                }
-                if (xhr.readyState == 4 && xhr.status == 403) {
-                    console.log("权限不足");
-                    return;
-                }
-            }
-            xhr.onerror = function () {
-                loading.close();
-            }
-            if (type == 'POST') {
-                //给指定的HTTP请求头赋值
-                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-                // 数组转成字符串
-                xhr.send(queryData);
-                loading.show();
-            } else {
-                xhr.send()
-            }
-        }
-    }
-})();
-
 ;(function (window) {
     'use strict';
 
@@ -286,12 +235,8 @@ const $ = (function () {
             //如果options.expires没有设置，就判断一下value的类型
             let type = Object.prototype.toString.call(options.value);
             //如果value是对象或者数组对象的类型，就先用JSON.stringify转一下，再存进去
-            if (Object.prototype.toString.call(options.value) == '[object Object]') {
-                options.value = JSON.stringify(options.value);
-            }
-            if (Object.prototype.toString.call(options.value) == '[object Array]') {
-                options.value = JSON.stringify(options.value);
-            }
+            if (type == '[object Object]') options.value = JSON.stringify(options.value);
+            if (type == '[object Array]') options.value = JSON.stringify(options.value);
             localStorage.setItem(options.name, options.value);
         }
     }
@@ -467,9 +412,9 @@ const $ = (function () {
     }
 
     function submit() {
-        msg("&nbsp;");
+        msg('&nbsp;');
         if (!(/^1[3456789]\d{9}$/.test(username.value))) {
-            msg("请输入正确的手机号");
+            msg('请输入正确的手机号');
             return;
         }
         // 多种登录方式判断
@@ -483,11 +428,11 @@ const $ = (function () {
 
     async function code_login() {
         if (verifyCode.value == null || verifyCode.value == "") {
-            msg("请输入验证码");
+            msg('请输入验证码');
             return;
         }
         signInLoading();
-        let res = await ask("/auth/sms", {"username": username.value, "smsCode": verifyCode.value}, "POST");
+        let res = await ask('/auth/sms', {username: username.value, smsCode: verifyCode.value}, 'POST');
         signInLoading();
         extracted(res);
     }
@@ -511,12 +456,12 @@ const $ = (function () {
 
     function pw_login() {
         if (password.value == null || password.value == "") {
-            msg("请输入密码");
+            msg('请输入密码');
             return;
         }
         captcha_init(async (res) => {
             if (res.ret == 0) {
-                let flag = await ask("/captchaVerify", {"randStr": res.randstr, "ticket": res.ticket});
+                let flag = await ask('/captchaVerify', {randStr: res.randstr, ticket: res.ticket});
                 if (flag) {
                     login_pw(res.randstr, res.ticket);
                 } else {
@@ -529,22 +474,22 @@ const $ = (function () {
     async function login_pw(randStr, ticket) {
         if (randStr == null || ticket == null || randStr.trim() == "" || ticket.trim() == "") pw_login();
         signInLoading();
-        let res = await ask("/auth/login", {
-            "username": username.value,
-            "password": password.value,
-            "randStr": randStr,
-            "ticket": ticket
-        }, "POST");
+        let result = await ask('/auth/login', {
+            username: username.value,
+            password: password.value,
+            randStr: randStr,
+            ticket: ticket
+        }, 'POST');
         signInLoading();
-        extracted(res);
+        extracted(result);
     }
 
     async function sendVerifyCode() {
         if (!(/^1[3456789]\d{9}$/.test(username.value))) {
-            msg("请输入正确的手机号");
+            msg('请输入正确的手机号');
             return;
         }
-        captcha_init(async function (res) {
+        captcha_init(async (res) => {
             if (res.ret == 0) {
                 let flag = await ask("/captchaVerify", {"randStr": res.randstr, "ticket": res.ticket});
                 if (flag) {
@@ -581,16 +526,12 @@ const $ = (function () {
 
     function redirect() {
         let url = window.location.href;
-        if (!url.includes("redirect")) {
-            return "";
-        }
+        if (!url.includes("redirect")) return "";
         let split = url.split("&");
         for (let i = 0; i < split.length; i++) {
             if (split[i].indexOf("redirect") >= 0) {
                 let u = split[i].split("=");
-                if (u.length > 1) {
-                    return u[1];
-                }
+                if (u.length > 1) return u[1];
                 return "";
             }
         }
@@ -598,17 +539,12 @@ const $ = (function () {
     }
 })();
 
-function captcha_init(callback) {
-    let scr = document.querySelector('script[src="' + CONST.TCaptcha_url + '"]');
-    if (scr) {
-        let captcha1 = new TencentCaptcha('2002020665', function (res) {
-            callback(res);
-        })
-        captcha1.show();
+async function captcha_init(callback) {
+    let src = document.querySelector('script[src="' + CONST.TCaptcha_url + '"]');
+    if (src) {
+        new TencentCaptcha('2002020665', (res) => callback(res)).show();
     } else {
-        loadScript(CONST.TCaptcha_url, function () {
-            captcha_init(callback);
-        });
+        loadScript(CONST.TCaptcha_url, () => captcha_init(callback));
     }
 }
 
@@ -638,12 +574,7 @@ function html_init() {
 }
 
 function noticeMsg(msg, type = "warning") {
-    let notice = new NotificationFx({
-        message: msg,
-        ttl: 3000,
-        type: type
-    });
-    notice.show();
+    new NotificationFx({message: msg, ttl: 3000, type: type}).show();
 }
 
 function limitImg(file) {
@@ -656,8 +587,8 @@ function limitImg(file) {
 }
 
 async function logout() {
-    let res = await ask("/loginOut");
-    let data = JSON.parse(res);
+    let result = await ask("/loginOut");
+    let data = JSON.parse(result);
     if (data.code == 1) {
         storage.clear();
         window.location = "/";
@@ -665,58 +596,58 @@ async function logout() {
 }
 
 function loadScript(url, callback) {
-    let script = document.createElement("script");
-    script.type = "text/javascript";
+    let doc = document.createElement("script");
+    doc.type = "text/javascript";
     if (typeof (callback) != "undefined") {
-        if (script.readyState) {
-            script.onreadystatechange = function () {
-                if (script.readyState == "loaded" || script.readyState == "complete") {
-                    script.onreadystatechange = null;
+        if (doc.readyState) {
+            doc.onreadystatechange = function () {
+                if (doc.readyState == "loaded" || doc.readyState == "complete") {
+                    doc.onreadystatechange = null;
                     callback();
                 }
             };
         } else {
-            script.onload = function () {
+            doc.onload = function () {
                 callback()
             };
         }
     }
     ;
-    script.src = url;
-    document.body.appendChild(script);
+    doc.src = url;
+    document.body.appendChild(doc);
 }
 
-
+/*Loading加载创建*/
 ;(function (window) {
     'use strict';
-    let container, loadingDiv;
+    let _box, _loading;
 
     function init() {
         //检测下html中是否已经有这个loading元素
-        container = document.querySelector(".loading-body");
-        if (!container) {
+        _box = document.querySelector(".loading-body");
+        if (!_box) {
             // 创建一个Element对象
-            container = document.createElement('div');
-            container.className = "loading-body";
-            document.body.appendChild(container);
+            _box = document.createElement('div');
+            _box.className = "loading-body";
+            document.body.appendChild(_box);
         }
     }
 
     function show() {
         init();
         // 创建一个Element对象
-        loadingDiv = document.createElement('div');
-        loadingDiv.className = 'loading';
-        loadingDiv.innerHTML = "<span></span><span></span><span></span><span></span><span></span>";
-        container.appendChild(loadingDiv);
+        _loading = document.createElement('div');
+        _loading.className = 'loading';
+        _loading.innerHTML = "<span></span><span></span><span></span><span></span><span></span>";
+        _box.appendChild(_loading);
         document.body.style.overflow = 'hidden';
         document.documentElement.style.overflow = 'hidden'
     }
 
     function close() {
         try {
-            loadingDiv.remove();
-            container.remove();
+            _loading.remove();
+            _box.remove();
             document.body.removeAttribute("style")
             document.documentElement.removeAttribute("style")
         } catch (e) {
@@ -739,17 +670,12 @@ function loadScript(url, callback) {
     }
 })(window);
 
-function uploadImg(file, img) {
-    $.ajax({
-        url: "/getUpToken",
-        type: "get",
-        success: function (res) {
-            res = JSON.parse(res);
-            if (res.code == 1) {
-                sendRequest(file, res.data, img);
-            }
-        }
-    })
+async function uploadImg(file, img) {
+    let result = await ask('/getUpToken')
+    result = JSON.parse(result);
+    if (result.code == 1) {
+        sendRequest(file, result.data, img);
+    }
 }
 
 function sendRequest(file, token, img) {
