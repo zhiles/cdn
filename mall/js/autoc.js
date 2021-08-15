@@ -1,5 +1,5 @@
 class AutocJs {
-    constructor (options) {
+    constructor(options) {
         // 所有配置属性
         this.attributes = {}
 
@@ -35,7 +35,7 @@ class AutocJs {
         return this
     }
 
-    initialize (options) {
+    initialize(options) {
         let elements = this.getElements()
         let data = this.getData()
         let article
@@ -56,7 +56,7 @@ class AutocJs {
         return this
     }
 
-    reload (options) {
+    reload(options) {
         this.destroy().initialize(options).render().addListeners()
 
         return this
@@ -68,7 +68,7 @@ class AutocJs {
      * @param {*} [val]
      * @returns {Autoc}
      */
-    set (prop, val) {
+    set(prop, val) {
         let utils = AutocJs.Utils
         let attrs = this.attributes
 
@@ -84,19 +84,19 @@ class AutocJs {
     }
 
     // 获取属性值
-    get (prop) {
+    get(prop) {
         return this.attributes[prop]
     }
 
-    getElements () {
+    getElements() {
         return this.elements
     }
 
-    getData () {
+    getData() {
         return this.data
     }
 
-    generateHeadings (nodes) {
+    generateHeadings(nodes) {
         let headings = []
         let utils = AutocJs.Utils
 
@@ -112,7 +112,7 @@ class AutocJs {
         return headings
     }
 
-    generateChapters (headings) {
+    generateChapters(headings) {
         let utils = AutocJs.Utils
         let chapters = []
         let previous = 1
@@ -131,17 +131,16 @@ class AutocJs {
                 // 第一层级的 pid 是 -1
                 if (level === 1) {
                     pid = -1
-                }
-                else {
+                } else {
                     pid = i - 1
                 }
             }
-            // 当前标题的（标题标签）序号 = 前一个标题的序号
-            // h2 （前一个标题）
-            // h2 （当前标题）
-            // 当前标题的（标题标签）序号 < 前一个标题的序号，并且当前标题序号 > 当前的级别
-            // h2
-            // h4 （前一个标题）
+                // 当前标题的（标题标签）序号 = 前一个标题的序号
+                // h2 （前一个标题）
+                // h2 （当前标题）
+                // 当前标题的（标题标签）序号 < 前一个标题的序号，并且当前标题序号 > 当前的级别
+                // h2
+                // h4 （前一个标题）
             // h3 （当前标题：这种情况我们还是任务 h3 是 h2 的下一级章节）
             else if (current === previous || (current < previous && current > level)) {
                 // H1 的层级肯定是 1
@@ -149,17 +148,14 @@ class AutocJs {
                     level = 1
 
                     pid = -1
-                }
-                else {
+                } else {
                     pid = chapters[i - 1].pid
                 }
-            }
-            else if (current <= level) {
+            } else if (current <= level) {
                 // H1 的层级肯定是 1
                 if (current === 1) {
                     level = 1
-                }
-                else {
+                } else {
                     level = level - (previous - current)
 
                     if (level <= 1) {
@@ -170,8 +166,7 @@ class AutocJs {
                 // 第一级的标题
                 if (level === 1) {
                     pid = -1
-                }
-                else {
+                } else {
                     // 虽然看上去差点，不过能工作啊
                     pid = AutocJs._generatePid(chapters, previous - current, i)
                 }
@@ -193,7 +188,7 @@ class AutocJs {
         return chapters
     }
 
-    generateChapterCode (chapters) {
+    generateChapterCode(chapters) {
         let utils = AutocJs.Utils
         let groups = utils.groupBy(chapters, 'pid')
 
@@ -220,13 +215,13 @@ class AutocJs {
         return this
     }
 
-    render () {
+    render() {
         this.renderAnchors().renderOutline()
 
         return this
     }
 
-    renderAnchors () {
+    renderAnchors() {
         let dom = AutocJs.Utils.DOM
         let data = this.getData()
         let headings = data.headings
@@ -273,7 +268,7 @@ class AutocJs {
         return this
     }
 
-    renderOutline () {
+    renderOutline() {
         let position = this.get('position').toLowerCase()
 
         if (!this.get('isGenerateOutline')) {
@@ -298,7 +293,7 @@ class AutocJs {
         return this
     }
 
-    renderInnerHTMLOutline () {
+    renderInnerHTMLOutline() {
         let utils = AutocJs.Utils
         let dom = utils.DOM
         let elements = this.getElements()
@@ -306,15 +301,13 @@ class AutocJs {
 
         // 创建导航头部
         elements.title = dom.createElement('h2', {
-            className:'head-title'
+            className: 'head-title'
         }, [
             title
         ])
-        elements.list = dom.createElement('ul', {
-        })
+        elements.list = dom.createElement('ul', {})
         // 创建导航容器
-        elements.wrap = dom.createElement('div', {
-        }, [
+        elements.wrap = dom.createElement('div', {}, [
             elements.title,
             elements.list
         ])
@@ -322,7 +315,7 @@ class AutocJs {
         return this
     }
 
-    renderOutsideOutline () {
+    renderOutsideOutline() {
         let utils = AutocJs.Utils
         let dom = utils.DOM
         let elements = this.getElements()
@@ -405,7 +398,7 @@ class AutocJs {
         return this
     }
 
-    renderInsideOutline () {
+    renderInsideOutline() {
         let utils = AutocJs.Utils
         let dom = utils.DOM
         let elements = this.getElements()
@@ -446,7 +439,7 @@ class AutocJs {
         return this
     }
 
-    renderChapters () {
+    renderChapters() {
         let chapters = this.getData().chapters
         let dom = AutocJs.Utils.DOM
         let list = this.getElements().list
@@ -458,7 +451,8 @@ class AutocJs {
             let li
             let code
             let text = dom.createElement('span', {
-                className: 'outline-chapter-text'
+                className: 'outline-chapter-text',
+                title: chapter.text
             }, [
                 chapter.text
             ])
@@ -513,8 +507,8 @@ class AutocJs {
         return this
     }
 
-    scrollTo (top) {
-        top -= 70;
+    scrollTo(top) {
+        top -= 80;
         let utils = AutocJs.Utils
         let elements = document.querySelectorAll('html,body')
         let rootElement = elements[0].scrollTop - elements[1].scrollTop >= 0 ? elements[0] : elements[1]
@@ -530,7 +524,7 @@ class AutocJs {
                 this.stop()
             }
 
-            count+=1
+            count += 1
 
             if (isScrollUp) {
                 scrollTop -= utils.easeInQuad(count)
@@ -560,14 +554,14 @@ class AutocJs {
         return this
     }
 
-    stop () {
+    stop() {
         clearTimeout(this.timer)
         this.timer = null
 
         return this
     }
 
-    show () {
+    show() {
         let elements = this.getElements()
         let dom = AutocJs.Utils.DOM
 
@@ -577,7 +571,7 @@ class AutocJs {
         return this
     }
 
-    hide () {
+    hide() {
         let elements = this.getElements()
         let dom = AutocJs.Utils.DOM
 
@@ -587,7 +581,7 @@ class AutocJs {
         return this
     }
 
-    toggle () {
+    toggle() {
         if (AutocJs.Utils.DOM.hasClass(this.getElements().modal, 'outline-outside-modal-opened')) {
             this.hide()
         } else {
@@ -597,7 +591,7 @@ class AutocJs {
         return this
     }
 
-    remove () {
+    remove() {
         let elements = this.getElements()
         let wrap = elements.wrap
 
@@ -614,7 +608,7 @@ class AutocJs {
         return this
     }
 
-    destroy () {
+    destroy() {
         this.remove()
 
         // 所有配置属性
@@ -647,7 +641,7 @@ class AutocJs {
         return this
     }
 
-    removeListeners () {
+    removeListeners() {
         let elements = this.getElements()
         let article = elements.article
         let wrap = elements.wrap
@@ -673,7 +667,7 @@ class AutocJs {
         return this
     }
 
-    addListeners () {
+    addListeners() {
         let elements = this.getElements()
         let article = elements.article
         let wrap = elements.wrap
@@ -700,7 +694,7 @@ class AutocJs {
         return this
     }
 
-    _handleArticleHeadingMouseEnter (evt) {
+    _handleArticleHeadingMouseEnter(evt) {
         let target = evt.delegateTarget
         let anchor = target.querySelector('.outline-heading-anchor')
 
@@ -711,7 +705,7 @@ class AutocJs {
         return this
     }
 
-    _handleArticleHeadingMouseLeave (evt) {
+    _handleArticleHeadingMouseLeave(evt) {
         let target = evt.delegateTarget
         let anchor = target.querySelector('.outline-heading-anchor')
 
@@ -722,7 +716,7 @@ class AutocJs {
         return this
     }
 
-    _handleHeadingAnchorClick (evt) {
+    _handleHeadingAnchorClick(evt) {
         let anchor = evt.delegateTarget
         let rel = anchor.getAttribute('rel')
         let heading = document.querySelector('#' + rel)
@@ -731,7 +725,7 @@ class AutocJs {
         let events = utils.Events
         let offsetTop = dom.offset(heading).top
 
-        if(utils.isEmpty(this.get('anchorURL'))){
+        if (utils.isEmpty(this.get('anchorURL'))) {
             this.stop().scrollTo(offsetTop)
             events.stop(evt)
         }
@@ -739,7 +733,7 @@ class AutocJs {
         return this
     }
 
-    _handleChapterClick (evt) {
+    _handleChapterClick(evt) {
         let anchor = evt.delegateTarget
         let rel = anchor.getAttribute('rel')
         let heading = document.querySelector('#' + rel)
@@ -757,13 +751,13 @@ class AutocJs {
         return this
     }
 
-    _handleSwitcherClick () {
+    _handleSwitcherClick() {
         this.toggle()
 
         return this
     }
 
-    _handleTopClick (evt) {
+    _handleTopClick(evt) {
         let utils = AutocJs.Utils
         let events = utils.Events
 
@@ -774,7 +768,7 @@ class AutocJs {
         return this
     }
 
-    _handleOverlayClick () {
+    _handleOverlayClick() {
         this.hide()
 
         return this
@@ -951,7 +945,7 @@ AutocJs.Utils.DOM = {
      * @param {String} className - 样式名称
      * @returns {*}
      */
-    hasClass (el, className) {
+    hasClass(el, className) {
         let allClass = el.className
 
         if (!allClass) {
@@ -967,7 +961,7 @@ AutocJs.Utils.DOM = {
      * @param {String} className - 样式名称
      * @returns {Boolean}
      */
-    addClass (el, className) {
+    addClass(el, className) {
         let allClass = el.className
 
         if (AutocJs.Utils.DOM.hasClass(el, className)) {
@@ -985,7 +979,7 @@ AutocJs.Utils.DOM = {
      * @param {String} className - 样式名称
      * @returns {Boolean}
      */
-    removeClass (el, className) {
+    removeClass(el, className) {
         let utils = AutocJs.Utils
         let allClass = el.className
 
@@ -1003,7 +997,7 @@ AutocJs.Utils.DOM = {
      * @param {HTMLElement} el - DOM 节点
      * @returns {{left: Number, top: Number}}
      */
-    offset (el) {
+    offset(el) {
         let dom = AutocJs.Utils.DOM
         let left = dom.offsetLeft(el)
         let top = dom.offsetTop(el)
@@ -1019,7 +1013,7 @@ AutocJs.Utils.DOM = {
      * @param {HTMLElement} el - DOM 节点
      * @returns {Number}
      */
-    offsetTop (el) {
+    offsetTop(el) {
         let dom = AutocJs.Utils.DOM
         let top = el.offsetTop
 
@@ -1035,7 +1029,7 @@ AutocJs.Utils.DOM = {
      * @param {HTMLElement} el - DOM 节点
      * @returns {Number}
      */
-    offsetLeft (el) {
+    offsetLeft(el) {
         let dom = AutocJs.Utils.DOM
         let left = el.offsetLeft
 
@@ -1066,7 +1060,7 @@ AutocJs.Utils.Events = {
      * @param {Object} [context] - callback 回调函数的 this 上下文（默认值：el）
      * @param {Boolean} [capture] - 是否采用事件捕获（默认值：false - 事件冒泡）
      */
-    delegate (el, selector, type, callback, context, capture) {
+    delegate(el, selector, type, callback, context, capture) {
         const wrapper = function (e) {
             if (e.delegateTarget = AutocJs.getDelegateTarget(el, e.target, selector)) {
                 callback.call(context || el, e)
@@ -1091,7 +1085,7 @@ AutocJs.Utils.Events = {
      * @param {Function} callback - 绑定事件的回调函数
      * @param {Boolean} [capture] - 是否采用事件捕获（默认值：false - 事件冒泡）
      */
-    off (el, type, callback, capture) {
+    off(el, type, callback, capture) {
         if (callback._delegateWrapper) {
             callback = callback._delegateWrapper
             delete callback._delegateWrapper
@@ -1108,7 +1102,7 @@ AutocJs.Utils.Events = {
      *
      * @param {Event} evt - 事件对象
      */
-    stop (evt) {
+    stop(evt) {
         let events = AutocJs.Utils.Events
 
         events.stopPropagation(evt)
@@ -1119,10 +1113,10 @@ AutocJs.Utils.Events = {
      *
      * @param {Event} evt - 事件对象
      */
-    stopPropagation (evt) {
+    stopPropagation(evt) {
         let event = window.event
 
-        if(evt.stopPropagation){
+        if (evt.stopPropagation) {
             evt.stopPropagation()
         } else {
             event.cancelBubble = true
@@ -1133,10 +1127,10 @@ AutocJs.Utils.Events = {
      *
      * @param {Event} evt - 事件对象
      */
-    preventDefault (evt) {
+    preventDefault(evt) {
         let event = window.event
 
-        if(evt.preventDefault){
+        if (evt.preventDefault) {
             evt.preventDefault()
         } else {
             event.returnValue = false
