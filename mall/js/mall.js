@@ -299,208 +299,243 @@ const ask = (function (url, data = {}, method = 'GET') {
     }
 
 })(window);
-;(function () {
-    let login, signIn, close, loginType, verifyCode, username, password;
-    let logins = document.querySelectorAll('.login-in');
-    logins.forEach(el => {
-        el.addEventListener('click', init_login);
-    })
 
-    function init_login() {
-        let element = document.querySelector('.login');
-        if (element) return;
-        let div = document.createElement("div");
-        div.className = 'login';
-        div.innerHTML = "<div class=\"body\">\n" +
-            "        <div class=\"form sign-in\">\n" +
-            "            <form onsubmit=\"return false;\">\n" +
-            "                <h1>登陆</h1>\n" +
-            "                <div class=\"container-text\">&nbsp;</div>\n" +
-            "                <div class=\"full-width\">\n" +
-            "                    <input type=\"text\" maxlength=\"11\" oninput = \"value=value.replace(/[^\\d]/g,'')\" placeholder=\"请输入手机号\" id=\"username\">\n" +
-            "                    <input type=\"password\"  oninput = \"value=value.replace(/[^\\w]/g,'')\"  placeholder=\"请输入密码\" id=\"password\">\n" +
-            "                    <input type=\"text\" maxlength=\"4\" oninput = \"value=value.replace(/[^\\d]/g,'')\" class=\"verify_code is-hidden\" placeholder=\"验证码\">\n" +
-            "                    <input type=\"button\" class=\"send_code  is-hidden\" value=\"发送\">\n" +
-            "                    <div class=\"is-size-7 is-clearfix\" style=\"margin-left: .2rem\">\n" +
-            "                        <span class=\"pw_login is-hidden\">\n" +
-            "                            <a class=\"is-pulled-left\">密码登录</a>\n" +
-            "                            <span style=\"margin-left: .5rem\">登录未注册账户，将自动注册。</span>\n" +
-            "                        </span>\n" +
-            "                        <a class=\"is-pulled-left ph_login\">短信登录/注册</a>\n" +
-            "                    </div>\n" +
-            "                    <button type=\"button\" class=\"button signIn is-fullwidth\" style=\"margin-top: 2rem\">登录</button>\n" +
-            "                </div>\n" +
-            "                <div class=\"is-size-7\">\n" +
-            "                    <input style=\"width: auto;display:inline-block\" type=\"checkbox\" class=\"checkbox\" checked> 我已阅读并同意\n" +
-            "                </div>\n" +
-            "                <div class=\"is-size-7\">\n" +
-            "                    <a class=\"has-text-grey\" href=\"//www.teifan.com/agreement\" target=\"_blank\">《网络服务协议》</a> 和 <a class=\"has-text-grey\" href=\"//www.teifan.com/privacy\">《用户隐私条款》</a>\n" +
-            "                </div>\n" +
-            "                <button class=\"is-close delete is-small is-hidden-desktop is-hidden-tablet\" title=\"关闭\"></button>\n" +
-            "            </form>\n" +
-            "        </div>\n" +
-            "        <div class=\"overlay-container\">\n" +
-            "            <div class=\"overlay\">\n" +
-            "                <div class=\"overlay-panel overlay-right\">\n" +
-            "                    <button class=\"is-close delete is-small is-hidden-mobile\" title=\"关闭\"></button>\n" +
-            "                    <h1>忒凡网</h1>\n" +
-            "                    <h3>免费、好用、高排名</h3><br><br><br>\n" +
-            "                    <p>只需一步急速注册</p>\n" +
-            "                    <p>快速收录接口</p>\n" +
-            "                    <p>新站报道接口</p>\n" +
-            "                </div>\n" +
-            "            </div>\n" +
-            "        </div>\n" +
-            "    </div>";
-        document.body.appendChild(div);
-        login = document.querySelector('.login');
-        verifyCode = document.querySelector('.verify_code');
-        //登陆
-        signIn = document.querySelector('.signIn');
-        signIn.addEventListener('click', submit);
-        //关闭登录框按钮
-        close = document.querySelectorAll('.is-close');
-        close.forEach(el => {
+class Login {
+    constructor() {
+        this.login = "";
+        this.login401 = "";
+        this.signIn = "";
+        this.close = "";
+        this.loginType = "";
+        this.verifyCode = "";
+        this.username = "";
+        this.password = "";
+        let logins = document.querySelectorAll('.login-in');
+        logins.forEach(el => {
             el.addEventListener('click', () => {
-                login.remove();
+                this.init_login();
+            });
+        })
+    }
+
+    init_login() {
+        let element = document.querySelector('.login');
+        if (!element) {
+            let div = document.createElement("div");
+            div.className = 'login';
+            div.innerHTML = "<div class=\"body\">\n" +
+                "        <div class=\"form sign-in\">\n" +
+                "            <form onsubmit=\"return false;\">\n" +
+                "                <h1>登陆</h1>\n" +
+                "                <div class=\"container-text\">&nbsp;</div>\n" +
+                "                <div class=\"full-width\">\n" +
+                "                    <input type=\"text\" maxlength=\"11\" oninput = \"value=value.replace(/[^\\d]/g,'')\" placeholder=\"请输入手机号\" id=\"username\">\n" +
+                "                    <input type=\"password\"  oninput = \"value=value.replace(/[^\\w]/g,'')\"  placeholder=\"请输入密码\" id=\"password\">\n" +
+                "                    <input type=\"text\" maxlength=\"4\" oninput = \"value=value.replace(/[^\\d]/g,'')\" class=\"verify_code is-hidden\" placeholder=\"验证码\">\n" +
+                "                    <input type=\"button\" class=\"send_code  is-hidden\" value=\"发送\">\n" +
+                "                    <div class=\"is-size-7 is-clearfix\" style=\"margin-left: .2rem\">\n" +
+                "                        <span class=\"pw_login is-hidden\">\n" +
+                "                            <a class=\"is-pulled-left\">密码登录</a>\n" +
+                "                            <span style=\"margin-left: .5rem\">登录未注册账户，将自动注册。</span>\n" +
+                "                        </span>\n" +
+                "                        <a class=\"is-pulled-left ph_login\">短信登录/注册</a>\n" +
+                "                    </div>\n" +
+                "                    <button type=\"button\" class=\"button signIn is-fullwidth\" style=\"margin-top: 2rem\">登录</button>\n" +
+                "                </div>\n" +
+                "                <div class=\"is-size-7\">\n" +
+                "                    <input style=\"width: auto;display:inline-block\" type=\"checkbox\" class=\"checkbox\" checked> 我已阅读并同意\n" +
+                "                </div>\n" +
+                "                <div class=\"is-size-7\">\n" +
+                "                    <a class=\"has-text-grey\" href=\"//www.teifan.com/agreement\" target=\"_blank\">《网络服务协议》</a> 和 <a class=\"has-text-grey\" href=\"//www.teifan.com/privacy\">《用户隐私条款》</a>\n" +
+                "                </div>\n" +
+                "                <button class=\"is-close delete is-small is-hidden-desktop is-hidden-tablet\" title=\"关闭\"></button>\n" +
+                "            </form>\n" +
+                "        </div>\n" +
+                "        <div class=\"overlay-container\">\n" +
+                "            <div class=\"overlay\">\n" +
+                "                <div class=\"overlay-panel overlay-right\">\n" +
+                "                    <button class=\"is-close delete is-small is-hidden-mobile\" title=\"关闭\"></button>\n" +
+                "                    <h1>忒凡网</h1>\n" +
+                "                    <h3>免费、好用、高排名</h3><br><br><br>\n" +
+                "                    <p>只需一步急速注册</p>\n" +
+                "                    <p>快速收录接口</p>\n" +
+                "                    <p>新站报道接口</p>\n" +
+                "                </div>\n" +
+                "            </div>\n" +
+                "        </div>\n" +
+                "    </div>";
+            document.body.appendChild(div);
+        }
+        // document.body.style.overflow = 'hidden';
+        // document.documentElement.style.overflow = 'hidden'
+
+        this.login = document.querySelector('.login');
+        this.verifyCode = document.querySelector('.verify_code');
+        this.login401 = document.querySelector('.login401');
+        //登陆
+        this.signIn = document.querySelector('.signIn');
+        this.signIn.addEventListener('click', () => {
+            this.submit();
+        });
+        //关闭登录框按钮
+        this.close = document.querySelectorAll('.is-close');
+        this.close.forEach(el => {
+            el.addEventListener('click', () => {
+                if (this.login401 == undefined) {
+                    this.login.remove();
+                } else {
+                    window.history.go(-1);
+                }
             });
         });
         //验证码
         let sendCodeBtn = document.querySelector('.send_code');
-        sendCodeBtn.addEventListener('click', sendVerifyCode);
-        username = document.querySelector('#username');
-        password = document.querySelector('#password');
+        sendCodeBtn.addEventListener('click', () => {
+            this.sendVerifyCode();
+        });
+        this.username = document.querySelector('#username');
+        this.password = document.querySelector('#password');
         let pw = document.querySelector('.pw_login');
         let ph = document.querySelector('.ph_login');
-        loginType = 1;
+        this.loginType = 1;
         pw.addEventListener('click', () => {
-            loginType = 1;
-            verifyCode.value = "";
-            classie.removeClass(password, 'is-hidden')
-            classie.addClass(verifyCode, 'is-hidden');
+            this.loginType = 1;
+            this.verifyCode.value = "";
+            classie.removeClass(this.password, 'is-hidden')
+            classie.addClass(this.verifyCode, 'is-hidden');
             classie.addClass(sendCodeBtn, 'is-hidden');
             classie.removeClass(ph, 'is-hidden');
             classie.addClass(pw, 'is-hidden');
         });
         ph.addEventListener('click', () => {
-            loginType = 2;
-            password.value = "";
-            classie.addClass(password, 'is-hidden');
-            classie.removeClass(verifyCode, 'is-hidden');
+            this.loginType = 2;
+            this.password.value = "";
+            classie.addClass(this.password, 'is-hidden');
+            classie.removeClass(this.verifyCode, 'is-hidden');
             classie.removeClass(sendCodeBtn, 'is-hidden');
             classie.removeClass(pw, 'is-hidden');
             classie.addClass(ph, 'is-hidden');
         })
     }
 
-    if (window.location.href.includes("?login")) {
-        init_login();
-    }
-
-    function msg(msg) {
+    msg(msg) {
         let text = document.querySelector('.container-text');
         text.innerHTML = msg;
     }
 
-    function signInLoading() {
-        let has = classie.has(signIn, 'is-loading');
+    signInLoading() {
+        let has = classie.has(this.signIn, 'is-loading');
         if (has) {
-            classie.remove(signIn, 'is-loading');
+            classie.remove(this.signIn, 'is-loading');
         } else {
-            classie.add(signIn, 'is-loading');
+            classie.add(this.signIn, 'is-loading');
         }
     }
 
-    function submit() {
-        msg('&nbsp;');
-        if (!(/^1[3456789]\d{9}$/.test(username.value))) {
-            msg('请输入正确的手机号');
+    submit() {
+        this.msg('&nbsp;');
+        if (!(/^1[3456789]\d{9}$/.test(this.username.value))) {
+            this.msg('请输入正确的手机号');
             return;
         }
-        // 多种登录方式判断
-        let loginMap = new Map([
-            [1, pw_login],
-            [2, code_login],
-            // [3,wechat_login]
-        ]);
-        loginMap.get(loginType)();
+        switch (this.loginType) {
+            case 1:
+                this.pw_login();
+                break;
+            case 2:
+                this.code_login();
+                break;
+            default:
+                this.msg("类型错误")
+        }
     }
 
-    async function code_login() {
-        if (verifyCode.value == null || verifyCode.value == "") {
-            msg('请输入验证码');
+    code_login() {
+        if (this.verifyCode.value == null || this.verifyCode.value == "") {
+            this.msg('请输入验证码');
             return;
         }
-        signInLoading();
-        let res = await ask('/auth/sms', {username: username.value, smsCode: verifyCode.value}, 'POST');
-        signInLoading();
-        extracted(res);
+        if (this.verifyCode.value.length != 4) {
+            this.msg('请输入完整的验证码');
+            return;
+        }
+        this.signInLoading();
+        let res = ask('/auth/sms', {username: this.username.value, smsCode: this.verifyCode.value}, 'POST');
+        if (res) {
+            this.signInLoading();
+            res.then(data => {
+                this.extracted(data, undefined);
+            })
+        }
     }
 
-    function extracted(res) {
+    extracted(res, callback) {
         let data = JSON.parse(res);
-        if (data.code == 1) {
-            let url = redirect();
-            if (url == "") {
-                html_init();
-                login.remove();
-            } else {
-                window.location = url;
-            }
+        if (data.code == 1 && this.login401 == undefined) {
+            html_init();
+            this.login.remove();
+        } else if (data.code == 1 && this.login401) {
+            window.location = window.location.href;
         } else if (data.code == 1000) {
-            pw_login();
+            this.msg(data.msg);
+            // this.pw_login();
+            if (callback != undefined) {
+                callback()
+            }
+        } else if (data.msg != undefined) {
+            this.msg(data.msg);
         } else {
-            msg(data.msg);
+            this.msg("未知错误，请联系管理员")
         }
     }
 
-    function pw_login() {
-        if (password.value == null || password.value == "") {
-            msg('请输入密码');
+    pw_login() {
+        if (this.password.value == null || this.password.value == "") {
+            this.msg('请输入密码');
             return;
         }
-        captcha_init(async (res) => {
+        this.captcha_init(async (res) => {
             if (res.ret == 0) {
                 let flag = await ask('/captchaVerify', {randStr: res.randstr, ticket: res.ticket});
                 if (flag) {
-                    login_pw(res.randstr, res.ticket);
+                    this.login_pw(res.randstr, res.ticket);
                 } else {
-                    pw_login();
+                    this.pw_login();
                 }
             }
         });
     }
 
-    async function login_pw(randStr, ticket) {
-        if (randStr == null || ticket == null || randStr.trim() == "" || ticket.trim() == "") pw_login();
-        signInLoading();
+    async login_pw(randStr, ticket) {
+        if (randStr == null || ticket == null || randStr.trim() == "" || ticket.trim() == "") this.pw_login();
+        this.signInLoading();
         let result = await ask('/auth/login', {
-            username: username.value,
-            password: password.value,
+            username: this.username.value,
+            password: this.password.value,
             randStr: randStr,
             ticket: ticket
         }, 'POST');
-        signInLoading();
-        extracted(result);
+        this.signInLoading();
+        this.extracted(result, this.pw_login);
     }
 
-    async function sendVerifyCode() {
-        if (!(/^1[3456789]\d{9}$/.test(username.value))) {
-            msg('请输入正确的手机号');
+    async sendVerifyCode() {
+        if (!(/^1[3456789]\d{9}$/.test(this.username.value))) {
+            this.msg('请输入正确的手机号');
             return;
         }
-        captcha_init(async (res) => {
+        this.captcha_init(async (res) => {
             if (res.ret == 0) {
                 let flag = await ask("/captchaVerify", {"randStr": res.randstr, "ticket": res.ticket});
                 if (flag) {
                     let d = await ask("/getVerify", {
-                        "username": username.value,
+                        "username": this.username.value,
                         "randStr": res.randstr,
                         "ticket": res.ticket
                     });
                     let data = JSON.parse(d);
-                    if (data.code == 1) codeBtnTime();
-                    msg(data.code == 1 ? "验证码已发送" : data.msg);
+                    if (data.code == 1) this.codeBtnTime();
+                    this.msg(data.code == 1 ? "验证码已发送" : data.msg);
                 } else {
                     sendVerifyCode();
                 }
@@ -508,7 +543,7 @@ const ask = (function (url, data = {}, method = 'GET') {
         });
     }
 
-    function codeBtnTime() {
+    codeBtnTime() {
         let codeBtn = document.querySelector('.send_code');
         let time = 59, timer = null;
         codeBtn.disabled = true;
@@ -524,29 +559,18 @@ const ask = (function (url, data = {}, method = 'GET') {
         }, 1000);
     }
 
-    function redirect() {
-        let url = window.location.href;
-        if (!url.includes("redirect")) return "";
-        let split = url.split("&");
-        for (let i = 0; i < split.length; i++) {
-            if (split[i].indexOf("redirect") >= 0) {
-                let u = split[i].split("=");
-                if (u.length > 1) return u[1];
-                return "";
-            }
+    async captcha_init(callback) {
+        let src = document.querySelector('script[src="' + CONST.TCaptcha_url + '"]');
+        if (src) {
+            new TencentCaptcha('2002020665', (res) => callback(res)).show();
+        } else {
+            loadScript(CONST.TCaptcha_url, () => this.captcha_init(callback));
         }
-        return "";
-    }
-})();
-
-async function captcha_init(callback) {
-    let src = document.querySelector('script[src="' + CONST.TCaptcha_url + '"]');
-    if (src) {
-        new TencentCaptcha('2002020665', (res) => callback(res)).show();
-    } else {
-        loadScript(CONST.TCaptcha_url, () => captcha_init(callback));
     }
 }
+
+let login = new Login();
+
 
 function html_init() {
     let no_login = document.querySelectorAll('.no-login');
