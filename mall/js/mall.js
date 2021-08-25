@@ -205,6 +205,12 @@ const ask = (function (url, data = {}, method = 'GET') {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 resolve(xhr.responseText);
             }
+            if (xhr.readyState == 4 && xhr.status == 403) {
+                noticeMsg("暂无相应授权")
+            }
+            if (xhr.readyState == 4 && xhr.status == 401) {
+                location.reload();
+            }
         }
         xhr.onerror = () => {
             reject(xhr.responseText);
@@ -475,7 +481,7 @@ class Login {
             html_init();
             this.login.remove();
         } else if (data.code == 1 && this.login401) {
-            window.location = window.location.href;
+            location.reload();
         } else if (data.code == 1000) {
             this.msg(data.msg);
             // this.pw_login();

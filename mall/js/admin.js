@@ -24,6 +24,10 @@ class Init {
             let organ = new Organ();
             organ._init();
         }
+        if (tag == "users") {
+            let user = new User();
+            user.list();
+        }
     }
 }
 
@@ -62,7 +66,7 @@ class Stores {
             })
         });
         this.query.addEventListener('click', () => {
-            this.jump(1);
+            this.list();
         })
 
         let vipBtn = document.querySelector('.vip-btn');
@@ -530,13 +534,29 @@ class Article {
         this.author = document.querySelector('#author');
         this.url = document.querySelector('#url');
 
+        this.query = document.querySelector('.query');
+        this.article_name = document.querySelector('.article-name');
+        this.status = document.querySelector('.status');
+        query.addEventListener('click', () => {
+            this.list();
+        })
+
         this.element = document.querySelector('tbody');
         this.pagination = document.querySelector('.pagination');
         this.pageNo = 1;
     }
 
+    method() {
+        this.list();
+    }
+
     async list() {
-        let res = await ask('/article/findAllPage', {pageNo: this.pageNo, pageSize: 10}, 'POST');
+        let res = await ask('/article/findAllPage', {
+            title: this.article_name.value,
+            status: this.status.value,
+            pageNo: this.pageNo,
+            pageSize: 10
+        }, 'POST');
         res = JSON.parse(res);
         if (res.code == 1) {
             let el = "";
@@ -720,6 +740,52 @@ class Domain {
                 noticeMsg(res.msg);
             }
         })
+    }
+
+}
+
+class User {
+    constructor() {
+        this.element = document.querySelector('tbody');
+        this.pagination = document.querySelector('.pagination');
+        this.pageNo = 1;
+    }
+
+    method() {
+        this.list();
+    }
+
+    async list() {
+        let res = await ask('/auth/findAllPage', {pageNo: this.pageNo, pageSize: 10}, 'POST');
+        res = JSON.parse(res);
+        if (res.code == 1) {
+            let el = "";
+            for (let i = 0; i < res.data.users.records.length; i++) {
+                let d = res.data.users.records;
+                el += "<tr>" +
+                    "<td>" + d[i].nickName + "</td>" +
+                    "<td>" + d[i].username + "</td>" +
+                    "<td>";
+                if (d[i].source == 0) {
+                    el += "自主";
+                } else if (d[i].source == 1) {
+                    el += "代为";
+                } else {
+                    el += "导入";
+                }
+                el += "</td><td>";
+                if (d[i].organId != undefined) {
+                    el += "<a target='_blank' href='/store/" + d[i].organId + "'>跳转</a>";
+                } else {
+                    el += "未创建";
+                }
+                el += "</td><td>" + d[i].gmtCreate + "</td>";
+                el += "<td><a class='news'>禁用</a> ";
+                el += "</tr>";
+            }
+            this.element.innerHTML = el;
+            new Common().initPage(res.data.users, res.data.rainbow, this);
+        }
     }
 
 }
@@ -1093,105 +1159,6 @@ function _AMap_init() {
     let element1 = document.querySelector('.aMap');
     classie.removeClass(element1, 'is-hidden');
     AMap_init();
-    // let geocoder, marker;
-    //
-    // let map = new AMap.Map('container', {
-    //     resizeEnable: true,
-    //     zoom: 10
-    // });
-    // map.on('complete', function () {
-    //     let tipinput = document.querySelector("#tipinput");
-    //     tipinput.style.display = "block";
-    // });
-    // AMap.plugin(['AMap.Geolocation', 'AMap.ToolBar', 'AMap.Scale', 'AMap.AutoComplete', 'AMap.PlaceSearch', 'AMap.Geocoder'], function () {
-    //     let geolocation = new AMap.Geolocation({
-    //         enableHighAccuracy: true,//是否使用高精度定位，默认:true
-    //         timeout: 10000,          //超过10秒后停止定位，默认：5s
-    //         buttonPosition: 'RB',    //定位按钮的停靠位置
-    //         buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-    //         zoomToAccuracy: true,   //定位成功后是否自动调整地图视野到定位点
-    //     });
-    //     map.addControl(geolocation);
-    //     geolocation.getCurrentPosition(function (status, result) {
-    //         if (status == 'complete') {
-    //             document.getElementById('address').innerHTML = '定位成功……网络较慢请稍后……'
-    //             getAddress(result.position.lng, result.position.lat);
-    //         } else {
-    //             document.getElementById('address').innerHTML = '定位失败……请开启定位权限或更换设备……';
-    //         }
-    //     });
-    //     let toolBar = new AMap.ToolBar({
-    //         visible: true,
-    //         position: {
-    //             top: '20px',
-    //             left: '20px'
-    //         }
-    //     });
-    //     // 在图面添加工具条控件，工具条控件集成了缩放、平移、定位等功能按钮在内的组合控件
-    //     map.addControl(toolBar);
-    //     // 在图面添加比例尺控件，展示地图在当前层级和纬度下的比例尺
-    //     map.addControl(new AMap.Scale());
-    //
-    //     //输入提示
-    //     let autoOptions = {
-    //         input: "tipinput"
-    //     };
-    //     let auto = new AMap.AutoComplete(autoOptions);
-    //     let placeSearch = new AMap.PlaceSearch({
-    //         map: map
-    //     });  //构造地点查询类
-    //     auto.on('select', function (e) {
-    //         placeSearch.setCity(e.poi.adcode);
-    //         placeSearch.search(e.poi.name);  //关键字查询查询
-    //     });
-    //     geocoder = new AMap.Geocoder();
-    //     placeSearch.on('markerClick', function (e) {
-    //         if (marker) {
-    //             map.remove(marker);
-    //         }
-    //         getAddress(e.data.location.lng, e.data.location.lat);
-    //     })
-    // });
-    //
-    // map.on('click', function (ev) {
-    //     let lnglat = ev.lnglat;
-    //     addMarker(map, lnglat.lng, lnglat.lat);
-    // });
-    // // 创建 AMap.Icon 实例：
-    // var icon = new AMap.Icon({
-    //     size: new AMap.Size(20, 25),    // 图标尺寸
-    //     image: '//a.amap.com/jsapi/static/image/plugin/marker_red.png',  // Icon的图像
-    //     // imageOffset: new AMap.Pixel(0, 0),  // 图像相对展示区域的偏移量，适于雪碧图等
-    //     imageSize: new AMap.Size(20, 25)  // 根据所设置的大小拉伸或压缩图片
-    // });
-    //
-    // function addMarker(map, lng, lat) {
-    //     if (marker) {
-    //         map.remove(marker);
-    //     }
-    //     marker = new AMap.Marker({
-    //         position: new AMap.LngLat(lng, lat),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
-    //         draggable: true,
-    //         offset: new AMap.Pixel(-10, -20),
-    //         icon: icon,
-    //         cursor: 'move'
-    //     });
-    //     map.add(marker);
-    //     getAddress(lng, lat);
-    // }
-    //
-    // function getAddress(lng, lat) {
-    //     document.querySelector("#lng").value = lng;
-    //     document.querySelector("#lat").value = lat;
-    //     let lnglat = [lng, lat];
-    //     geocoder.getAddress(lnglat, function (status, result) {
-    //         if (status === 'complete' && result.info === 'OK') {
-    //             document.getElementById('address').innerHTML = result.regeocode.formattedAddress;
-    //             document.querySelector('#adcode').value = result.regeocode.addressComponent.adcode;
-    //             document.querySelector('#citycode').value = result.regeocode.addressComponent.citycode;
-    //         }
-    //     })
-    // }
 }
 
 class Common {
