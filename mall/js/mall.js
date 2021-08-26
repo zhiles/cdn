@@ -58,12 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-window.onload = () => {
-    document.querySelectorAll('.is-logout').forEach(el => {
-        el.addEventListener('click', logout);
-    })
-    html_init();
-}
+
 ;(function (window) {
     'use strict';
 
@@ -724,14 +719,42 @@ function sendRequest(file, token, img) {
     xhr.send(data);
 }
 
-let w_url = window.location.href;
-if (w_url.search(/https:\/\/\w+.teifan.com\//i) != -1 && w_url.indexOf("admin") == -1 && w_url.indexOf("manage") == -1) {
-    let v = storage.getItem("ve") || new Array();
-    if (!v.toString().includes(w_url)) {
-        v.push(w_url);
-        let expires = new Date(new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 - 1) - new Date().getTime();
-        storage.setItem("ve", v, expires);
-        let t = new Image;
-        t.src = "//api.teifan.com/s.gif?v=" + w_url;
+window.onload = () => {
+    document.querySelectorAll('.is-logout').forEach(el => {
+        el.addEventListener('click', logout);
+    })
+    html_init();
+    let qrcode = document.querySelector('.dropdown-menu');
+    if (qrcode) {
+        new QRCode(qrcode, {
+            text: window.location.href,
+            width: 100,
+            height: 100,
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    }
+    let select = document.querySelector('#vSelect');
+    let search = document.querySelector('.search');
+    let query = document.querySelector('.query');
+    if (search && select) {
+        search.addEventListener('click', function () {
+            if (query.value == "") {
+                classie.addClass(query, 'is-danger');
+                return;
+            }
+            window.location.href = "/search/" + select.value + "_1/" + query.value;
+        })
     }
 }
+
+// let w_url = window.location.href;
+// if (w_url.search(/https:\/\/\w+.teifan.com\//i) != -1 && w_url.indexOf("admin") == -1 && w_url.indexOf("manage") == -1) {
+//     let v = storage.getItem("ve") || new Array();
+//     if (!v.toString().includes(w_url)) {
+//         v.push(w_url);
+//         let expires = new Date(new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 - 1) - new Date().getTime();
+//         storage.setItem("ve", v, expires);
+//         let t = new Image;
+//         t.src = "//api.teifan.com/s.gif?v=" + w_url;
+//     }
+// }

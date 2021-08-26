@@ -283,6 +283,12 @@ nav .container {
     transition: box-shadow .3s;
 }
 
+.p-div:hover {
+    -webkit-box-shadow: 0 4px 8px 0 rgba(38, 38, 38, .1);
+    -moz-box-shadow: 0 4px 8px 0 rgba(38, 38, 38, .1);
+    box-shadow: 0 4px 8px 0 rgba(38, 38, 38, .1);
+}
+
 .p-imgs {
     height: 128px;
     width: 128px;
@@ -344,10 +350,37 @@ nav .container {
     margin: .6rem 0;
 }
 
+.p-name:hover {
+    font-weight: 600;
+    color: #3273dc;
+}
+
+.p-bottom {
+    width: 128px;
+    margin: 0 auto
+}
+
 .p-price {
-    color: #f14668;
+    color: #888888;
     font-size: 0.8rem;
-    margin: .5rem 0;
+    margin: .2rem 0;
+    float: left;
+    padding: 0 .3rem;
+}
+
+.p-link {
+    color: #888888;
+    font-size: 0.8rem;
+    margin: .2rem 0;
+    float: right;
+    padding: 0 .3rem;
+    text-decoration: underline;
+}
+
+.p-link:hover {
+    padding: 0 .3rem;
+    background-color: #3273dc;
+    color: #ffffff;
 }
 
 .honesty-head {
@@ -357,7 +390,6 @@ nav .container {
     font-size: 16px;
     font-weight: 600;
     background: #f1f4f7;
-    /*background: #f1f4f7 url(https://static.gcimg.net/i/201804/GTcEfXfFKw.png) no-repeat 173px 5px;*/
 }
 
 .honesty-name {
