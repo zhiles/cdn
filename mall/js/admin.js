@@ -537,7 +537,7 @@ class Article {
         this.query = document.querySelector('.query');
         this.article_name = document.querySelector('.article-name');
         this.status = document.querySelector('.status');
-        query.addEventListener('click', () => {
+        this.query.addEventListener('click', () => {
             this.list();
         })
 

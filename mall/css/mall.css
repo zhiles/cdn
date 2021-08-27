@@ -66,6 +66,10 @@ nav .container {
     right: .5rem
 }
 
+.tops-index {
+    z-index: 10
+}
+
 .box-shadow {
     box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
     margin-top: .75rem
@@ -292,7 +296,7 @@ nav .container {
 .p-imgs {
     height: 128px;
     width: 128px;
-    margin: .5rem auto;
+    margin: .55rem auto;
     border-radius: .25rem;
 }
 
@@ -383,19 +387,6 @@ nav .container {
     color: #ffffff;
 }
 
-.honesty-head {
-    height: 3rem;
-    line-height: 3rem;
-    padding-left: 24px;
-    font-size: 16px;
-    font-weight: 600;
-    background: #f1f4f7;
-}
-
-.honesty-name {
-    font-size: 14px;
-    color: #262626;
-}
 
 .trades-name, .category-name {
     font-size: 1rem;
@@ -409,6 +400,8 @@ nav .container {
 }
 
 .trades-right, .category-right {
+    display: inline-block;
+    color: #4a4a4a;
     width: 60%;
     margin: .3rem 0 0 .5rem;
 }
@@ -422,7 +415,15 @@ nav .container {
 .trades-info .tag, .news-info .tag {
     margin: .2rem .5rem 0 0;
 }
-
+.trade-price{
+    margin-top:.1rem
+}
+.trade-min{
+    margin-left: 2rem
+}
+.trade-phone,.trade-address,.category-user,.category-phone,.category-address,.category-business{
+    margin-top:.2rem
+}
 .tag-bordered {
     line-height: 14px;
     justify-content: center;
@@ -469,6 +470,7 @@ nav .container {
 }
 
 .news-info {
+    position: relative;
     padding: .5rem
 }
 
@@ -624,6 +626,11 @@ figure img {
     color: #242424;
 }
 
+.classify-desc {
+    color: #7a7a7a;
+    padding-bottom: .5rem;
+}
+
 .classify-middle {
     padding: .75rem 0;
     text-align: center;
@@ -649,9 +656,49 @@ figure img {
     height: 5rem;
 }
 
-.sincerity {
+.more {
+    float: right;
+    font-size: 0.75rem;
+    padding: .5rem;
+}
+
+.friendship {
+    font-size: .75rem;
+    color: #7a7a7a;
+}
+
+.friendship a {
+    color: #7a7a7a;
+}
+
+.honesty {
     padding: .5rem;
     display: block;
+    border-bottom: 1px dashed #f1f4f7;
+}
+
+.honesty-head {
+    height: 3rem;
+    line-height: 3rem;
+    padding-left: 24px;
+    font-size: 16px;
+    font-weight: 600;
+    background: #f1f4f7;
+}
+
+.honesty-icon {
+    color: #ff8b4f;
+    float: left;
+}
+
+.honesty-name {
+    font-size: 14px;
+    color: #262626;
+}
+
+.honesty-business {
+    color: #7a7a7a;
+    font-size: .75rem;
 }
 
 .ul-absolute-left .tag {
@@ -723,6 +770,19 @@ figure img {
     display: inline-block;
 }
 
+.store-modal{
+    background-color: #f9f9f9;
+    margin: .5rem auto;
+}
+.store-desc{
+    text-indent:2em;
+    font-size: 14px;
+}
+.news-ul li{
+    border-bottom: 1px dashed #c1c1c1;
+    padding: .3rem .1rem
+}
+
 /* 用绝对定位使按钮脱离文档流，透明度设置为0将其隐藏 */
 input[type="radio"] {
     position: absolute;
@@ -745,7 +805,9 @@ input[type="radio"]:checked ~ .tab-box {
     /* 选中时提升层级，遮挡其他tab页达到选中切换的效果 */
     z-index: 5;
 }
-
+.loadChange{
+    display: inline-block;
+}
 @media screen and (min-width: 1408px) {
     .container:not(.is-max-desktop):not(.is-max-widescreen) {
         max-width: 1152px;
@@ -806,15 +868,17 @@ input[type="radio"]:checked ~ .tab-box {
     width: 100%;
     padding-top: .3rem;
     padding-bottom: calc(0.1rem + env(safe-area-inset-bottom));
-
+    text-align: center;
     background-color: #fff;
     border-top: 1px solid #d8d8d8;
+    font-size: .75rem;
     z-index: 9999;
 }
 
 .flex-bottom > a {
     color: #7a7a7a;
 }
+
 
 .is-logout {
     color: #f14668;
