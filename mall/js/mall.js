@@ -3,6 +3,7 @@ let CONST = {
     host: '//api.teifan.com',
     tf_auth_info: 'tf_auth_info',
     TCaptcha_url: 'https://ssl.captcha.qq.com/TCaptcha.js',
+    encrypt_url: 'https://cdn.jsdelivr.net/gh/zhiles/cdn@master/mall/js/jsencrypt.min.js',
     box_top: document.querySelector(".top")
 }
 if (window.location.href.indexOf('teifan.com') < 0) {
@@ -320,6 +321,7 @@ class Login {
     }
 
     init_login() {
+        loadScript(CONST.encrypt_url,undefined);
         let element = document.querySelector('.login');
         if (!element) {
             let div = document.createElement("div");
