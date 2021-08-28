@@ -253,27 +253,6 @@ nav .container {
     -webkit-box-orient: vertical;
 }
 
-.content h1 {
-    line-height: 2.2rem;
-    font-weight: 600;
-    font-size: 2rem;
-    margin-bottom: .5rem;
-}
-
-.content h2 {
-    line-height: 2rem;
-    font-weight: 600;
-    font-size: 1.7rem;
-    margin-bottom: .32rem;
-}
-
-.content h3 {
-    line-height: 1.8rem;
-    font-weight: 600;
-    font-size: 1.4rem;
-    margin-bottom: .32rem;
-}
-
 .navbar-link:not(.is-arrowless)::after {
     border-color: #3273dc;
     margin-top: -.375em;
