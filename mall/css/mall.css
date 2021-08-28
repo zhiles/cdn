@@ -950,27 +950,6 @@ input[type="radio"]:checked ~ .tab-box {
         margin-right: 0;
     }
 
-    .content h1 {
-        line-height: 1.5rem;
-        font-weight: 700;
-        font-size: 1.3rem;
-        margin-bottom: .5rem;
-    }
-
-    .content h2 {
-        line-height: 1.4rem;
-        font-weight: 700;
-        font-size: 1.2rem;
-        margin-bottom: .32rem;
-    }
-
-    .content h3 {
-        line-height: 1.3rem;
-        font-weight: 700;
-        font-size: 1.1rem;
-        margin-bottom: .32rem;
-    }
-
     .information {
         margin: 2rem auto;
     }
