@@ -304,6 +304,7 @@ const ask = (function (url, data = {}, method = 'GET') {
 
 class Login {
     constructor() {
+        this.key = "";
         this.login = "";
         this.login401 = "";
         this.signIn = "";
@@ -319,9 +320,14 @@ class Login {
             });
         })
     }
-
+    init_encrypt(){
+        let src = document.querySelector('script[src="' + CONST.encrypt_url + '"]');
+        if (!src) {
+            loadScript(CONST.encrypt_url,undefined);
+        }
+    }
     init_login() {
-        loadScript(CONST.encrypt_url,undefined);
+        this.init_encrypt();
         let element = document.querySelector('.login');
         if (!element) {
             let div = document.createElement("div");
@@ -463,7 +469,9 @@ class Login {
             return;
         }
         this.signInLoading();
-        let res = ask('/auth/sms', {username: this.username.value, smsCode: this.verifyCode.value}, 'POST');
+        let encrypt = new JSEncrypt();
+        encrypt.setPublicKey(this.key);
+        let res = ask('/auth/sms', {username: encrypt.encrypt(this.username.value), smsCode: this.verifyCode.value}, 'POST');
         if (res) {
             this.signInLoading();
             res.then(data => {
@@ -499,8 +507,10 @@ class Login {
         }
         this.captcha_init(async (res) => {
             if (res.ret == 0) {
-                let flag = await ask('/captchaVerify', {randStr: res.randstr, ticket: res.ticket});
-                if (flag) {
+                let result = await ask('/captchaVerify', {randStr: res.randstr, ticket: res.ticket});
+                result = JSON.parse(result);
+                if (result.code == 1) {
+                    this.key = result.data;
                     this.login_pw(res.randstr, res.ticket);
                 } else {
                     this.pw_login();
@@ -512,9 +522,11 @@ class Login {
     async login_pw(randStr, ticket) {
         if (randStr == null || ticket == null || randStr.trim() == "" || ticket.trim() == "") this.pw_login();
         this.signInLoading();
+        let encrypt = new JSEncrypt();
+        encrypt.setPublicKey(this.key);
         let result = await ask('/auth/login', {
-            username: this.username.value,
-            password: this.password.value,
+            username: encrypt.encrypt(this.username.value),
+            password: encrypt.encrypt(this.password.value),
             randStr: randStr,
             ticket: ticket
         }, 'POST');
@@ -529,10 +541,14 @@ class Login {
         }
         this.captcha_init(async (res) => {
             if (res.ret == 0) {
-                let flag = await ask("/captchaVerify", {"randStr": res.randstr, "ticket": res.ticket});
-                if (flag) {
+                let result = await ask("/captchaVerify", {"randStr": res.randstr, "ticket": res.ticket});
+                result = JSON.parse(result);
+                if (result.code == 1) {
+                    this.key = result.data;
+                    let encrypt = new JSEncrypt();
+                    encrypt.setPublicKey(this.key);
                     let d = await ask("/getVerify", {
-                        "username": this.username.value,
+                        "username": encrypt.encrypt(this.username.value),
                         "randStr": res.randstr,
                         "ticket": res.ticket
                     });
