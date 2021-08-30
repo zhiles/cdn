@@ -42,16 +42,19 @@ nav .container {
 .information {
     margin: 1rem auto;
 }
-
+.ab-bottom{
+    font-size: .75rem;
+    color: #7a7a7a;
+}
 .ab-bottom-time {
     position: absolute;
-    bottom: -1px;
+    bottom: 2px;
 }
 
 .ab-bottom-div {
     line-height: 14px;
     position: absolute;
-    bottom: -2px;
+    bottom: 1px;
     left: 5rem;
     width: 55%;
 }
@@ -62,7 +65,7 @@ nav .container {
 
 .ab-bottom-read {
     position: absolute;
-    bottom: -1px;
+    bottom: 2px;
     right: .5rem
 }
 
