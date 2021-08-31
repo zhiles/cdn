@@ -9,6 +9,12 @@ let CONST = {
 if (window.location.href.indexOf('teifan.com') < 0) {
     CONST.host = '';
 }
+if(window.NodeList && !NodeList.prototype.forEach) {
+    NodeList.prototype.forEach = Array.prototype.forEach;
+}
+if(window.HTMLCollection && !HTMLCollection.prototype.forEach) {
+    HTMLCollection.prototype.forEach = Array.prototype.forEach;
+}
 if (CONST.box_top) {
     function scrollAnimate(target, time) {
         let frameNumber = 0;//帧编号
