@@ -52,7 +52,7 @@ async function submitBanner(id, func) {
     }, 'POST');
     result = JSON.parse(result);
     if (result.code == 1) {
-        noticeMsg("保存成功");
+        notify("保存成功");
         classie.removeClass(modal_banner, 'is-active');
         link.value = "";
         sort.value = "";
@@ -66,15 +66,15 @@ async function submitBanner(id, func) {
 
 function verify() {
     if (img.src == "") {
-        noticeMsg("图片不能为空");
+        notify("图片不能为空");
         return true;
     }
     if (startTime.value == "") {
-        noticeMsg("开始时间不能为空");
+        notify("开始时间不能为空");
         return true;
     }
     if (endTime.value == "") {
-        noticeMsg("结束时间不能为空");
+        notify("结束时间不能为空");
         return true;
     }
     return false;

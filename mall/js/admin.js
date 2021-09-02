@@ -3,30 +3,27 @@ class Init {
         if (tag == "stores") {
             let stores = new Stores();
             stores.list();
-        }
-        if (tag == "trades") {
+        } else if (tag == "trades") {
             let trade = new Trade();
             trade.list();
-        }
-        if (tag == "news") {
+        } else if (tag == "news") {
             let news = new News();
             news.list();
-        }
-        if (tag == "article") {
+        } else if (tag == "article") {
             let article = new Article();
             article.init();
-        }
-        if (tag == "articles") {
+        } else if (tag == "articles") {
             let article = new Article();
             article.list();
-        }
-        if (tag == "organ") {
+        } else if (tag == "organ") {
             let organ = new Organ();
             organ._init();
-        }
-        if (tag == "users") {
+        } else if (tag == "users") {
             let user = new User();
             user.list();
+        } else if (tag == "banners") {
+            let banners = new Banner();
+            banners.initBanner();
         }
     }
 }
@@ -74,7 +71,7 @@ class Stores {
         let synchronizeBtn = document.querySelector('.synchronize-btn');
         vipBtn.addEventListener('click', () => {
             if (this.organId == "") {
-                noticeMsg(CONST.admin_error);
+                notify(CONST.admin_error);
                 return;
             }
             let vip = new Vip();
@@ -84,7 +81,7 @@ class Stores {
             let result = await ask('/admin/synchronize', {id: organId}, 'POST');
             result = JSON.parse(result);
             if (result.code == 1) {
-                noticeMsg("同步成功");
+                notify("同步成功");
             }
         })
         domainBtn.addEventListener('click', () => {
@@ -117,7 +114,7 @@ class Stores {
                     "<a class='trade' data-id='" + d[i].id + "' data-business='" + d[i].business + "'>产品</a> " +
                     "<a class='news' data-id='" + d[i].id + "' data-business='" + d[i].business + "'>资讯</a> " +
                     "<a class='detail' data-id='" + d[i].id + "'>详情</a> " +
-                    "<a class='startAndStop' data-id='" + d[i].id + "' data-status='" + d[i].status + "'>" + (d[i].status == 1 ? '禁用' : '解封') + "</a> ";
+                    "<a class='startAndStop' data-id='" + d[i].id + "' data-status='" + (d[i].status == 1 ? 0 : 1) + "'>" + (d[i].status == 1 ? '禁用' : '解封') + "</a> ";
                 el += "</td></tr>";
             }
             this.element.innerHTML = el;
@@ -164,7 +161,7 @@ class Stores {
         let res = await ask("/admin/verifyOrgan", {"id": id, "status": status}, "POST");
         res = JSON.parse(res);
         if (res.code == 1) {
-            noticeMsg((status == 0 ? "禁用" : "解封") + "成功");
+            notify((status == 0 ? "禁用" : "解封") + "成功");
             this.list();
         }
     }
@@ -176,7 +173,7 @@ class Stores {
 
     showTrade(organId, business) {
         if (organId == "") {
-            noticeMsg(CONST.admin_error);
+            notify(CONST.admin_error);
             return;
         }
         if (this.trade == undefined) {
@@ -188,7 +185,7 @@ class Stores {
 
     showNews(organId, business) {
         if (organId == "") {
-            noticeMsg(CONST.admin_error);
+            notify(CONST.admin_error);
             return;
         }
         this.news = new News();
@@ -262,7 +259,7 @@ class Trade {
         result = JSON.parse(result);
         if (result.code == 1) {
             this.list();
-            noticeMsg("删除成功");
+            notify("删除成功");
         }
     }
 
@@ -273,7 +270,6 @@ class Trade {
         this.getClassify();
         this.getDataInit(tradeId);
         this.trade_resume.addEventListener('change', () => {
-            console.log(this.trade_resume)
             if (!limitImg(this.trade_resume) && this.trade_resume.files[0] != undefined) {
                 uploadImg(this.trade_resume.files[0], this.tradeImg);
                 this.trade_resume.value = "";
@@ -330,31 +326,31 @@ class Trade {
 
     verify() {
         if (!this.trade_protocol.checked) {
-            noticeMsg("请阅读并确认协议");
+            notify("请阅读并确认协议");
             return true;
         }
         if (!this.name.value) {
-            noticeMsg("请填写标题");
+            notify("请填写标题");
             return true;
         }
         if (!this.trade_keyword.value) {
-            noticeMsg("请填写关键词");
+            notify("请填写关键词");
             return true;
         }
         if (!this.tradeImg.src) {
-            noticeMsg("请上传封面图");
+            notify("请上传封面图");
             return true;
         }
         if (!window.editor.getData() || window.editor.getData().replace(/<[^>]*>/ig, "").length < 200) {
-            noticeMsg("详情描述需大于200文字。");
+            notify("详情描述需大于200文字。");
             return true;
         }
         if (!this.price.value) {
-            noticeMsg("请填写价格");
+            notify("请填写价格");
             return true;
         }
         if (!this.minNumber.value) {
-            noticeMsg("请填写最小采购量");
+            notify("请填写最小采购量");
             return true;
         }
         return false;
@@ -439,7 +435,7 @@ class News {
         result = JSON.parse(result);
         if (result.code == 1) {
             dataInit(pageNo);
-            noticeMsg("删除成功");
+            notify("删除成功");
         }
     }
 
@@ -485,27 +481,27 @@ class News {
 
     verify() {
         if (!this.title.value) {
-            noticeMsg("请完善标题信息");
+            notify("请完善标题信息");
             return true;
         }
         if (!this.news_keyword.value) {
-            noticeMsg("请完善关键词信息");
+            notify("请完善关键词信息");
             return true;
         }
         if (!this.guide.value) {
-            noticeMsg("请完善导读信息");
+            notify("请完善导读信息");
             return true;
         }
         if (!this.cover.src) {
-            noticeMsg("请上传封面图片");
+            notify("请上传封面图片");
             return true;
         }
         if (!window.editor.getData() || window.editor.getData().replace(/<[^>]*>/ig, "").length < 200) {
-            noticeMsg("详情描述需大于200文字。");
+            notify("详情描述需大于200文字。");
             return true;
         }
         if (!this.new_protocol.checked) {
-            noticeMsg("请阅读并确认协议");
+            notify("请阅读并确认协议");
             return true;
         }
         return false;
@@ -592,7 +588,7 @@ class Article {
         let indexOf = location.href.indexOf("article/");
         let article_id = indexOf >= 0 ? location.href.substring(indexOf + 8, location.href.length) : '';
         new Editor("", "article_editor")
-        this.getDataInit(article_id);
+        await this.getDataInit(article_id);
         this.article_submit.addEventListener('click', async () => {
             if (this.verify()) {
                 return;
@@ -609,7 +605,7 @@ class Article {
             }, 'POST');
             result = JSON.parse(result);
             if (result.code == 1) {
-                noticeMsg("发布成功")
+                notify("发布成功")
             }
         })
         this.article_resume.addEventListener('change', () => {
@@ -639,33 +635,179 @@ class Article {
 
     verify() {
         if (this.title.value.trim() == "") {
-            noticeMsg("标题不能为空");
+            notify("标题不能为空");
             return true;
         }
         if (this.article_keyword.value.trim() == "") {
-            noticeMsg("关键词不能为空");
+            notify("关键词不能为空");
             return true;
         }
         if (this.guide.value.trim() == "") {
-            noticeMsg("导读不能为空");
+            notify("导读不能为空");
             return true;
         }
         if (this.cover.src.trim() == "") {
-            noticeMsg("图片不能为空");
+            notify("图片不能为空");
             return true;
         }
         if (window.editor.getData() == "") {
-            noticeMsg("文章内容不能为空");
+            notify("文章内容不能为空");
             return true;
         }
         if (this.author.value.trim() == "") {
-            noticeMsg("作者不能为空");
+            notify("作者不能为空");
             return true;
         }
         return false;
     }
 }
 
+class Banner {
+    constructor() {
+        this.modal_banner = document.querySelector('.modal_banner');
+        this.submitBannerBtn = document.querySelector('.submit_banner');
+        this.banner_close = document.querySelector('.is_banner_close');
+        this.banner_resume = document.querySelector('#banner-resume');
+        this.startTime = document.querySelector('#startTime');
+        this.endTime = document.querySelector('#endTime');
+        this.link = document.querySelector('#link');
+        this.sort = document.querySelector('#sort');
+        this.alt = document.querySelector('#alt');
+        this.img = document.querySelector('#img');
+        let id = cookie.getCookie(CONST.tf_auth_info).organId || '';
+        this.element = document.querySelector('tbody');
+        this.add = document.querySelector('.is-add');
+        this.organ = storage.getItem(id);
+    }
+
+    initBanner() {
+        this.list();
+        this.add.addEventListener('click', () => {
+            if (this.organ.vipLog && this.organ.vipLog.vipId == 1) {
+                notify("该功能为VIP功能,请先开通VIP。");
+                return;
+            }
+            this.init('');
+        });
+    }
+
+    async list() {
+        let res = await ask('/ad/findAllByOrganId', {}, 'POST');
+        res = JSON.parse(res);
+        if (res.code == 1) {
+            let el = "";
+            for (let i = 0; i < res.data.length; i++) {
+                let d = res.data;
+                el += "<tr>" +
+                    "<td>" + d[i].sort + "</td>" +
+                    "<td>" + (d[i].link || '') + "</td>" +
+                    "<td>" + (d[i].alt || '') + "</td>" +
+                    "<td>" + d[i].startTime + "</td>" +
+                    "<td>" + d[i].endTime + "</td>" +
+                    "<td><a class='edit' data-id='" + d[i].id + "'>编辑</a> " +
+                    "<a class='onAnOf' data-id='" + d[i].id + "' data-status='" + (d[i].status == 1 ? 0 : 1) + "'>" + (d[i].status == 1 ? '下架' : '上架') + "</a></td>" +
+                    "</tr>";
+            }
+            this.element.innerHTML = el;
+            let edits = document.querySelectorAll('.edit');
+            let onAnOfs = document.querySelectorAll('.onAnOf');
+            edits.forEach(item => {
+                item.addEventListener('click', () => {
+                    this.init(item.getAttribute('data-id'), this.list());
+                })
+            })
+            onAnOfs.forEach(item => {
+                item.addEventListener('click', () => {
+                    this.onAndOf(item.getAttribute('data-id'),item.getAttribute('data-status'))
+                })
+            })
+        }
+    }
+
+    async onAndOf(id, status) {
+        let result = await ask('/ad/onAndOf', {id, status}, 'POST');
+        result = JSON.parse(result);
+        if (result.code == 1) {
+            notify((status == 1 ? "上架" : "下架") + "成功");
+            this.list();
+        } else {
+            notify(result.msg);
+        }
+    }
+
+    init(id) {
+        if (id) {
+            this.getBannerById(id);
+        }
+        this.banner_resume.addEventListener('change', () => {
+            uploadImg(this.banner_resume.files[0], this.img);
+        })
+        this.banner_close.addEventListener('click', () => {
+            classie.removeClass(this.modal_banner, 'is-active');
+        });
+        this.submitBannerBtn.addEventListener('click', () => {
+            this.submit(id).then(result => {
+                result = JSON.parse(result);
+                if (result.code == 1) {
+                    notify("保存成功");
+                    classie.removeClass(this.modal_banner, 'is-active');
+                    this.link.value = "";
+                    this.sort.value = "";
+                    this.alt.value = "";
+                    this.img.src = "";
+                    this.startTime.value = "";
+                    this.endTime.value = "";
+                    this.list();
+                }
+            });
+
+        });
+        classie.addClass(this.modal_banner, 'is-active');
+    }
+
+    async getBannerById(id) {
+        let res = await ask('/ad/findById', {id}, 'POST');
+        res = JSON.parse(res);
+        if (res.code == 1) {
+            this.link.value = res.data.link || '';
+            this.sort.value = res.data.sort;
+            this.alt.value = res.data.alt || '';
+            this.img.src = res.data.imgUrl;
+            this.startTime.value = res.data.startTime.substring(0, 10);
+            this.endTime.value = res.data.endTime.substring(0, 10);
+        }
+    }
+
+    async submit(id) {
+        if (this.verify()) return;
+        return await ask('/ad/save', {
+            "id": id || '',
+            "link": this.link.value.trim(),
+            "sort": this.sort.value,
+            "alt": this.alt.value.trim(),
+            "imgUrl": this.img.src.replace(/(http|https):/ig, ''),
+            "startTime": this.startTime.value + " 00:00:00",
+            "endTime": this.endTime.value + " 00:00:00",
+            "type": 2
+        }, 'POST');
+    }
+
+    verify() {
+        if (this.img.src == "") {
+            notify("图片不能为空");
+            return true;
+        }
+        if (this.startTime.value == "") {
+            notify("开始时间不能为空");
+            return true;
+        }
+        if (this.endTime.value == "") {
+            notify("结束时间不能为空");
+            return true;
+        }
+        return false;
+    }
+}
 
 class Vip {
     constructor() {
@@ -690,7 +832,7 @@ class Vip {
             }, 'POST');
             result = JSON.parse(result);
             if (result.code == 1) {
-                noticeMsg("开通成功");
+                notify("开通成功");
             }
             classie.removeClass(this.modal, 'is-active');
             this.vip.value = "";
@@ -723,21 +865,21 @@ class Domain {
         });
         this.submit.addEventListener('click', async () => {
             if (!this.domain.value.trim()) {
-                noticeMsg("域名不能为空")
+                notify("域名不能为空")
                 return;
             }
             if (this.domain.value.length <= 3) {
-                noticeMsg("域名长度应大于3位")
+                notify("域名长度应大于3位")
                 return;
             }
 
             let res = await ask('/admin/setDomain', {id, domain: this.domain.value.trim()}, 'POST');
             res = JSON.parse(res);
             if (res.code == 1) {
-                noticeMsg("开通成功");
+                notify("开通成功");
                 classie.removeClass(this.domain_modal, 'is-active');
             } else {
-                noticeMsg(res.msg);
+                notify(res.msg);
             }
         })
     }
@@ -914,31 +1056,31 @@ class Organ {
 
     verify() {
         if (this.logo.src == "") {
-            noticeMsg("请上传LOGO");
+            notify("请上传LOGO");
             return true;
         }
         if (this.industry.value == "") {
-            noticeMsg("请选择所属行业");
+            notify("请选择所属行业");
             return true;
         }
         if (this.pattern.value == "") {
-            noticeMsg("请选择经营模式");
+            notify("请选择经营模式");
             return true;
         }
         if (this.business.value == "") {
-            noticeMsg("请输入主营业务");
+            notify("请输入主营业务");
             return true;
         }
         if (this.describes.value == "") {
-            noticeMsg("请输入企业简介");
+            notify("请输入企业简介");
             return true;
         }
         if (this.person.value == "") {
-            noticeMsg("请输入联系人");
+            notify("请输入联系人");
             return true;
         }
         if (this.phone.value == "") {
-            noticeMsg("请输入手机号");
+            notify("请输入手机号");
             return true;
         }
 
@@ -988,9 +1130,9 @@ class Organ {
         result = JSON.parse(result);
         if (result.code == 1) {
             storage.delItem(this.id)
-            noticeMsg("保存成功", "success")
+            notify("保存成功", "success")
         } else {
-            noticeMsg(result.msg);
+            notify(result.msg);
         }
         return result;
     }
@@ -1036,10 +1178,10 @@ class Organ {
             }, 'POST');
             result = JSON.parse(result);
             if (result.code == 1) {
-                noticeMsg("创建成功", "success")
+                notify("创建成功", "success")
                 classie.removeClass(modal, 'is-active')
             } else {
-                noticeMsg(result.msg)
+                notify(result.msg)
             }
         })
     }

@@ -9,12 +9,7 @@ let CONST = {
 if (window.location.href.indexOf('teifan.com') < 0) {
     CONST.host = '';
 }
-if(window.NodeList && !NodeList.prototype.forEach) {
-    NodeList.prototype.forEach = Array.prototype.forEach;
-}
-if(window.HTMLCollection && !HTMLCollection.prototype.forEach) {
-    HTMLCollection.prototype.forEach = Array.prototype.forEach;
-}
+
 if (CONST.box_top) {
     function scrollAnimate(target, time) {
         let frameNumber = 0;//帧编号
@@ -208,7 +203,7 @@ const ask = (function (url, data = {}, method = 'GET') {
                 resolve(xhr.responseText);
             }
             if (xhr.readyState == 4 && xhr.status == 403) {
-                noticeMsg("暂无相应授权")
+                notify("暂无相应授权")
             }
             if (xhr.readyState == 4 && xhr.status == 401) {
                 location.reload();
@@ -622,14 +617,32 @@ function html_init() {
     }
 }
 
-function noticeMsg(msg, type = "warning") {
-    new NotificationFx({message: msg, ttl: 3000, type: type}).show();
+function notify(msg, type = "warn") {
+    if(toastr == undefined){
+        return;
+    }
+    if(type == 'warn'){
+        toastr.warn(msg,"警告");
+    }
+    if(type == 'success'){
+        toastr.success(msg,"提醒");
+    }
+    if(type == 'error'){
+        toastr.error(msg,"错误");
+    }
+    if(type == 'info'){
+        toastr.info(msg,"提醒");
+    }
+    let n = new Notification( "忒凡网", {
+        body: msg
+    });
+    n.close();
 }
 
 function limitImg(file) {
     let f = (file.files && file.files[0]) || file;
     if (f.size / 1024 > 400) {
-        noticeMsg("图片大小不能超过400k。");
+        notify("图片大小不能超过400k。");
         return true;
     }
     return false;
