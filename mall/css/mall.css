@@ -8,7 +8,26 @@ em {
     font-style: normal;
     color: #f73131;
 }
-
+/*article start*/
+.segmentation {
+    margin: .75rem 0;
+    background-image:repeating-linear-gradient(-45deg,#fff,#fff 4px,transparent 4px,transparent 8px);
+    background-color:#DDDDDD;
+    border: none;height: 3px;
+    box-sizing: content-box;
+}
+.like{
+    margin: .7rem 0 .5rem 0;
+    text-align:center;
+}
+.statement{
+    padding: .75rem;
+    font-size: .75rem;
+}
+.adjacent{
+    padding: .5rem 0;
+}
+/**article end*/
 .has-text-vip {
     color: #ff8b4f;
 }

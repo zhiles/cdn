@@ -78,7 +78,7 @@ class Stores {
             vip.init(this.organId);
         })
         synchronizeBtn.addEventListener('click', async () => {
-            let result = await ask('/admin/synchronize', {id: organId}, 'POST');
+            let result = await ask('/admin/synchronize', {id: this.organId}, 'POST');
             result = JSON.parse(result);
             if (result.code == 1) {
                 notify("同步成功");
@@ -664,9 +664,8 @@ class Article {
 
 class Banner {
     constructor() {
+        this.bannerId = '';
         this.modal_banner = document.querySelector('.modal_banner');
-        this.submitBannerBtn = document.querySelector('.submit_banner');
-        this.banner_close = document.querySelector('.is_banner_close');
         this.banner_resume = document.querySelector('#banner-resume');
         this.startTime = document.querySelector('#startTime');
         this.endTime = document.querySelector('#endTime');
@@ -678,17 +677,49 @@ class Banner {
         this.element = document.querySelector('tbody');
         this.add = document.querySelector('.is-add');
         this.organ = storage.getItem(id);
-    }
 
-    initBanner() {
-        this.list();
+        let submitBannerBtn = document.querySelector('.submit_banner');
+        let banner_close = document.querySelector('.is_banner_close');
+        this.banner_resume.addEventListener('change', () => {
+            uploadImg(this.banner_resume.files[0], this.img);
+        })
         this.add.addEventListener('click', () => {
             if (this.organ.vipLog && this.organ.vipLog.vipId == 1) {
                 notify("该功能为VIP功能,请先开通VIP。");
                 return;
             }
-            this.init('');
+            this.show();
         });
+        banner_close.addEventListener('click', () => {
+            this.destroy();
+        });
+        submitBannerBtn.addEventListener('click', () => {
+            this.submit().then(result => {
+                if(result){
+                    result = JSON.parse(result);
+                    if (result.code == 1) {
+                        notify("保存成功");
+                        this.destroy();
+                        this.list();
+                    }
+                }
+            });
+
+        });
+    }
+
+    destroy() {
+        classie.removeClass(this.modal_banner, 'is-active');
+        this.link.value = "";
+        this.sort.value = "";
+        this.alt.value = "";
+        this.img.src = "";
+        this.startTime.value = "";
+        this.endTime.value = "";
+    }
+
+    initBanner() {
+        this.list();
     }
 
     async list() {
@@ -713,7 +744,7 @@ class Banner {
             let onAnOfs = document.querySelectorAll('.onAnOf');
             edits.forEach(item => {
                 item.addEventListener('click', () => {
-                    this.init(item.getAttribute('data-id'), this.list());
+                    this.show(item.getAttribute('data-id'));
                 })
             })
             onAnOfs.forEach(item => {
@@ -734,34 +765,12 @@ class Banner {
             notify(result.msg);
         }
     }
-
-    init(id) {
+    show(id){
+        this.bannerId = id;
+        console.log(this.bannerId)
         if (id) {
             this.getBannerById(id);
         }
-        this.banner_resume.addEventListener('change', () => {
-            uploadImg(this.banner_resume.files[0], this.img);
-        })
-        this.banner_close.addEventListener('click', () => {
-            classie.removeClass(this.modal_banner, 'is-active');
-        });
-        this.submitBannerBtn.addEventListener('click', () => {
-            this.submit(id).then(result => {
-                result = JSON.parse(result);
-                if (result.code == 1) {
-                    notify("保存成功");
-                    classie.removeClass(this.modal_banner, 'is-active');
-                    this.link.value = "";
-                    this.sort.value = "";
-                    this.alt.value = "";
-                    this.img.src = "";
-                    this.startTime.value = "";
-                    this.endTime.value = "";
-                    this.list();
-                }
-            });
-
-        });
         classie.addClass(this.modal_banner, 'is-active');
     }
 
@@ -778,10 +787,10 @@ class Banner {
         }
     }
 
-    async submit(id) {
+    async submit() {
         if (this.verify()) return;
         return await ask('/ad/save', {
-            "id": id || '',
+            "id": this.bannerId || '',
             "link": this.link.value.trim(),
             "sort": this.sort.value,
             "alt": this.alt.value.trim(),
