@@ -218,6 +218,7 @@ class Trade {
         this.trade_protocol = document.querySelector('#trade-protocol');
         this.trade_resume = document.querySelector('#trade-resume');
         this.organId = "";
+        this.tradeId = "";
 
         this.element = document.querySelector('tbody');
         this.pagination = document.querySelector('.pagination');
@@ -265,6 +266,7 @@ class Trade {
 
     init(organId, tradeId, business) {
         this.organId = organId || "";
+        this.tradeId = tradeId || "";
         this.trade_keyword.value = business || "";
         new Editor(organId, "trade_editor");
         this.getClassify();
@@ -293,6 +295,7 @@ class Trade {
     async submit() {
         if (this.verify()) return;
         let result = await ask('/trade/save', {
+            "id":this.tradeId,
             "organId": this.organId,
             "name": this.name.value.trim(),
             "keyword": this.trade_keyword.value.trim(),
@@ -326,31 +329,31 @@ class Trade {
 
     verify() {
         if (!this.trade_protocol.checked) {
-            notify("请阅读并确认协议");
+            notify("请阅读并确认协议","warn");
             return true;
         }
         if (!this.name.value) {
-            notify("请填写标题");
+            notify("请填写标题","warn");
             return true;
         }
         if (!this.trade_keyword.value) {
-            notify("请填写关键词");
+            notify("请填写关键词","warn");
             return true;
         }
         if (!this.tradeImg.src) {
-            notify("请上传封面图");
+            notify("请上传封面图","warn");
             return true;
         }
         if (!window.editor.getData() || window.editor.getData().replace(/<[^>]*>/ig, "").length < 200) {
-            notify("详情描述需大于200文字。");
+            notify("详情描述需大于200文字。","warn");
             return true;
         }
         if (!this.price.value) {
-            notify("请填写价格");
+            notify("请填写价格","warn");
             return true;
         }
         if (!this.minNumber.value) {
-            notify("请填写最小采购量");
+            notify("请填写最小采购量","warn");
             return true;
         }
         return false;
@@ -395,6 +398,7 @@ class News {
         this.new_resume = document.querySelector('#new-resume');
         this.new_protocol = document.querySelector('#new-protocol');
         this.organId = "";
+        this.newId = "";
 
         this.element = document.querySelector('tbody');
         this.pagination = document.querySelector('.pagination');
@@ -440,8 +444,9 @@ class News {
     }
 
     init(organId, newId, business) {
-        this.organId = organId;
-        this.news_keyword.value = business;
+        this.organId = organId || "";
+        this.newId = newId || "";
+        this.news_keyword.value = business || "";
         this.getDataInit(newId);
         new Editor(organId, "news_editor");
         this.new_resume.addEventListener('change', () => {
@@ -455,6 +460,7 @@ class News {
     async submit() {
         if (this.verify()) return;
         let result = await ask('/new/save', {
+            "id":this.newId,
             "organId": this.organId,
             "title": this.title.value.trim(),
             "keyword": this.news_keyword.value.trim().replace("，", ",").replace(" ", ","),
@@ -481,27 +487,27 @@ class News {
 
     verify() {
         if (!this.title.value) {
-            notify("请完善标题信息");
+            notify("请完善标题信息","warn");
             return true;
         }
         if (!this.news_keyword.value) {
-            notify("请完善关键词信息");
+            notify("请完善关键词信息","warn");
             return true;
         }
         if (!this.guide.value) {
-            notify("请完善导读信息");
+            notify("请完善导读信息","warn");
             return true;
         }
         if (!this.cover.src) {
-            notify("请上传封面图片");
+            notify("请上传封面图片","warn");
             return true;
         }
         if (!window.editor.getData() || window.editor.getData().replace(/<[^>]*>/ig, "").length < 200) {
-            notify("详情描述需大于200文字。");
+            notify("详情描述需大于200文字。","warn");
             return true;
         }
         if (!this.new_protocol.checked) {
-            notify("请阅读并确认协议");
+            notify("请阅读并确认协议","warn");
             return true;
         }
         return false;
@@ -635,27 +641,27 @@ class Article {
 
     verify() {
         if (this.title.value.trim() == "") {
-            notify("标题不能为空");
+            notify("标题不能为空","warn");
             return true;
         }
         if (this.article_keyword.value.trim() == "") {
-            notify("关键词不能为空");
+            notify("关键词不能为空","warn");
             return true;
         }
         if (this.guide.value.trim() == "") {
-            notify("导读不能为空");
+            notify("导读不能为空","warn");
             return true;
         }
         if (this.cover.src.trim() == "") {
-            notify("图片不能为空");
+            notify("图片不能为空","warn");
             return true;
         }
         if (window.editor.getData() == "") {
-            notify("文章内容不能为空");
+            notify("文章内容不能为空","warn");
             return true;
         }
         if (this.author.value.trim() == "") {
-            notify("作者不能为空");
+            notify("作者不能为空","warn");
             return true;
         }
         return false;
@@ -685,7 +691,7 @@ class Banner {
         })
         this.add.addEventListener('click', () => {
             if (this.organ.vipLog && this.organ.vipLog.vipId == 1) {
-                notify("该功能为VIP功能,请先开通VIP。");
+                notify("该功能为VIP功能,请先开通VIP。","warn");
                 return;
             }
             this.show();
@@ -803,15 +809,15 @@ class Banner {
 
     verify() {
         if (this.img.src == "") {
-            notify("图片不能为空");
+            notify("图片不能为空","warn");
             return true;
         }
         if (this.startTime.value == "") {
-            notify("开始时间不能为空");
+            notify("开始时间不能为空","warn");
             return true;
         }
         if (this.endTime.value == "") {
-            notify("结束时间不能为空");
+            notify("结束时间不能为空","warn");
             return true;
         }
         return false;
@@ -1065,31 +1071,31 @@ class Organ {
 
     verify() {
         if (this.logo.src == "") {
-            notify("请上传LOGO");
+            notify("请上传LOGO","warn");
             return true;
         }
         if (this.industry.value == "") {
-            notify("请选择所属行业");
+            notify("请选择所属行业","warn");
             return true;
         }
         if (this.pattern.value == "") {
-            notify("请选择经营模式");
+            notify("请选择经营模式","warn");
             return true;
         }
         if (this.business.value == "") {
-            notify("请输入主营业务");
+            notify("请输入主营业务","warn");
             return true;
         }
         if (this.describes.value == "") {
-            notify("请输入企业简介");
+            notify("请输入企业简介","warn");
             return true;
         }
         if (this.person.value == "") {
-            notify("请输入联系人");
+            notify("请输入联系人","warn");
             return true;
         }
         if (this.phone.value == "") {
-            notify("请输入手机号");
+            notify("请输入手机号","warn");
             return true;
         }
 
@@ -1134,7 +1140,7 @@ class Organ {
             "address": this.address.innerHTML,
             "adCode": this.adCode.value,
             "cityCode": this.cityCode.value,
-            "theme": theme
+            "theme": theme || ""
         }, 'POST');
         result = JSON.parse(result);
         if (result.code == 1) {
@@ -1174,6 +1180,20 @@ class Organ {
             let address = document.querySelector('#address');
             let adcode = document.querySelector('#adcode');
             let citycode = document.querySelector('#citycode');
+
+            if(name.value.trim() == ""){
+                notify("请输入企业名称","warn")
+                return;
+            }
+            if(describes.value.trim() == ""){
+                notify("请输入企业描述","warn")
+                return;
+            }
+            if(business.value.trim() == ""){
+                notify("请输入主营业务","warn")
+                return;
+            }
+
             let result = await ask('/organ/init', {
                 "name": name.value,
                 "industry": industry.value,
@@ -1188,7 +1208,8 @@ class Organ {
             result = JSON.parse(result);
             if (result.code == 1) {
                 notify("创建成功", "success")
-                classie.removeClass(modal, 'is-active')
+                classie.removeClass(this.modal, 'is-active')
+                location.reload();
             } else {
                 notify(result.msg)
             }
@@ -1511,7 +1532,7 @@ class Editor {
 
 
     wyc5188(callback, organId) {
-        if (organId != undefined && organId != "") {
+        // if (organId != undefined && organId != "") {
             let URL5188 = "https://aiplugin.5118.com/static/OnlineJs/Inner_5118_Wyc.js"
             let scr = document.querySelector('script[src="' + URL5188 + '"]');
             if (scr) {
@@ -1519,7 +1540,7 @@ class Editor {
             } else {
                 loadScript(URL5188, () => this.wyc5188(callback, organId));
             }
-        }
+        // }
     }
 
     wyc5188Init() {

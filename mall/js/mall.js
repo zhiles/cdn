@@ -356,7 +356,7 @@ class Login {
                 "                    <input style=\"width: auto;display:inline-block\" type=\"checkbox\" class=\"checkbox\" checked> 我已阅读并同意\n" +
                 "                </div>\n" +
                 "                <div class=\"is-size-7\">\n" +
-                "                    <a class=\"has-text-grey\" href=\"//www.teifan.com/agreement\" target=\"_blank\">《网络服务协议》</a> 和 <a class=\"has-text-grey\" href=\"//www.teifan.com/privacy\">《用户隐私条款》</a>\n" +
+                "                    <a class=\"has-text-grey\" href=\"//www.teifan.com/agreement\" target=\"_blank\">《网络服务协议》</a> 和 <a class=\"has-text-grey\" href=\"//www.teifan.com/privacy\" target=\"_blank\">《用户隐私条款》</a>\n" +
                 "                </div>\n" +
                 "                <button class=\"is-close delete is-small is-hidden-desktop is-hidden-tablet\" title=\"关闭\"></button>\n" +
                 "            </form>\n" +
@@ -617,7 +617,7 @@ function html_init() {
     }
 }
 
-function notify(msg, type = "warn") {
+function notify(msg, type = "success") {
     if(toastr == undefined){
         return;
     }
@@ -625,7 +625,7 @@ function notify(msg, type = "warn") {
         toastr.warn(msg,"警告");
     }
     if(type == 'success'){
-        toastr.success(msg,"提醒");
+        toastr.success(msg,"提示");
     }
     if(type == 'error'){
         toastr.error(msg,"错误");

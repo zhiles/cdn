@@ -28,6 +28,9 @@ em {
     padding: .5rem 0;
 }
 /**article end*/
+.footer-bottom img{
+    margin: 0 .5rem;
+}
 .has-text-vip {
     color: #ff8b4f;
 }
