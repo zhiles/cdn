@@ -63,12 +63,14 @@ class Stores {
             })
         });
         this.query.addEventListener('click', () => {
+            this.pageNo = 1;
             this.list();
         })
 
         let vipBtn = document.querySelector('.vip-btn');
         let domainBtn = document.querySelector('.domain-btn');
         let synchronizeBtn = document.querySelector('.synchronize-btn');
+        let destroyBtn = document.querySelector('.destroy-btn');
         vipBtn.addEventListener('click', () => {
             if (this.organId == "") {
                 notify(CONST.admin_error);
@@ -87,6 +89,13 @@ class Stores {
         domainBtn.addEventListener('click', () => {
             let domain = new Domain();
             domain.init(this.organId);
+        })
+        destroyBtn.addEventListener('click',async()=>{
+            let result = await ask('/admin/destroy', {id: this.organId}, 'POST');
+            result = JSON.parse(result);
+            if (result.code == 1) {
+                notify("清理成功");
+            }
         })
     }
 
