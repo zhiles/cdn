@@ -641,8 +641,8 @@ function notify(msg, type = "success") {
 
 function limitImg(file) {
     let f = (file.files && file.files[0]) || file;
-    if (f.size / 1024 > 400) {
-        notify("图片大小不能超过400k。");
+    if (f.size / 1024 > 800) {
+        notify("图片大小不能超过800k。");
         return true;
     }
     return false;
